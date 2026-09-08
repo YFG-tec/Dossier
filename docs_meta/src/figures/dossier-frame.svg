@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 512" width="880" height="512"
+     font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif">
+  <!-- Dossier 框架图
+       主：目录即权限——横轴是层，纵轴是手，方块＝这一层归谁说了算（不是谁敲键盘）
+       行序＝权威从高到低：人 → 规划席 → 实现席三只手
+       实现席拆三只手：src/ 和 tests/ 不是同一只手的写权限（roles.md）
+       审查那一行一个实心都没有——审查的手不写文件
+       副：换阶段就是换手——同一批手摊到时间上；施工/举证/对账三段各挂一只手，接回上表
+       朱只有一处：人 × 在办，就是勾 TODO 那一下 -->
+  <rect width="880" height="512" fill="#FFFFFF"/>
+
+  <!-- ── 标题与图例 ───────────────────────────────── -->
+  <text x="20" y="34" font-size="21" font-weight="700" fill="#1D1D1F">目录即权限</text>
+  <g font-size="13" fill="#6B6B6B">
+    <rect x="475" y="21" width="15" height="15" rx="3.5" fill="#1D1D1F"/>
+    <text x="497" y="33">写</text>
+    <circle cx="549" cy="28.5" r="7" fill="none" stroke="#1D1D1F" stroke-width="2" opacity="0.4"/>
+    <text x="563" y="33">只读</text>
+    <text x="619" y="33">空白＝不许碰</text>
+    <rect x="727" y="21" width="15" height="15" rx="3.5" fill="#D9342B"/>
+    <text x="749" y="33">朱＝只有人能落</text>
+  </g>
+
+  <!-- ── 列头（层） ───────────────────────────────── -->
+  <g font-size="17" fill="#1D1D1F" text-anchor="middle">
+    <text x="216" y="62">约定</text>
+    <text x="312" y="62">合同</text>
+    <text x="408" y="62">在办</text>
+    <text x="504" y="62">实现</text>
+    <text x="600" y="62">把关</text>
+    <text x="696" y="62">交付</text>
+    <text x="792" y="62">草稿</text>
+  </g>
+  <line x1="168" y1="76" x2="840" y2="76" stroke="#1D1D1F" stroke-width="2"/>
+
+  <!-- 列导引线 -->
+  <g stroke="#ECECEC" stroke-width="1">
+    <line x1="264" y1="80" x2="264" y2="298"/>
+    <line x1="360" y1="80" x2="360" y2="298"/>
+    <line x1="456" y1="80" x2="456" y2="298"/>
+    <line x1="552" y1="80" x2="552" y2="298"/>
+    <line x1="648" y1="80" x2="648" y2="298"/>
+    <line x1="744" y1="80" x2="744" y2="298"/>
+  </g>
+  <!-- 实现席那三行归在一起 -->
+  <line x1="168" y1="166" x2="840" y2="166" stroke="#E2E2E2" stroke-width="1"/>
+
+  <!-- ── 行标（手）：权威从高到低 ───────────────────── -->
+  <g font-size="17" fill="#1D1D1F" text-anchor="end">
+    <text x="150" y="106">人</text>
+    <text x="150" y="138">规划席</text>
+    <text x="150" y="194">实现</text>
+    <text x="150" y="238">测试</text>
+    <text x="150" y="282">审查</text>
+  </g>
+  <text x="150" y="155" font-size="11" fill="#9A9A9A" text-anchor="end">默认 Cursor</text>
+
+  <!-- 三只手同坐一席：一个会话，三种写权限 -->
+  <path d="M 94,169 h-8 v126 h8" fill="none" stroke="#1D1D1F" stroke-width="1.5" opacity="0.55"/>
+  <text x="76" y="220" font-size="14" fill="#6B6B6B" text-anchor="end">实现席</text>
+  <g font-size="11" fill="#9A9A9A" text-anchor="end">
+    <text x="76" y="237">默认</text>
+    <text x="76" y="251">Claude Code</text>
+  </g>
+
+  <!-- ── 格子 ───────────────────────────────────── -->
+  <g fill="#1D1D1F">
+    <!-- 人：约定与合同——规矩和物理口径是人的，规划席代笔 -->
+    <rect x="205" y="89" width="22" height="22" rx="5"/>
+    <rect x="301" y="89" width="22" height="22" rx="5"/>
+    <!-- 规划席：合同 在办 交付 草稿 -->
+    <rect x="301" y="133" width="22" height="22" rx="5"/>
+    <rect x="397" y="133" width="22" height="22" rx="5"/>
+    <rect x="685" y="133" width="22" height="22" rx="5"/>
+    <rect x="781" y="133" width="22" height="22" rx="5"/>
+    <!-- 实现 builder：只有 src/ 和 .tmp/ -->
+    <rect x="493" y="177" width="22" height="22" rx="5"/>
+    <rect x="781" y="177" width="22" height="22" rx="5"/>
+    <!-- 测试 contract-tester：只有 tests/ 和 .tmp/。手叫「测试」，层叫「把关」，不同名 -->
+    <rect x="589" y="221" width="22" height="22" rx="5"/>
+    <rect x="781" y="221" width="22" height="22" rx="5"/>
+    <!-- 审查 review：一格都没有 -->
+  </g>
+
+  <!-- 人 × 在办：全图唯一一处朱 -->
+  <rect x="397" y="89" width="22" height="22" rx="5" fill="#D9342B"/>
+
+  <!-- 只读。规划席 × 约定 是 ○ 不是 ▣：被约定管的手不许改约定 -->
+  <g fill="none" stroke="#1D1D1F" stroke-width="2" opacity="0.4">
+    <circle cx="696" cy="100" r="9"/>
+    <circle cx="216" cy="144" r="9"/>
+    <circle cx="216" cy="188" r="9"/>
+    <circle cx="312" cy="188" r="9"/>
+    <circle cx="408" cy="188" r="9"/>
+    <circle cx="696" cy="188" r="9"/>
+    <circle cx="216" cy="232" r="9"/>
+    <circle cx="312" cy="232" r="9"/>
+    <circle cx="408" cy="232" r="9"/>
+    <circle cx="696" cy="232" r="9"/>
+    <circle cx="216" cy="276" r="9"/>
+    <circle cx="312" cy="276" r="9"/>
+    <circle cx="408" cy="276" r="9"/>
+    <circle cx="696" cy="276" r="9"/>
+  </g>
+  <text x="326" y="182" font-size="12" fill="#6B6B6B">※</text>
+
+  <line x1="168" y1="298" x2="840" y2="298" stroke="#1D1D1F" stroke-width="2"/>
+  <g font-size="12" fill="#6B6B6B">
+    <text x="168" y="315">审查那一行一个实心都没有——审查的手不写文件</text>
+    <text x="840" y="315" text-anchor="end">※ 卡片点名才改合同</text>
+  </g>
+
+  <!-- ── 接上表：同一批手，换成时间轴 ─────────────────── -->
+  <path d="M 26,330 v12 m-4,-5 l4,5 4,-5" fill="none" stroke="#1D1D1F" stroke-width="1.5" opacity="0.6"/>
+  <text x="40" y="343" font-size="13" fill="#1D1D1F">同一批手，摊到时间上——上表说<tspan font-weight="700">谁许写</tspan>，下带说<tspan font-weight="700">什么时候轮到谁</tspan>。</text>
+
+  <!-- ── 流转带 ───────────────────────────────────── -->
+  <rect x="14" y="352" width="852" height="128" rx="10" fill="#F5F5F4"/>
+  <text x="32" y="378" font-size="16" font-weight="700" fill="#1D1D1F">换阶段就是换手</text>
+
+  <g font-size="13" fill="#6B6B6B" text-anchor="middle">
+    <text x="225" y="398">规划席</text>
+    <text x="498" y="398">实现席（三只手串行，不并行改核）</text>
+    <text x="763" y="398">人</text>
+  </g>
+  <g stroke="#1D1D1F" stroke-width="2" fill="none">
+    <path d="M 160,410 v-7 h130 v7"/>
+    <path d="M 306,410 v-7 h384 v7"/>
+    <path d="M 706,410 v-7 h114 v7"/>
+  </g>
+  <g font-size="16" fill="#1D1D1F" text-anchor="middle">
+    <text x="225" y="434">立案</text>
+    <text x="370" y="434">施工</text>
+    <text x="498" y="434">举证</text>
+    <text x="626" y="434">对账</text>
+    <text x="763" y="434">结案</text>
+  </g>
+  <!-- 这三段各挂一只手，就是上表实现席那三行 -->
+  <g font-size="12" fill="#8A8A8A" text-anchor="middle">
+    <text x="370" y="452">实现</text>
+    <text x="498" y="452">测试</text>
+    <text x="626" y="452">审查</text>
+  </g>
+
+  <!-- 两道闸：人只站这两处 -->
+  <g stroke="#1D1D1F" stroke-width="1.5" stroke-dasharray="4 4">
+    <line x1="298" y1="404" x2="298" y2="458"/>
+    <line x1="698" y1="404" x2="698" y2="458"/>
+  </g>
+  <g font-size="12.5" fill="#6B6B6B">
+    <text x="291" y="472" text-anchor="end">闸一「按卡片做」</text>
+    <text x="705" y="472">闸二「勾 TODO」</text>
+  </g>
+
+  <text x="20" y="500" font-size="12" fill="#8A8A8A">画的是桌上的一刀。母本自己没有 src/ 与 tests/——规矩作用在桌上，clone 下来不带求解器。</text>
+</svg>
