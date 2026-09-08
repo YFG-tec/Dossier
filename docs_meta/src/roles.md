@@ -33,10 +33,10 @@
 | 角色 | 只许动 | 不许动 | 失败时 |
 |---|---|---|---|
 | **领班**（主会话） | 派角色、跑收口验收、对人说话 | 自己少写核 | 告诉人勾不勾；不 commit、不勾 TODO |
-| **写卡** `write-cmd` | **新增** `docs/cmd/PROMPT_xx.md`（只增不删）+ **覆盖** `SESSION.md` | `src/` `tests/` | 写完**停**。要的是可贴指令，不是开刀。**两份都要出**：PROMPT 是历史，SESSION 是当前 |
+| **写卡** `write-cmd` | **新增** `docs/cmd/PROMPT_xx.md`（结案后只增不删；退卡即删）+ **覆盖** `SESSION.md` | `src/` `tests/` | 写完**停**。要的是可贴指令，不是开刀。**两份都要出**：PROMPT 是历史，SESSION 是当前 |
 | **规格看守** `spec-guard` | 只覆盖 `SESSION.md` | `src/` `tests/`、自己派 builder | 写完**停**。没有卡片不准往下 |
 | **实现** `builder` | 卡片「交什么」里的 `src/`；`.tmp/` 探针 | `tests/` 的验收口径、`TODO` 勾选、对照材料 | 核散了先交定性，不准在核里试一刀修法；做不到或只剩折衷则**退卡**（`workflow.md`），摆选项给人选，不自己采纳 |
-| **契约测试** `contract-tester` | `tests/`；`.tmp/` 试跑 | `src/` 算法 | 核错了写**红测**并回报，禁止在测试角色里「修到绿」 |
+| **契约测试** `contract-tester` | `tests/`；`.tmp/` 试跑 | `src/` 算法 | 核错了写**红测**并回报，禁止在测试角色里「修到绿」。退卡清账时本刀的 `tests/` 也归它判：**删还是改，只这两向**，不许借机放宽（`workflow.md`） |
 | **审查** `review` | 无（只读、只跑） | 一切改动；不问做法、不听自评 | 只核对结果和预先声明的标准。一页：哪条过了、哪条没过、要不要返工 |
 | **规划席默认** `cursor-desk` | `docs/` `research/` `examples/` 叙述 `.tmp/` | `src/` `tests/`、派 builder | 「继续推进」只够写卡 / 改文档 |
 
