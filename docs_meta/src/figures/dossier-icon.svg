@@ -6,8 +6,8 @@
        向外转 7 度：贴上去是「放」，转过来是「盖」 -->
   <rect width="256" height="256" fill="#FFFFFF"/>
   <g stroke="#1D1D1F" fill="none" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="64" y="48" width="128" height="160" rx="22"/>
-    <path d="M 104,48 V 208" stroke-linecap="butt"/>
+    <rect x="64" y="48" width="128" height="160" rx="22.652"/>
+    <path d="M 104,48 V 208" stroke-width="8.652" stroke-linecap="butt"/>
   </g>
   <g fill="#D9342B" transform="rotate(7 152 160) translate(152 160) scale(0.675) translate(-50 -51)">
     <!-- 掌垫：三叶求并后傅里叶低通（留 6 次谐波），三处接缝抹成弧 -->
