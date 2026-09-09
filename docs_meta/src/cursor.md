@@ -29,6 +29,10 @@ AGENTS.md                      与 Claude Code 共用的短锁
 
 不要把规划席的自我说明写进 `SESSION.md`——SESSION 是本刀卡片，下一刀整篇覆盖。
 
+用户说「**验收这部分**」，是把验收和结案一起下。先审范围：动过的路径超出本卡点名的那几处就停，
+不 commit、不勾，报给用户。没超才一并 commit 并勾那一行。
+**这一爪是用户下的，本席只落笔。** 细则见 `workflow.md`「四个词各管哪一段」。
+
 ## 和 Claude Code 的接口
 
 不是互读聊天。接口是在办层三份文件：`docs/TODO.md`、`docs/SESSION.md`、`docs/cmd/PROMPT_*.md`。

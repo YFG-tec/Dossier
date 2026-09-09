@@ -34,7 +34,7 @@
 - 名字 **Dossier**，中文不另起名；Dossier / 桌 / 刀三个词各管一层
 - 领班收口 = 绿落盘 + 对账（`workflow.md`）
 - 开桌先议事：`design/` 分已定 / 草案 / 占位，占位写成问句；框架要聊全，判据只要够第一刀；
-  TODO 只能长不能胖，占位由收口点名、人在闸二升格（`workflow.md`）
+  TODO 只能长不能胖，占位由收口点名、人在结案升格（`workflow.md`）
 - 不设常设 `docs/README.md`，不另开 `USERGUIDE.md`，不设 `docs/archive/`，不另开 `scripts/`
 - 图跟引用它的文档走；禁止 `docs/figures/`，重复图就复制
 - 外部对照的 1、2 不另做特性（`sources.md`）
