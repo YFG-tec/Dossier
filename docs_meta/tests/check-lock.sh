@@ -7,7 +7,7 @@
 # 同 check-word.sh 整本、check-link.sh C / D 两段、check-seat.sh 整本那条理由。
 #
 # 为什么要有第九本：原有八本的射程里，根 CLAUDE.md / AGENTS.md 一份都不在。
-#   check-claw 扫 paradigm.md，check-done 扫 todo.md 加 cmd/，check-mark 扫 workflow.md，
+#   check-paw 扫 paradigm.md，check-done 扫 todo.md 加 cmd/，check-mark 扫 workflow.md，
 #   check-cmd 扫 src/ 那几份加 paradigm.md，check-rename 扫 readme.md 加 src/ 加两张图，
 #   check-link 扫 SESSION.md，check-seat 扫 roles.md，check-word A 段扫 src/ 加 readme.md。
 #   具体后果：产物里写了作废的旧词没有东西会红，两份锁同时消失也没有东西会红。
@@ -45,13 +45,18 @@
 #     **这是「两处都留」唯一能机械变红的东西**，也是本刀这一条禁令唯一的哨兵。
 #     **它只查得到那个标题，查不到内容被抄了一半。** 那一问写在卡的「验收」栏里，人读。
 #
-#   E 变假的那一行没被留着 —— paradigm.md 里「还没落 `CLAUDE.md`」出现 0 次。
-#     §9 那一行的三格在本刀落完之后全假。留着就是静默降档：
-#     母本写着约定层空着，根上躺着两份。
-#     **它查不了那一行是被撤掉的还是被悄悄删的**——撤行要在表底下说清它为什么不见了，
-#     那一条也在卡的「验收」栏里，人读。
+#   E 退役（2026-09-11，`cmd/PROMPT_013.md` 第 9 件）。原来查的是：paradigm.md 里
+#     「还没落 `CLAUDE.md`」必须 0 处——防母本写着约定层空着、根上却躺着两份。
+#     **退役理由**：那一刀把 `design/` 从红绿判定里剥出去，`paradigm.md` 整份降成思路层。
+#     拿一份思路层的措辞当断言，正是这一刀要废掉的那种用法；留着它，本刀落完自相矛盾。
+#     **人 2026-09-11 落槌**「字面退役」。退役是放宽，不是收紧，所以不能由测试这只手自己做
+#     （同 check-mark.sh A / B 两段的先例）。
 #
-# **不设放行词。** 五条一条都没留「同一行还出现某某就放过」的口子。
+#     **代价照写，不假装没损失**：§9 那一行现在没有哨兵。它变假了也不会有东西变红，
+#     只能靠人读。这一刀换来的是「不拿思路层当判据」，换掉的是这一格机械保险——
+#     **是少了一格，不是换了地方。**
+#
+# **不设放行词。** 剩下四条一条都没留「同一行还出现某某就放过」的口子。
 #   留了就等于说「提一句可以」，而「提一句」和「真写死」之间没有机器分得清的界
 #   （同 check-link.sh A、check-word.sh 整本）。
 #
@@ -66,7 +71,7 @@ fail=0
 C=CLAUDE.md
 A=AGENTS.md
 
-echo "（射程：根 CLAUDE.md / AGENTS.md；D 段扫 docs_meta/docs/design/ch2.md，E 段扫 paradigm.md——见脚本头）"
+echo "（射程：根 CLAUDE.md / AGENTS.md；D 段扫 docs_meta/docs/design/ch2.md。E 段已退役——见脚本头）"
 echo
 
 echo "== A 两份都在：根 CLAUDE.md 和 AGENTS.md 都必须存在 =="
@@ -140,24 +145,6 @@ else
   else
     printf '%s\n' "$hit" | sed 's/^/   /'
     echo "   FAIL: 还在 $CH2 里——两处都留，这一刀就是反的"
-    fail=1
-  fi
-fi
-
-echo
-echo "== E 变假的那一行没被留着：paradigm.md 里「还没落 \`CLAUDE.md\`」必须 0 处 =="
-echo "   （留着就是静默降档：母本写着约定层空着，根上躺着两份。撤行的说明由人读）"
-PARA=docs_meta/docs/design/paradigm.md
-if [ ! -f "$PARA" ]; then
-  echo "   FAIL: $PARA 不存在"
-  fail=1
-else
-  hit=$(grep -n '还没落 `CLAUDE.md`' "$PARA")
-  if [ -z "$hit" ]; then
-    echo "   PASS: 0 处，§9 那一行已经撤掉"
-  else
-    printf '%s\n' "$hit" | sed 's/^/   /'
-    echo "   FAIL: §9 那一行还在——约定层落了，母本还写着它空着"
     fail=1
   fi
 fi

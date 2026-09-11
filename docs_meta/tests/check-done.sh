@@ -40,6 +40,11 @@
 #     而 workflow.md:131 那张状态表**本身就在陈述口径**，它在围栏里也照样算数。
 #     剥了就漏。**判据要跟着问题走，不跟着上一条判据走。**
 #     cmd/ 是只增不删的历史，一律不扫。
+#     **2026-09-11 扫描名单去掉了 `paradigm.md`**（`cmd/PROMPT_013.md` 第 12 件）：
+#     那一刀把 `design/` 从红绿判定里剥出去，不在思路层的文件上做机械断言。
+#     人当天落槌「字面退役」——减扫描目标是放宽，不由测试这只手自己做。
+#     **代价照写**：`paradigm.md` 里要是把旧口径当现行规矩写回来，不会有东西红。
+#     `workflow.md` / `directory.md` / `todo.md` 三项照旧，那三处才是口径的正身。
 #
 # 这三条查的是**指针对不对得上**，查不了「这一刀到底干成了没有」——那是人的判断。
 cd "$(dirname "$0")/../.."
@@ -134,8 +139,7 @@ echo
 echo "== C 同口径：旧口径不许再作为现行规矩出现 =="
 echo "   （扫原文，不剥围栏——状态表本身就在陈述口径；cmd/ 是历史，不扫）"
 echo "   （放行条件：同一行还出现「旧」/「以前」/「不再」/「改成」——那是在讲来历，不是在立规矩）"
-for f in docs_meta/src/workflow.md docs_meta/src/directory.md \
-         docs_meta/docs/design/paradigm.md "$TODO"; do
+for f in docs_meta/src/workflow.md docs_meta/src/directory.md "$TODO"; do
   hit=$(grep -n $'勾完删行\|勾完就删' "$f" | grep -v $'旧\|以前\|不再\|改成')
   if [ -n "$hit" ]; then
     echo "   $f"
