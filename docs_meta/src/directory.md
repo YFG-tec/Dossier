@@ -142,7 +142,7 @@ papers/ codes/              papers/ codes/
 这一段说的是**桌**长成什么样。母本自己不长 `src/` `tests/` `.venv/`。
 `docs/` 是给桌的骨架，换根带走；`docs_meta/` 是母本自己的规划与品牌，不进桌。见 `naming.md`。
 
-## `docs/` 内部怎么切
+## `docs/` 内部怎么切（→ harness）
 
 不设常设的 `docs/README.md`。目录名就是地图；开刀顺序见在办层和 `CLAUDE.md`。人每天四件事见 `workflow.md`。
 SMAIRT 那种 CONTEXT_INDEX 是文件堆成一摊才要的；权威分层之后，索引就是这棵树。
@@ -240,7 +240,7 @@ examples/<case>/    演示：run.py + REPORT.md + 本算例图；批跑 / 出图
 `utils/` 若存在：只放长期尺子，不算公开 API，也不要变成第二套 `src/`。
 不另开 `scripts/`。Xenia 的 `sync_xmf.py` 那种入口，原则上也进 `examples/`。
 
-## `.tmp/` 是目录设计，不是 gitignore 细节
+## `.tmp/` 是目录设计，不是 gitignore 细节（→ harness）
 
 - 代理临时文件有且只有这一处；禁止落到 `docs/`、`research/`、桌面、系统 Temp。
 - 可直接写、改、跑，不必问。除 `README.md` 外不 `git add`。

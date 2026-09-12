@@ -6,7 +6,7 @@
 默认坐**规划席**。读合同、写卡、对账、拒超售。改核走另一会话里的实现席（Claude Code 规划见 `claude-code.md`）。
 席可以换，两席必须两个会话——这一条在 `readme.md`，这里不重复。
 
-## 目标文件
+## 目标文件（→ harness）
 
 ```text
 AGENTS.md                      与 Claude Code 共用的短锁
