@@ -10,6 +10,7 @@
 
 ```text
 AGENTS.md                      与 Claude Code 共用的短锁
+.cursor/rules/switches.mdc     本桌开关的唯一现态；alwaysApply: true；两席共用，不是规划席专属
 .cursor/skills/
   cursor-desk/SKILL.md         规划席默认：写文档，不改核
   example-report/SKILL.md      算例报告公式；与 Claude 侧同名 skill 同一口径

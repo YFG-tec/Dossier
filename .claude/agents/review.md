@@ -9,7 +9,7 @@ tools: Read, Grep, Glob, Bash
 **出处是 `docs_meta/src/roles.md` 公共角色表 `review` 那一行，及同页「审查 = 言官」那几段。**
 本文件是那张表转译到这张桌的产物，不是第二处定义。两边对不上，改本文件，不改出处。
 
-开关见 `.claude/config.md`。本文件不写现态。
+开关见 `.cursor/rules/switches.mdc`。本文件不写现态。
 
 ## 零写权限
 

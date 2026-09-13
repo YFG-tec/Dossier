@@ -11,6 +11,7 @@
 ```text
 CLAUDE.md                      每会话细锁：先读、干活在哪、禁令
 AGENTS.md                      同一份锁，写短的
+.claude/host.md                宿主怎么用，不是这张桌的规矩，不当判据引
 .claude/agents/
   spec-guard.md                只覆盖 SESSION；写完停
   builder.md                   只改卡片「交什么」里的 src/；.tmp/ 探针
@@ -24,6 +25,9 @@ AGENTS.md                      同一份锁，写短的
 
 调度 skill 不是角色。`one-slice` 只规定 `roles.md` 那条顺序。
 `31` 的 `tmp-experiment` 是探索模式，对应 `.tmp/` 层，不落成第五个实现角色。
+
+根锁里有一行 `@` 导入开关表。
+`@` 只有实现席展开，规划席靠 `alwaysApply` 读同一份。两条通道一份真相。
 
 **`CLAUDE.md` 是转译层，不作断言落点。** 它回答的是这张桌为什么这么设计、总体怎么转；
 一句话要当判据用，判据的正身得在源码那几份里，`CLAUDE.md` 只是把它转译过来。

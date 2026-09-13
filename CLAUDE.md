@@ -18,6 +18,11 @@
 **新会话第一段先读本页，再按下面的先读顺序翻，不从聊天里猜。**
 从哪启动写在这里，不另开用户指南（`docs_meta/src/cursor.md`「目标文件」末那句）。
 
+**开关的现态住 `.cursor/rules/switches.mdc`，一份，两席共用。** 下面那一行是导入行，不是内容；
+拧档只改那一份，不改本页。
+
+@.cursor/rules/switches.mdc
+
 ## 先读顺序
 
 按 `docs_meta/src/directory.md`「`docs/` 内部怎么切」那三行现算到本仓库的路径。
