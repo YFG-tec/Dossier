@@ -24,12 +24,22 @@
 ## Bash 弹窗：A 档前缀（2026-09-13）
 
 不是这张桌的规矩，不当判据引。人裁：A 直接改项目 `.claude/settings.json`，B/C 暂不处理。
-读测前缀：`grep` / `awk` / `sed -n` / `echo` / `wc` / `head` / `tail` / `mkdir`、`bash docs_meta/tests/*`、`SWITCH_ROOT=` / `SECT_ROOT=`、只读 `git status|diff|log|ls-files`。
-**没放** `tee`、`chmod`。改完要重载窗口。
+读测前缀：`grep` / `sed -n` / `echo` / `wc` / `head` / `tail` / `mkdir`、`bash docs_meta/tests/*`、只读 `git status|diff|log|ls-files`。
+假根必须写成 `env SWITCH_ROOT=… bash docs_meta/tests/…` / `env SECT_ROOT=… bash docs_meta/tests/…`。
+`Bash(SWITCH_ROOT=*)` / `Bash(SECT_ROOT=*)` 实测整条不生效（命令以 `VAR=` 开头时前缀匹不上），已删。
+**没放** `tee`、`chmod`、`awk`。改完要重载窗口。
 
 **没验过的一句，写在改动旁边：** 前缀够宽之后，宿主还往不往 `settings.local.json` 追加原文，本席没量。
-`Bash(awk *)` 按厂商文档罩住整句，包括 `awk … > 文件`。A 不是只读；堵重定向要 `deny` 或 hook，人裁暂不处理。
+A 本身是写权限：`echo … > 文件`、`grep … > 文件` 实测静默且真落盘，不是「只读旁边有洞」。
+路径形 `deny` 拦不住 `>`（参数位拦、重定向位不拦，已量）。堵它只剩 hook，人裁只记不修。
 
 人 2026-09-13 后裁：git 写操作堵严，其余不管。项目 `settings.json` 的 `deny` 拦
-`git commit` / `push` / `reset` / `rebase`（含 `git -C …` 那一形）。
-`status` / `diff` / `log` / `ls-files` 仍在 allow。`&&` 拼在后面的 `git commit` 前缀匹配可能罩不住，厂商文档如此，不吹。改完重载窗口。
+`git commit` / `push` / `reset` / `rebase` / `checkout` / `switch` / `clean` / `restore` / `stash`（含 `git -C …` 那一形）。
+`status` / `diff` / `log` / `ls-files` 仍在 allow。`&&` 拼在后面的写操作前缀匹配可能罩不住，厂商文档如此，不吹。改完重载窗口。
+
+人又裁：壳上动 `.git` 目录也盖大面（拦君子不拦小人）。`deny` 加 ` .git` / ` .git/` / `/.git/`、`GIT_DIR=`、`--git-dir=`。
+不写 `*.git*`，以免误伤 `.gitignore`。Edit / `python -c` 仍绕得过，不补。`.git/` 连只读也拦，是既定代价。
+
+`Bash(py -3 -c ' *)`、`Bash(awk *)`、`Bash(SWITCH_ROOT=*)`、`Bash(SECT_ROOT=*)` 实测整条不生效，已从 allow 删掉。
+进库那一份里画图标 / 本机 Edge 的 10 条精确原文也清了，换根不再带走。
+一次性路径探针 `Bash(* d:/tmp/perm_probe_deny.txt)` 量完已删。

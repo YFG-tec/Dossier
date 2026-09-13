@@ -2,7 +2,6 @@
   "permissions": {
     "allow": [
       "Bash(grep *)",
-      "Bash(awk *)",
       "Bash(sed -n *)",
       "Bash(echo *)",
       "Bash(wc *)",
@@ -10,23 +9,12 @@
       "Bash(tail *)",
       "Bash(mkdir *)",
       "Bash(bash docs_meta/tests/*)",
-      "Bash(SWITCH_ROOT=*)",
-      "Bash(SECT_ROOT=*)",
+      "Bash(env SWITCH_ROOT=* bash docs_meta/tests/*)",
+      "Bash(env SECT_ROOT=* bash docs_meta/tests/*)",
       "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git log *)",
-      "Bash(git ls-files *)",
-      "Bash(py -3 -c ' *)",
-      "Bash(py -3 -c \"import cairosvg; print\\('cairosvg ok'\\)\")",
-      "Bash(py -3 -c \"import PIL; print\\('pillow', PIL.__version__\\)\")",
-      "Bash(py -3 -c \"import matplotlib; print\\('mpl', matplotlib.__version__\\)\")",
-      "Bash(py -3 -c \"import playwright; print\\('playwright ok'\\)\")",
-      "Read(//c/Program Files \\\\\\(x86\\\\\\)/Microsoft/Edge/Application/**)",
-      "Bash(py -3 .tmp/render_icon.py .tmp/icon_v1.svg)",
-      "Bash(py -3 .tmp/render_icon.py .tmp/icon_v2.svg)",
-      "Bash(py -3 .tmp/render_icon.py .tmp/icon_v3.svg)",
-      "Bash(py -3 compare_icons.py c_a_arch.svg c_b_peel.svg c_c_deck.svg c_d_half.svg)",
-      "Bash(py -3 compare_icons.py c_c_deck.svg c_v2.svg)"
+      "Bash(git ls-files *)"
     ],
     "deny": [
       "Bash(git commit)",
@@ -37,10 +25,30 @@
       "Bash(git reset *)",
       "Bash(git rebase)",
       "Bash(git rebase *)",
+      "Bash(git checkout)",
+      "Bash(git checkout *)",
+      "Bash(git switch)",
+      "Bash(git switch *)",
+      "Bash(git clean)",
+      "Bash(git clean *)",
+      "Bash(git restore)",
+      "Bash(git restore *)",
+      "Bash(git stash)",
+      "Bash(git stash *)",
       "Bash(git -C * commit *)",
       "Bash(git -C * push *)",
       "Bash(git -C * reset *)",
-      "Bash(git -C * rebase *)"
+      "Bash(git -C * rebase *)",
+      "Bash(git -C * checkout *)",
+      "Bash(git -C * switch *)",
+      "Bash(git -C * clean *)",
+      "Bash(git -C * restore *)",
+      "Bash(git -C * stash *)",
+      "Bash(* .git)",
+      "Bash(* .git/*)",
+      "Bash(*/.git/*)",
+      "Bash(GIT_DIR=*)",
+      "Bash(* --git-dir=*)"
     ]
   }
 }
