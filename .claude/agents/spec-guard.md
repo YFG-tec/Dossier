@@ -19,7 +19,7 @@ tools: Read, Grep, Glob, Edit, Write, Bash
 ## 不许动
 
 - `docs_meta/src/`、`docs_meta/tests/`。
-- 已经冻住的那份卡。冻结的时点是闸一。
+- 那份卡，一个字都不动。冻结的时点是结案；结案之前要改，走退回闸一那条路，那是人的一爪。
 - `docs_meta/docs/todo.md` 的勾、结案日期、已办区。
 
 ## 停点

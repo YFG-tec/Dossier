@@ -3,8 +3,8 @@
 # 用法：bash docs_meta/tests/check-switch.sh
 #
 # 谁加的：2026-09-13 由 cmd/PROMPT_019.md 第 3 件新增，契约测试这只手写的。
-# **这是收紧，不是放宽**，所以不另发一次授权（同 check-role.sh / check-sect.sh 脚本头那条理由：
-# 松判据才是人的那一爪，收紧是测试这只手的本职）。
+# **这是收紧，不是放宽**，所以不另发一次授权。这一次射程收窄是人 2026-09-13 亲自裁的，逐字记下原话「1，放到f里」；
+# 下一次要收别的射程，仍旧一处一裁（松判据才是人的那一爪，收紧是测试这只手的本职）。
 #
 # 为什么要有第十三本：2.6e 把开关从 .claude/ 下那份集中配置搬进 .cursor/rules/switches.mdc，
 #   根 CLAUDE.md 写一行 @ 导入。一份真相，两条通道（@ 只有实现席展开，规划席靠 alwaysApply 读同一份）。
@@ -20,8 +20,8 @@
 #   人 2026-09-13 裁过：不配哨兵，**不是推后，是配不出来**。
 #   本本查的是另一件事：**一份真相有没有长出第二份。** 这一件 grep 得动。
 #
-# 射程写死（下面这一段就是射程的定义，改它等于改判据）：
-#   根 CLAUDE.md + 根 AGENTS.md + .claude/** + .cursor/**。
+# 射程的定义和取法（改它等于改判据）：
+#   扫 根 CLAUDE.md + 根 AGENTS.md + .claude/** + .cursor/**。
 #   **不含 docs_meta/docs/** —— 卡、SESSION.md、todo.md 是**描述**这几个字面的地方，
 #     它们本来就要把字面写出来，扫进来必假红。
 #   **不含 docs_meta/tests/ 自己** —— D 段要断言某个文件名字面在射程内为 0，
@@ -29,6 +29,15 @@
 #     本脚本扫到自己，当场假红。PROMPT_017 整张退卡就死在这种自伤上。
 #     **旧入口的文件名不是开关的现值**，写它不算在脚本里存第二真相；
 #     **开关的现值仍然一个字都不许写进本脚本**，见 C 段那一条。
+#
+#   取法分两路，按 SWITCH_ROOT **有没有被设置**：
+#     **SWITCH_ROOT 未设（主仓库，run.sh 走这一路）** 用新取法排掉被忽略层：
+#       git ls-files --cached --others --exclude-standard -- .claude .cursor
+#       两半都要（进库的加上还没进库、未被忽略的）；新 harness 文件忘了 git add 也照得出。
+#       **这条路答不出就红，不许退回 find**——取法只许走这一条。
+#     **SWITCH_ROOT 已设（造红副本，.tmp/ 以下被 gitignore）** 用 find 遍历：
+#       find "$ROOT/.claude" "$ROOT/.cursor" -type f
+#       新取法查不出被忽略那一层，用 find 保证射程非 0。这条路造红用，那一层都是临时。
 #
 # 口径（脚本和卡必须同一套）：
 #
@@ -68,6 +77,13 @@
 #   **run.sh 走默认那一路，不带参数、不设这个变量。**
 #
 # 查不到什么，照写不吹：
+#   进了库、但会被别的程序改写的文件仍在射程。今天没有这种文件；有了还会再炸一次。
+#     这一收治的是「被忽略的那一层」，不是治「机器会替你写」那个病根。
+#   被忽略的那一层里若真有人抄了现值，本本照不出来。让出去的理由：那一层不进库，
+#     也不构成两席读到的那一份真相。这是明着让的，不是漏的。
+#   取法依赖 git。不在 git 工作树里跑（例如把仓库打包拷走）时它答不出；
+#     答不了要红，不许假绿——同 C 段现行那一格的写法。
+#
 #   查不到「人有没有把档拧对」。本本只答「现态只有一处」，答不了那一处写的值对不对——
 #     值是人拧的，没有源码出处可对。
 #   查不到换个措辞泄现态。C 段盯的是「原话」那一整格的固定说法；有人若改口叙述同一件事，
@@ -88,6 +104,15 @@ MDC="$ROOT/.cursor/rules/switches.mdc"
 IMP='@.cursor/rules/switches.mdc'
 PTR='.cursor/rules/switches.mdc'
 OLD='config.md'
+GIT_FAILED=0
+
+# 主仓库那一路必须能用 git，否则答不出要红
+if [ ! -v SWITCH_ROOT ]; then
+  # SWITCH_ROOT 未设，这是主仓库，检查 git 是否可用
+  if ! git ls-files --cached --others --exclude-standard -- .claude .cursor >/dev/null 2>&1; then
+    GIT_FAILED=1
+  fi
+fi
 
 # occ <文件> <字面> —— 数出现**处数**，不是行数：一行里写两次也要看得见。
 occ() {
@@ -95,15 +120,31 @@ occ() {
 }
 
 # 射程清单现算，不写死名单。顺序固定，便于逐行对读。
+# 按 SWITCH_ROOT 有没有被设分两路：未设（主仓库）用 git ls-files 排掉被忽略层，
+# 已设（造红副本）用 find。两条路的分界就是「是否设了 SWITCH_ROOT」。
 scope_list() {
   [ -f "$LOCK" ] && printf '%s\n' "$LOCK"
   [ -f "$SHORT" ] && printf '%s\n' "$SHORT"
-  find "$ROOT/.claude" "$ROOT/.cursor" -type f 2>/dev/null | sort
+  if [ -v SWITCH_ROOT ]; then
+    # SWITCH_ROOT 已设，这是造红副本（被 gitignore），用 find
+    find "$ROOT/.claude" "$ROOT/.cursor" -type f 2>/dev/null | sort
+  else
+    # SWITCH_ROOT 未设，这是主仓库，用 git ls-files 排掉被忽略层
+    # 两半都要：--cached（进库的）加 --others --exclude-standard（未进库、未被忽略的）
+    # 答不出就红，不许退回 find——那是两条路的分界
+    if [ "$GIT_FAILED" -eq 0 ]; then
+      git ls-files --cached --others --exclude-standard -- .claude .cursor 2>/dev/null | sed "s|^|$ROOT/|" | sort
+    fi
+  fi
 }
 SCOPE=$(scope_list)
 nscope=$(printf '%s\n' "$SCOPE" | grep -c . | tr -d ' ')
-echo "== 射程（现算，$nscope 份）：根 CLAUDE.md + 根 AGENTS.md + .claude/** + .cursor/** =="
-echo "   根目录：$ROOT   （不含 docs_meta/docs/，不含 docs_meta/tests/ 自己）"
+echo "== 射程（现算，$nscope 份，用 git ls-files 或 find 分两路）：根 CLAUDE.md + 根 AGENTS.md + .claude/** + .cursor/** =="
+echo "   根目录：$ROOT   （不含 docs_meta/docs/，不含 docs_meta/tests/ 自己；新取法排掉被忽略层）"
+if [ "$GIT_FAILED" -eq 1 ]; then
+  echo "   FAIL: 主仓库那一路 git 命令答不出，取法只许走这一条，不许退回 find"
+  fail=1
+fi
 if [ "$nscope" -eq 0 ]; then
   echo "   FAIL: 射程内一份文件都没有，下面几段会全变恒绿"
   fail=1
