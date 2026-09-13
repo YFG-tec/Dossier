@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""把 add_task 复原成干净起点。冒烟每趟先跑这一下。不进 docs_meta/tests/run.sh。"""
+"""add_task 的本体：写出干净起点。盘上那份夹是生成物，不入库。不进 docs_meta/tests/run.sh。"""
 from __future__ import annotations
 
 import shutil

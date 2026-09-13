@@ -2,3 +2,4 @@
 !.tmp/README.md
 .env
 .venv/
+example_meta/add_task/
