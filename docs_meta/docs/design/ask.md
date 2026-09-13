@@ -708,3 +708,14 @@ SWITCH_ROOT="/d/00_Works/33_Dossier/.tmp/020/副本" bash docs_meta/tests/check-
 4. 回归：读测前缀仍不弹；`git rebase --abort` 仍硬拦
 
 改完要重载窗口。请人带一句「重载了」。
+
+## 12 规划席清死规则（2026-09-14）
+
+**这一节也是追记，上面 §0–§11 一个字没改。** 人原话：「死规则清理」。
+认 11.1：`env` 形状也死，不换 `Bash(env *)`。
+
+allow 里删掉：
+`Bash(env SWITCH_ROOT=* bash docs_meta/tests/*)`、
+`Bash(env SECT_ROOT=* bash docs_meta/tests/*)`。
+
+假根跑 `check-switch.sh` / `check-sect.sh` 接受每次弹一下。不重载也能读这份；要让实现席确认 allow 少了两条，仍请带一句「重载了」。

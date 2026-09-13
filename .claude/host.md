@@ -25,8 +25,8 @@
 
 不是这张桌的规矩，不当判据引。人裁：A 直接改项目 `.claude/settings.json`，B/C 暂不处理。
 读测前缀：`grep` / `sed -n` / `echo` / `wc` / `head` / `tail` / `mkdir`、`bash docs_meta/tests/*`、只读 `git status|diff|log|ls-files`。
-假根必须写成 `env SWITCH_ROOT=… bash docs_meta/tests/…` / `env SECT_ROOT=… bash docs_meta/tests/…`。
-`Bash(SWITCH_ROOT=*)` / `Bash(SECT_ROOT=*)` 实测整条不生效（命令以 `VAR=` 开头时前缀匹不上），已删。
+假根 `SWITCH_ROOT=` / `SECT_ROOT=` 以及换成 `env SWITCH_ROOT=* bash docs_meta/tests/*` 都量死了，不放。
+不写 `Bash(env *)`（罩住 `env` 能起的任何进程）。假根跑 `check-switch.sh` / `check-sect.sh` 接受每次弹一下。
 **没放** `tee`、`chmod`、`awk`。改完要重载窗口。
 
 **没验过的一句，写在改动旁边：** 前缀够宽之后，宿主还往不往 `settings.local.json` 追加原文，本席没量。
@@ -40,6 +40,7 @@ A 本身是写权限：`echo … > 文件`、`grep … > 文件` 实测静默且
 人又裁：壳上动 `.git` 目录也盖大面（拦君子不拦小人）。`deny` 加 ` .git` / ` .git/` / `/.git/`、`GIT_DIR=`、`--git-dir=`。
 不写 `*.git*`，以免误伤 `.gitignore`。Edit / `python -c` 仍绕得过，不补。`.git/` 连只读也拦，是既定代价。
 
-`Bash(py -3 -c ' *)`、`Bash(awk *)`、`Bash(SWITCH_ROOT=*)`、`Bash(SECT_ROOT=*)` 实测整条不生效，已从 allow 删掉。
+死规则已从 allow 删掉：`Bash(py -3 -c ' *)`、`Bash(awk *)`、`Bash(SWITCH_ROOT=*)`、`Bash(SECT_ROOT=*)`、
+`Bash(env SWITCH_ROOT=* bash docs_meta/tests/*)`、`Bash(env SECT_ROOT=* bash docs_meta/tests/*)`。
 进库那一份里画图标 / 本机 Edge 的 10 条精确原文也清了，换根不再带走。
 一次性路径探针 `Bash(* d:/tmp/perm_probe_deny.txt)` 量完已删。

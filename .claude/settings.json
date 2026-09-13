@@ -9,8 +9,6 @@
       "Bash(tail *)",
       "Bash(mkdir *)",
       "Bash(bash docs_meta/tests/*)",
-      "Bash(env SWITCH_ROOT=* bash docs_meta/tests/*)",
-      "Bash(env SECT_ROOT=* bash docs_meta/tests/*)",
       "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git log *)",
