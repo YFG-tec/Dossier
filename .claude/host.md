@@ -20,3 +20,16 @@
 
 这两格是外部产品那一天的行为，不是常量。换一组平台要重走一遍这个编译流程，
 一组平台走一次。厂商改了机制，这份产物会静默失准，盘上不会红——这是明着留的残余。
+
+## Bash 弹窗：A 档前缀（2026-09-13）
+
+不是这张桌的规矩，不当判据引。人裁：A 直接改项目 `.claude/settings.json`，B/C 暂不处理。
+读测前缀：`grep` / `awk` / `sed -n` / `echo` / `wc` / `head` / `tail` / `mkdir`、`bash docs_meta/tests/*`、`SWITCH_ROOT=` / `SECT_ROOT=`、只读 `git status|diff|log|ls-files`。
+**没放** `tee`、`chmod`。改完要重载窗口。
+
+**没验过的一句，写在改动旁边：** 前缀够宽之后，宿主还往不往 `settings.local.json` 追加原文，本席没量。
+`Bash(awk *)` 按厂商文档罩住整句，包括 `awk … > 文件`。A 不是只读；堵重定向要 `deny` 或 hook，人裁暂不处理。
+
+人 2026-09-13 后裁：git 写操作堵严，其余不管。项目 `settings.json` 的 `deny` 拦
+`git commit` / `push` / `reset` / `rebase`（含 `git -C …` 那一形）。
+`status` / `diff` / `log` / `ls-files` 仍在 allow。`&&` 拼在后面的 `git commit` 前缀匹配可能罩不住，厂商文档如此，不吹。改完重载窗口。
