@@ -4,7 +4,7 @@
 背景、选项、外部对照写在这里；**冲突时以 `paradigm.md` 为准**（分工见该页 §5）。
 一条定案了：先改 `paradigm.md` 的态，再把这里对应那条移进「已收」。
 
-换根不带走。下文只写文件名时指 `docs_meta/src/` 里那一份；已拍板的目录取舍见 `directory.md`，来源见 `sources.md`。
+不铺进宿主工作区。下文只写文件名时指 `docs_meta/src/` 里那一份；已拍板的目录取舍见 `directory.md`，来源见 `sources.md`。
 
 1. **新开数值验证默认轻档还是重档？** 默认先长 `directory.md` 六块，核开始变脏再加角色文件？（`paradigm.md` §8）
 2. **探索 → 入库门槛**要不要写成 `docs/design/` 草案的固定小节？
@@ -80,7 +80,7 @@
 - Dossier 对三桌是提取、统合、抽象、升级，不是汇编（`readme.md` / `sources.md`）
 - `tests/` 在仓库根上；阶段报告进 `docs/reports/`（`directory.md`）
 - 角色原则上要分开（`roles.md`）
-- 产品形态：clone 母本再换根；`docs/` 是给桌的骨架，`docs_meta/` 是母本自己的规划与品牌（`naming.md`）
+- 产品形态：母本以 git submodule 挂进宿主，骨架由 `init` 铺（`form.md`）；`docs/` 是给桌的骨架，`docs_meta/` 是母本自己的规划与品牌（`naming.md`）
 - 名字 **Dossier**，中文不另起名；Dossier / 桌 / 刀三个词各管一层
 - 领班收口 = 绿落盘 + 对账（`workflow.md`）
 - 开桌先议事：`design/` 分已定 / 草案 / 占位，占位写成问句；框架要聊全，判据只要够第一刀；

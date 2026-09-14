@@ -265,8 +265,8 @@ fix        一句可执行的话或一条命令
 根上再点一个点目录，旁边已经有 `.tmp`（零权威）和 `.claude`（产物）。第三者会把它读成第三份私货，或读成又一个 `.tmp`。
 和厂家也撞名（`.kiro/hooks`、Claude 也可能在 `.claude` 里挂钩）。
 
-换根也对不上。`docs_meta/` 不进桌。根上 `.hook` 若带走，桌就多了一棵母本检查树；
-若不带走，锁里的调用会指到一份桌上没有的路径。
+形态也对不上。`docs_meta/` 不铺进宿主工作区。根上 `.hook` 若跟着铺过去，桌就多了一棵母本检查树；
+若不铺过去，锁里的调用会指到一份桌上没有的路径。
 
 | | 母本 | 桌 |
 |---|---|---|
@@ -462,7 +462,7 @@ Cursor 按动作分（`beforeShellExecution` / `beforeReadFile` / `afterFileEdit
 | 工具级权限 | 无独立面 | agent 里 `tools` / `excludedTools` | `tools` 白名单 / `--disallowedTools` | `approval_policy`（`on-failure` 已弃） | 层 × 手落到工具白名单（`2.5`），只许收紧 |
 | OS 级沙箱 | `.cursor/sandbox.json`；`~/.cursor/sandbox-policies` | 未见 | 未查到 | **有**：本机 `[windows] sandbox = "elevated"`；文档另有 Seatbelt / Landlock | 不押；靠 `.tmp/` 零权威 + 落盘作证 |
 | 代理能改自己的权限文件吗 | **代码里禁**：`.cursor/**/*.json` 全锁，连 `.claude/*.json`、`.git/hooks/**` 一起护；`rules` / `commands` / `skills` / `agents` 明确放开 | 只有 prompt 里一句 `FORBIDDEN from calling fs_write` | 可用 deny 配，缺省不锁 | 沙箱在进程外，改不动 | **明禁**：发授权是人的三爪之一 |
-| 权威分层 | 企业 `C:\ProgramData\Cursor\hooks.json` > 用户 > 工作区 | 未找到机器级 | `managed-settings.json` > 用户 > 项目 | `[projects.'路径'] trust_level` 逐项目 | 母本 > 桌，换根带走；桌只许收紧，不回流 |
+| 权威分层 | 企业 `C:\ProgramData\Cursor\hooks.json` > 用户 > 工作区 | 未找到机器级 | `managed-settings.json` > 用户 > 项目 | `[projects.'路径'] trust_level` 逐项目 | 母本 > 桌，由 `init` 铺过去；桌只许收紧，不回流 |
 | 钩子事件粒度 | 按动作：`beforeShellExecution` / `beforeMCPExecution` / `beforeReadFile` / `afterFileEdit` / `beforeTabFileRead` | 按工具调用：`PreToolUse` / `PostToolUse` + matcher；另有 `PreTaskExec` / `PostFileSave` | 同 Kiro 一套，另有 `SubagentStop` | 只有 `notify` 一个出口，**拦不住** | 不押厂家事件词；软钩是模型拉，不是事件推 |
 | 钩子判决协议 | JSON `allow` / `deny` / `ask` | 退出码 0 / 2 | 退出码 0 / 2，另可回 JSON `permissionDecision` | 无判决面 | 六本红绿落盘，`.tmp/` 不准写「通过」 |
 | 检查自己挂了算什么 | 未核 | **其它退出码 = 静默放过** | 同形状 | 无此语义 | **fail-closed：缺文件 = 红** |
