@@ -1,6 +1,6 @@
 # 来源与外部对照
 
-换根不带走。原则见仓库根 `readme.md`。
+不铺进宿主工作区。原则见仓库根 `readme.md`。
 
 三桌是**来源**，用来对照「哪一条是踩坑之后留下的」，不是本规范的合规实现。
 各桌有各自的实现方式和探索路径。Dossier 做的不是汇编，是提取、统合、抽象、升级：
@@ -32,7 +32,7 @@
 | [Anatomia](https://github.com/anatomia-dev/anatomia) | Think / Plan / Build / **Verify 不读 Build 自评**；测试绿要封存跑出来的日志 | 角色拆法同构。可偷「审查盲评」和「绿必须落盘」。不要 CLI 引擎和 proof chain |
 | [SMAIRT](https://github.com/PNNL-CompBio/smairt-template)（PNNL cookiecutter） | 假说 → 实验 → 分析；`CONTEXT_INDEX`；`KNOWN_PATTERNS` | 最近的科研近亲。目录是 `experiments/01_synthetic`，和 `src/` / `.tmp/` 打架。树就是索引，不另写 `docs/README` |
 | BMAD + Spec-Kit 控制面 | npm 安装、审计环、证据链 TRACE/EVD | 太重。证据链 = 卡片 + 测试输出 + `docs/reports/` |
-| cookiecutter / GitHub Template | 生成新仓库 | Template ≈ clone 换根。旧桌若要对齐，嫁接比强制换根更现实 |
+| cookiecutter / GitHub Template | 生成新仓库 | 一次性生成新仓库，和子模块 + `init` 不是一路。旧桌要对齐走 `init`，不必另起一个仓库 |
 | 各类 `agentic-dev-template` | 12 个 slash、SPEC.md 开场 | 写卡已经覆盖。agent 数量是税 |
 
 没有看到专门为**数值离散 + 验证门 + 探索/验证分界**写的公共范式。
@@ -41,8 +41,8 @@
 **3、4** 是领班收口，见 `workflow.md`。
 不补：constitution 五段流水线、16 个 agent、cookiecutter 问卷、假说目录替代 `.tmp/`、论文草稿树、hashed proof chain。
 
-公开工具里，最接近「clone 再换身份」的是 **GitHub Template Repository**。
-Spec Kit 的 `specify init` 是反方向：把 harness **嫁接进已有仓库**。旧桌要对齐时，嫁接比换根合适。
+公开工具里，最接近「拿一份现成的开新仓库」的是 **GitHub Template Repository**。
+Spec Kit 的 `specify init` **也**拿它管新建和已有仓库两档——`init` 是各家脚手架通用的那个词，母本跟的是业内习惯，不是从某一家抄的。旧桌要对齐，走的是同一个 `init`。
 
 ## 补录 2026-09-07：贴着骨架长的那几个
 

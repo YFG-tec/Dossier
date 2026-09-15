@@ -1,6 +1,6 @@
 # 验证与排障
 
-换根不带走。原则见仓库根 `readme.md`。交付落点见 `directory.md`。
+不铺进宿主工作区。原则见仓库根 `readme.md`。交付落点见 `directory.md`。
 
 ## 验证诚信
 

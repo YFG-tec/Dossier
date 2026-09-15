@@ -1,6 +1,6 @@
 # 目录
 
-换根不带走。原则见仓库根 `readme.md`。三桌对照见 `sources.md`。
+不铺进宿主工作区。原则见仓库根 `readme.md`。三桌对照见 `sources.md`。
 收哪些目录进公共层，按提取原则甄别，不是三桌并集。
 
 三桌不是按文件类型分目录（「代码放一起、文档放一起」），而是按**权威等级**分目录：谁说了算、谁可以写「通过」、谁明天可以扔。
@@ -140,7 +140,7 @@ papers/ codes/              papers/ codes/
 对 **Dossier** 而言它们是产品本身，规划在 `claude-code.md` / `cursor.md`。
 
 这一段说的是**桌**长成什么样。母本自己不长 `src/` `tests/` `.venv/`。
-`docs/` 是给桌的骨架，换根带走；`docs_meta/` 是母本自己的规划与品牌，不进桌。见 `naming.md`。
+`docs/` 是给桌的骨架，由 `init` 铺到宿主上；`docs_meta/` 是母本自己的规划与品牌，不铺进宿主工作区。见 `naming.md`。
 
 ## `docs/` 内部怎么切（→ harness）
 

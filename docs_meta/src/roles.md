@@ -1,6 +1,6 @@
 # 角色与档位
 
-换根不带走。原则见仓库根 `readme.md`。写权限路径见 `directory.md`。
+不铺进宿主工作区。原则见仓库根 `readme.md`。写权限路径见 `directory.md`。
 各 harness 落成哪些文件：`claude-code.md`、`cursor.md`。
 
 目录回答「写到哪」；角色回答「谁许写」。两者对同一张权威图。
