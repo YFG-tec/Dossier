@@ -68,6 +68,11 @@
 #   造红必须造在副本上，源码和产物一个字不动——这是纪律，不是方便。
 #   **run.sh 走默认那一路，不带参数、不设这个变量。**
 #
+# 副本内容检查用的源码根开关：环境变量 SECT_SRC，默认仓库根下的 docs_meta/src。
+#   **副本那一路，产物在副本、源码仍在母本，两侧根不同。**
+#   所以 SECT_ROOT 指副本时，SECT_SRC 照旧指母本 src——两个根分设、不共根，SECT_SRC 不跟着 SECT_ROOT 走。
+#   **run.sh 走默认那一路，不带参数、不设这个变量。**
+#
 # 查不到什么，照写不吹：
 #   查不到「根锁引的那句话和节里写的是不是一回事」。A 段只答「根锁引了这个节名」，
 #     引的那句和节里的条款对不对得上，**意思机器读不了**（design/paradigm.md 第 6 节：
@@ -90,7 +95,7 @@ fail=0
 ROOT="${SECT_ROOT:-.}"
 LOCK="$ROOT/CLAUDE.md"
 SHORT="$ROOT/AGENTS.md"
-SRC="$ROOT/docs_meta/src"
+SRC="${SECT_SRC:-$ROOT/docs_meta/src}"
 SUF='（→ harness）'
 # 字段分隔符用 US（\037），不用制表符：制表符是 IFS 空白字符，read 会剥前导的、折叠中间的，
 # 空字段一被吃掉整行就错位——**而且错位了不会红**。这条是 check-role.sh 第一版踩出来的。
@@ -98,7 +103,7 @@ SEP=$(printf '\037')
 
 echo "（射程：$SRC/*.md × $LOCK × $SHORT，源码划的节 × 产物写的出处，两侧 join）"
 if [ -n "$SECT_ROOT" ]; then
-  echo "（SECT_ROOT 已设成 $SECT_ROOT —— 这一路只为在副本上造红，不是射程可调）"
+  echo "（SECT_ROOT 已设成 $SECT_ROOT —— 这一路既可造红，也对副本做内容检查；不是射程可调）"
 fi
 echo
 

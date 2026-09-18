@@ -55,6 +55,18 @@
 #
 # **不设放行词。** 四段一条都没留「同一行还出现某某就放过」的口子——同 check-lock.sh、check-link.sh A。
 #
+# 副本内容检查用的根目录开关：环境变量 ROLE_ROOT，默认仓库根（不设时路径不前缀）。
+#   **它是给副本用的：对副本做内容检查时，产物在副本，源码仍是母本那一份。**
+#   所以只把产物那一侧的路径接上根；ROLES / LIST 两行指的是母本那两张源码表，两行一个字不动。
+#   造红也走这一路，破的是副本那一份，母本一个字不动——这是纪律，不是方便。
+#   **run.sh 走默认那一路，不带参数、不设这个变量。**
+#
+# **设了 ROLE_ROOT 那一路，B 段整段不跑。** 原因：副本里那几份按设计不落这张桌，
+#   B 段「目标文件清单逐条都在盘上」逐条查必假红。**代价照写，不假装没损失：**
+#   副本上「清单逐条都在」这一格没有了——清单里每条的落点由 C 段按 id 兜住，
+#   不落这张桌的那几条两段都不逐条查。
+#   跳的依据是「设了开关」，**脚本里不写死是哪一份**（同本本「要查就现算」那条口径）。
+#
 # 查不到什么，照写不吹：
 #   查不到 src/ 里那几十行带禁止词的句子有没有落点。**本本只盖角色这一块**,
 #     那一头至今没有可枚举的边界，缺口归 todo.md 2.6d，本本不假装盖住了。
@@ -64,8 +76,12 @@
 #   查不到 .claude/ 里别的东西。settings.json、几份 SKILL.md 的正文，都不在射程。
 #   查不到清单里那份文件是不是「对的那一份」。**只查那条路径上有文件**——
 #     清单里有几份同名，本本靠整路径区分它们，靠的不是内容。
+#   查不到副本那一路「目标文件清单逐条都在盘上」。设了 ROLE_ROOT 时 B 段整段不跑，
+#     那一格就是空的——只有 C 段按 id 兜住有落点的那几条，不落这张桌的那几条两段都不查。
 cd "$(dirname "$0")/../.."
 fail=0
+ROOT="${ROLE_ROOT:-}"
+ROOT="${ROOT%/}"
 ROLES=docs_meta/src/roles.md
 LIST=docs_meta/src/claude-code.md
 # 字段分隔符用 US（\037），不用制表符：制表符是 IFS 空白字符，read 会剥掉前导的、
@@ -138,37 +154,42 @@ fi
 echo
 echo "== B 目标文件清单：结构在，且逐条按整路径各查一次 =="
 echo "   （路径从清单现算；不按文件名找——清单里有同名的，按名字找会假绿）"
-b=0
-nlist=$(printf '%s\n' "$list_rows" | grep -c . )
-echo "   清单现算出 $nlist 条整路径"
-if [ "$nlist" -eq 0 ]; then
-  echo "   BAD  清单块解析不出东西——「目标文件」那一节的 code block 没了或换了形状"
-  b=1
-fi
-nchecked=0
-while IFS="$SEP" read -r dir entry id path; do
-  [ -n "$path" ] || continue
-  nchecked=$((nchecked + 1))
-  if [ -f "$path" ]; then
-    echo "   OK   $path"
-  else
-    echo "   BAD  $path —— 清单写了，盘上没有"
+if [ -n "$ROOT" ]; then
+  echo "   设了 ROLE_ROOT：本段整段不跑 —— 副本那一路，清单里有几份按设计不落这张桌，逐条查必假红（代价见脚本头，落点由 C 段兜住）"
+else
+  b=0
+  nlist=$(printf '%s\n' "$list_rows" | grep -c . )
+  echo "   清单现算出 $nlist 条整路径"
+  if [ "$nlist" -eq 0 ]; then
+    echo "   BAD  清单块解析不出东西——「目标文件」那一节的 code block 没了或换了形状"
     b=1
   fi
-done <<EOF
+  nchecked=0
+  while IFS="$SEP" read -r dir entry id path; do
+    [ -n "$path" ] || continue
+    path="${ROOT:+$ROOT/}$path"
+    nchecked=$((nchecked + 1))
+    if [ -f "$path" ]; then
+      echo "   OK   $path"
+    else
+      echo "   BAD  $path —— 清单写了，盘上没有"
+      b=1
+    fi
+  done <<EOF
 $list_rows
 EOF
-echo "   逐条查过 $nchecked 条"
-if [ "$nchecked" -ne "$nlist" ]; then
-  echo "   BAD  现算出 $nlist 条，只逐条查了 $nchecked 条——有条目在解析这一步就掉了"
-  echo "        这一格是本段自己的哨兵：查漏的检查自己漏查，静默得很，第一版就是这么掉了两条"
-  b=1
-fi
-if [ "$b" -eq 0 ]; then
-  echo "   PASS: 清单里每一条路径上都有文件，一条不落"
-else
-  echo "   FAIL: 上面 BAD 那几条，源码清单写了而产物没落"
-  fail=1
+  echo "   逐条查过 $nchecked 条"
+  if [ "$nchecked" -ne "$nlist" ]; then
+    echo "   BAD  现算出 $nlist 条，只逐条查了 $nchecked 条——有条目在解析这一步就掉了"
+    echo "        这一格是本段自己的哨兵：查漏的检查自己漏查，静默得很，第一版就是这么掉了两条"
+    b=1
+  fi
+  if [ "$b" -eq 0 ]; then
+    echo "   PASS: 清单里每一条路径上都有文件，一条不落"
+  else
+    echo "   FAIL: 上面 BAD 那几条，源码清单写了而产物没落"
+    fail=1
+  fi
 fi
 
 echo
@@ -188,6 +209,7 @@ while IFS="$SEP" read -r id who only; do
     echo "   跳过 \`$id\` —— 清单里 0 处，源码在说它不落这张桌"
     continue
   fi
+  hit="${ROOT:+$ROOT/}$hit"
   if [ ! -f "$hit" ]; then
     echo "   BAD  \`$id\` → $hit 不在（B 段已经报过一次）"
     c=1
@@ -230,6 +252,7 @@ while IFS="$SEP" read -r id who only; do
   esac
   found=$((found + 1))
   hit=$(printf '%s\n' "$list_rows" | awk -F"$SEP" -v id="$id" '$3 == id {print $4}')
+  hit="${ROOT:+$ROOT/}$hit"
   if [ -z "$hit" ] || [ ! -f "$hit" ]; then
     echo "   BAD  \`$id\` 写着「$only」，但产物查不到（B / C 段已经报过）"
     d=1
