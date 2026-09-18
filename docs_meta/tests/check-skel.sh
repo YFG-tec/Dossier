@@ -18,9 +18,12 @@
 #
 # 钉的是哪几裁：
 #   **期望值不从 init.py 里取，从出处里取**（verify.md 第一条：同源同义反复）。
-#   11 件清单独立抄一份：8 件对 directory.md（:171–:182 的树、:126、:243），
-#   3 份 .gitkeep 对 cmd/PROMPT_026.md:262 那一裁。三份的出处是上一刀冻住的卡，不是代码。
-#   **期望值不从核里取，这一条对 11 件都成立。**
+#   22 件清单独立抄一份：
+#   - 11 件原有：8 件对 directory.md（:171–:182 的树、:126、:243），3 份 .gitkeep 对 cmd/PROMPT_026.md:262 那一裁
+#   - 11 份新增 harness：CLAUDE.md、AGENTS.md 对 directory.md:115–:116，
+#     .claude/ 及 .cursor/rules/switches.mdc 对本卡第 1 件那张清单（cmd/PROMPT_030.md）
+#   三份 .gitkeep 和九份 harness 的出处是冻住的卡，不是代码。
+#   **期望值不从核里取，这一条对 22 件都成立。**
 #
 #   **两路都判 D 段**（不给长大的桌留口子）。代价：桌一长大，D 段会红。
 #   管长大的桌是另一本，不是把 D 放宽。那一件记进缺口。
@@ -30,13 +33,21 @@
 #   **E 段没有红证。** 造红要改核，而核不归这只手。所以 E 现在是回归测——
 #   今天不红，将来坏了才红。不是恒真式（能红），但本刀没在盘上演示过。
 #   **这一本自己没有哨兵。** 断言写反了不会有东西红，只有四棵坏树和人眼。
+#   **F 段查不到那个串指的是不是这一次的子模块。** 指到另一份真的 `directory.md` 照样绿。
+#   和 check-link.sh C 段「拦不住指错了刀」同一个形状。
 #
 # 口径（脚本和文档必须同一套，见 cmd/PROMPT_027.md 两路表第 2 行、这一本的「这一本自己的规矩」）：
 #
 #   靶子路径规范：给相对靶子时，相对路径按调用者当时所在目录算，不按仓库根算。
 #   两路都印：检查开始前，两种调法（给靶子或自造）都要印出已解析的靶子绝对路径。
 #
-#   A 段 11 件逐件钉死：
+#   为什么自造那一路的临时树改到 .tmp/ 下：
+#   原来是 mktemp -d，在 Windows 上落在 C:\Users\...\Temp\，和仓库（D:）不同盘。
+#   init.py 的 os.path.relpath 跨盘符会抛 ValueError，当场退 4。
+#   把临时树改到仓库 .tmp/ 下（.gitignore 排掉，和仓库永远同盘），就不会跨盘。
+#   这样红的是核，不是临时目录选在哪儿。`.tmp/` 被排掉、盘面看不见，不算在母本上冒烟。
+#
+#   A 段 22 件逐件钉死：
 #   |  路径              | 类型   |
 #   | --------------- | ---- |
 #   | docs/            | 目录   |
@@ -50,6 +61,17 @@
 #   | docs/reports/.gitkeep | 文件 |
 #   | .tmp/            | 目录   |
 #   | .tmp/README.md   | 文件   |
+#   | CLAUDE.md        | 文件   |
+#   | AGENTS.md        | 文件   |
+#   | .claude/settings.json | 文件 |
+#   | .claude/agents/builder.md | 文件 |
+#   | .claude/agents/contract-tester.md | 文件 |
+#   | .claude/agents/review.md | 文件 |
+#   | .claude/agents/spec-guard.md | 文件 |
+#   | .claude/skills/example-report/SKILL.md | 文件 |
+#   | .claude/skills/one-slice/SKILL.md | 文件 |
+#   | .claude/skills/write-cmd/SKILL.md | 文件 |
+#   | .cursor/rules/switches.mdc | 文件 |
 #   目录要是目录，文件要是文件。缺一件红，类型错也红。红的那一行必须点名那一件的相对路径。
 #
 #   B 段：docs/figures/ 不许在（directory.md:189）
@@ -66,7 +88,7 @@
 #
 #   E 段幂等（只在自造那一路）：
 #   - 同一棵树上再跑一趟 init（--force --non-interactive）
-#   - 末行必须是 `建 0 件，跳过 11 件，覆盖 0 件`
+#   - 末行必须是 `建 0 件，跳过 30 件，覆盖 0 件`
 #   - 整树逐份 cksum 与第一趟相同
 #   第二路跳过 E 的时候要印一行说明，必须同时含「幂等」和「跳过」。
 #
@@ -106,7 +128,7 @@ fi
 
 # ---- 自造临时树 ----
 if [ "$create_tree" = true ]; then
-  temp_tree=$(mktemp -d)
+  temp_tree=$(mktemp -d "$PWD/.tmp/skel.XXXXXX")
   if [ -z "$temp_tree" ]; then
     echo "创建临时目录失败" >&2
     exit 1
@@ -145,7 +167,7 @@ fi
 echo "靶子：$target"
 echo
 
-# ---- A 段：11 件逐件检查 ----
+# ---- A 段：22 件逐件检查 ----
 check_a() {
   local entries=(
     "docs:d"
@@ -159,6 +181,17 @@ check_a() {
     "docs/reports/.gitkeep:f"
     ".tmp:d"
     ".tmp/README.md:f"
+    "CLAUDE.md:f"
+    "AGENTS.md:f"
+    ".claude/settings.json:f"
+    ".claude/agents/builder.md:f"
+    ".claude/agents/contract-tester.md:f"
+    ".claude/agents/review.md:f"
+    ".claude/agents/spec-guard.md:f"
+    ".claude/skills/example-report/SKILL.md:f"
+    ".claude/skills/one-slice/SKILL.md:f"
+    ".claude/skills/write-cmd/SKILL.md:f"
+    ".cursor/rules/switches.mdc:f"
   )
 
   local count=0
@@ -187,10 +220,10 @@ check_a() {
     fi
   done
 
-  if [ "$count" -eq 11 ]; then
-    echo "   OK   11 件都在"
+  if [ "$count" -eq 22 ]; then
+    echo "   OK   22 件都在"
   else
-    echo "   现有 $count / 11"
+    echo "   现有 $count / 22"
   fi
 }
 
@@ -298,7 +331,7 @@ check_e() {
   local init_output=$(python -B docs_meta/src/init.py "$target" --force --non-interactive 2>/dev/null)
   local last_line=$(printf '%s\n' "$init_output" | tail -1)
 
-  if ! printf '%s' "$last_line" | grep -qF '建 0 件，跳过 11 件，覆盖 0 件'; then
+  if ! printf '%s' "$last_line" | grep -qF '建 0 件，跳过 30 件，覆盖 0 件'; then
     echo "   FAIL: 第二趟末行不对：$last_line"
     fail=1
     return
@@ -318,8 +351,47 @@ check_e() {
   fi
 }
 
+# ---- F 段：占位符替换和出处指针验证 ----
+check_f() {
+  # F1：靶子里 {{DOSSIER_SRC}} 0 处
+  local f1_count=$(grep -rlF '{{DOSSIER_SRC}}' "$target" 2>/dev/null | wc -l)
+  if [ "$f1_count" -ne 0 ]; then
+    echo "   FAIL: F1 靶子里还有 {{DOSSIER_SRC}}，共 $f1_count 处"
+    fail=1
+  else
+    echo "   OK   F1 {{DOSSIER_SRC}} 0 处"
+  fi
+
+  # F2：从 CLAUDE.md 里抓出出处指针，验证 directory.md 存在且是文件
+  if [ ! -f "$target/CLAUDE.md" ]; then
+    echo "   FAIL: F2 靶子里没有 CLAUDE.md"
+    fail=1
+    return
+  fi
+
+  # 从 CLAUDE.md 里抓出相对路径（出处指针）
+  # 形式：母本布局 ../.../.../docs_meta/src，真宿主布局 <子模块名>/docs_meta/src
+  # 都以反引号或空格为分隔符
+  local relpath=$(grep -oE '[^[:space:]`]*docs_meta/src' "$target/CLAUDE.md" | head -1)
+
+  if [ -z "$relpath" ]; then
+    echo "   FAIL: F2 从 CLAUDE.md 里没抓到出处指针"
+    fail=1
+    return
+  fi
+
+  # 检查 $target/$relpath/directory.md 是否存在且是文件
+  local dirfile="$target/$relpath/directory.md"
+  if [ ! -f "$dirfile" ]; then
+    echo "   FAIL: F2 出处指针指向的 directory.md 不存在或非文件：$dirfile"
+    fail=1
+  else
+    echo "   OK   F2 出处指针指向的 directory.md 存在且是文件"
+  fi
+}
+
 # ---- 主检查流程 ----
-echo "== A 11 件逐件在 =="
+echo "== A 22 件逐件在 =="
 check_a
 echo
 
@@ -337,6 +409,10 @@ echo
 
 echo "== E 幂等 =="
 check_e
+echo
+
+echo "== F 占位符替换和出处指针 =="
+check_f
 echo
 
 if [ "$fail" -eq 0 ]; then
