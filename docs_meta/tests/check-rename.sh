@@ -7,6 +7,9 @@
 #   在办层这一刀的卡片和 TODO 那一行也必然写着旧名。
 # 所以查的是产品面必须干净。
 #
+# 第 3、4 条指针改向（2026-09-21，`cmd/PROMPT_034.md` 第 7 步）。原来钉在那份已弃的 SVG 蓝本上，
+# 现在改指 make_frame.py。断言不松，只换钉在哪份文件上。
+#
 # 第 2 条退役（2026-09-11，`cmd/PROMPT_013.md` 第 10 件）。原来查的是：
 #   `paradigm.md` 里的旧名必须全部落在 §10 之内，§10 之前一处都不许有。
 #   **退役理由**：那一刀把 `design/` 从红绿判定里剥出去，`paradigm.md` 整份降成思路层。
@@ -36,21 +39,21 @@ echo "   原来查：paradigm.md 里的旧名必须全落在 §10 决议记录�
 echo "   退役理由见脚本头。1 / 3 / 4 三条照旧。"
 
 echo
-echo "== 3. 新层名已就位（正文与图各查一处） =="
-for f in docs_meta/src/directory.md docs_meta/src/figures/dossier-frame.svg; do
+echo "== 3. 新层名已就位（正文与出图脚本各查一处） =="
+for f in docs_meta/src/directory.md docs_meta/src/figures/make_frame.py; do
   n=$(grep -c "$NEW" "$f")
   echo "   $f  ->  $n"
   if [ "$n" -lt 1 ]; then echo "   FAIL: $f 没有新层名"; fail=1; fi
 done
 
 echo
-echo "== 4. PNG 不比 SVG 旧（改了图必须重渲并回拷） =="
-svg=docs_meta/src/figures/dossier-frame.svg
+echo "== 4. PNG 不比出图脚本旧（改了脚本必须重渲） =="
+source=docs_meta/src/figures/make_frame.py
 png=docs_meta/src/figures/dossier-frame.png
-if [ "$png" -nt "$svg" ]; then
-  echo "   PASS: PNG 新于 SVG"
+if [ "$png" -nt "$source" ]; then
+  echo "   PASS: PNG 新于出图脚本"
 else
-  echo "   FAIL: PNG 旧于或同龄于 SVG —— 跑 .tmp/icon/frame.sh 再把 frame@2x.png 回拷"
+  echo "   FAIL: PNG 旧于或同龄于出图脚本 —— 跑 make_frame.py"
   fail=1
 fi
 

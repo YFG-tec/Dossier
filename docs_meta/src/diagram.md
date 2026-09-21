@@ -2,7 +2,7 @@
 
 不铺进宿主工作区。原则见仓库根 `readme.md`。图标见 `naming.md`。落点规矩见 `directory.md`。
 
-已落图：`docs_meta/src/figures/dossier-frame.svg`，挂在 readme「设计思维」里。
+已落图：`docs_meta/src/figures/dossier-frame.png`，挂在 readme「建制」里。
 它不是装饰，是**门面唯一一次把两件事同时说清**的机会：
 谁许写哪一层，以及换阶段就是换手。这一页是它的判据：说什么、不说什么、画成什么、放在哪。
 
@@ -114,12 +114,11 @@
 
 ## 形式与落点
 
-**SVG 手绘**：`docs_meta/src/figures/dossier-frame.svg`，`880 × 512`。与图标同色板同笔法，改一次手改 XML。
-（Mermaid 布局不可控，做不出「层 × 手」的矩阵，不用。ASCII 门面弱，中文全角在 GitHub 等宽块里对齐靠字体，宽图容易崩。）
+**matplotlib 出图**：脚本 `docs_meta/src/figures/make_frame.py`，出 `dossier-frame.png`（`880 × 512`，实际 `1760 × 1024` 2× 图）。
+色板沿用 `naming.md`，笔法按「版式（SVG 蓝本）」这一节。
 
-**和图标同一条：`.svg` 是源，`.png` 是导出件**（2× = `1760 × 808`，readme 里按 880 显示）。
-readme 引的是 PNG——这张图带中文，字体不在读者机器上就是一片豆腐块；图标那两张没有字，无所谓。
-重导走 `.tmp/icon/frame.sh`（无头 Edge，和图标同一套；`.tmp/` 的不自洽见 `naming.md` 末节）。
+readme 引的是 PNG。这张图带中文，字体不在读者机器上就是一片豆腐块。
+可重跑入口见脚本头注释（依赖：matplotlib 3.9.1.post1, pillow 10.4.0）。
 
 **只出浅底一版。** 深色版是 app-icon 那种容器才需要的东西；正文插图跟着页面走，
 GitHub 深色模式下浅底图会亮一块，但代价小于维护两份形状——图标那两份已经证明改一次要改两处。
@@ -133,9 +132,11 @@ readme 顶部图标维持现状：只挂浅底 `.png`，不上 `<picture>` 双�
 
 **合规性**：它被 readme 引用，readme 是正式文档，所以是正式图
 （`directory.md`「没有引用它的正式文档，就没有正式图」）。
-它是**手绘示意，不是机出图**，不受「必须有可重跑入口」约束——那条管的是桌上的数据图。
-它是品牌资产，和图标同层：住 `docs_meta/src/figures/`，不铺进宿主工作区，不进 `docs/`。
+它是**机出图**，有可重跑入口（`make_frame.py`），受 `directory.md:199` 约束。
+住 `docs_meta/src/figures/`，不铺进宿主工作区，不进 `docs/`。
 
-插入位置：readme「所以核是一句话」那段**之后**、「两席，角色是写权限」之前。
+建 `.venv/` 装依赖：在仓库根创建虚拟环境，激活后跑脚本。具体版本见 `make_frame.py` 脚本头注释。
+
+插入位置（`3.2` 已裁）：readme「建制」那一章，正文之后。
 图就是那句话的注脚——先用目录把权威分开（横轴），再用一刀把范围锁死（流转带），落到磁盘上（方块）。
 不放在标题下当门面：门面已经有图标，两张图抢重音。

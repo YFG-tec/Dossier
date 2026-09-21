@@ -247,18 +247,15 @@ SVG 里存的是这条曲线降成的 **24 段三次贝塞尔**（Catmull-Rom �
 
 `.svg` 是源，`.png` 是导出件（512×512 白底）。改形只改 SVG，PNG 重导。
 
-重导和上面那两次扫描都靠 `.tmp/icon/` 里的探针：
+重导靠 `docs_meta/src/figures/render_icon.py`。上面那两次扫描靠 `.tmp/icon/` 里的探针：
 
 | 探针 | 干什么 |
 |---|---|
-| `render.sh` | 无头 Edge 截图出 PNG 与逐档对照条。不依赖 cairosvg / Inkscape / ImageMagick |
+| `render_icon.py` | 无头 Edge 截图出 PNG 与逐档对照条。不依赖 cairosvg / Inkscape / ImageMagick |
 | `sweep.py` | 扫源形那三个椭圆的六个参数，前三条判据 |
 | `curve.py` | 求并取极径、低通、量曲率、降贝塞尔。上一节那条 `<path>` 从这里出 |
 | `fit.py` | 拿玫瑰线去凑趾间节奏，凑不上。留着当否证记录 |
 | `variants.py` | 比稿：四列并排，单看 / 整爪 / 摆进卷宗 / 小尺寸 |
-
-**这是一处已知的不自洽**：按自己的规矩 `.tmp/` 零权威，不能当正式出图入口，更不该被规范正文引用——而本节偏偏引了这一整排。
-母本没有 `src/`，这几个脚本眼下无处安放。见 `../docs/design/open.md` 第 3 条「Dossier 要不要按自己的规矩管自己」。
 
 **两席没有画进去**，是有意的：两席是权限结构不是画面，硬画出来就是两个方块并排，32 px 下是两坨。
 它写在副标题和 `directory.md` 的写权限表里，不写在图上。
