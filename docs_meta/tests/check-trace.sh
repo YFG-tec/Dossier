@@ -19,6 +19,17 @@
 #     收窄到「src/ 和生成的规则 / 角色文件」会漏掉 .tmp/ 和 docs_meta/tests/，
 #     而那两处恰好是审查那只手最可能落笔的地方——
 #     行上明写它连 .tmp/ 都不许写，review.md 自己写着它的 Bash 就在 tests/ 下跑。
+#   **2026-09-22 松了一格：.venv/ 排出射程**（人松判据原话逐字：
+#     「能出图就行，这个放宽，坚决不审 .venv 要不然啥都别干了」；
+#     同日点名钦差办理，原话逐字：「你派一个subagent，算是钦差，去把这个.venv 的指纹验收给处理了」；
+#     立案 todo.md 4.9）。上面那行「射程是整个工作树」从这一裁起读成「整个工作树减 .venv/」。
+#     为什么松：.venv/ 下 4278 份 PIL/numpy 文件全在 --ignored -uall 的射程里，
+#     逐份起一次 git hash-object，一次指纹拖到十几分钟，拖垮整盘——慢在逐份哈希的进程开销，
+#     status 自己扫树不足一秒。
+#     落地就一处：status 的 pathspec 加 -- ':(exclude).venv'，取法其余一个字不动。
+#     **松的只有这一格**：.tmp/ 的 --ignored、-uall 两个保证（B、C 段自检）一律不动，
+#     射程其余部分不动；排除锚在根，嵌套在别处的 .venv/ 不在豁免之内。
+#     这道裁明付的代价，写在下面「查不到什么」第一条。
 #   **两个开关都要**（本刀实测）：缺 --ignored，.tmp/ 整层看不见；
 #     缺 -uall，已经在报的那个 ignored 目录塌成一行，里面改什么都不动指纹。
 #   **内容哈希比行上写的宽**（收紧，写明）：行上写的是「未跟踪文件的哈希」，
@@ -50,7 +61,8 @@
 # 口径（脚本和文档必须同一套）：
 #
 #   指纹怎么算，写死：
-#     git -c core.quotepath=false status --porcelain -uall --ignored   状态行，排序
+#     git -c core.quotepath=false status --porcelain -uall --ignored -- ':(exclude).venv'   状态行，排序
+#     （那段排除是人 2026-09-22 那道裁加的，来历见上面「钉的是哪几裁」）
 #     每一条报出来的路径，只要是普通文件，再算一次内容哈希
 #   core.quotepath=false 是为了非 ASCII 路径不被转义成 \xxx。
 #   本机 locale 的坑记在 PROMPT_015，同一类。
@@ -80,6 +92,9 @@
 #
 # **它查不到什么，照写不吹：**
 #
+#   查不到 **.venv/ 里改了什么**。人 2026-09-22 那道裁把它整层排出射程（见上）。
+#     有手往 .venv/ 里落笔，这一本不红——那是那道裁明付的代价，不是漏。
+#
 #   查不到**是哪只手改的**。指纹只答盘变没变。
 #     重档下派出去的是子代理，但指纹分不出是它写的还是领班顺手写的。
 #
@@ -104,7 +119,7 @@ cd "$(dirname "$0")/../.."
 
 # ---- 取一份指纹 ----
 take() {
-  git -c core.quotepath=false status --porcelain -uall --ignored | LC_ALL=C sort | while IFS= read -r line; do
+  git -c core.quotepath=false status --porcelain -uall --ignored -- ':(exclude).venv' | LC_ALL=C sort | while IFS= read -r line; do
     path=${line#???}
     if [ -f "$path" ]; then
       h=$(git hash-object "$path" 2>/dev/null || echo "HASHFAIL")
@@ -151,7 +166,7 @@ probe=".tmp/trace-probe-$$"
 cleanup() { rm -rf "$probe"; }
 trap cleanup EXIT INT TERM
 
-echo "（射程：整个工作树，含 ignored 那一层。空跑只自检取法，不自检任何一次真实派发——见脚本头）"
+echo "（射程：整个工作树减 .venv/，含 ignored 那一层——.venv/ 排出是人 2026-09-22 那道裁，todo.md 4.9，见脚本头。空跑只自检取法，不自检任何一次真实派发——见脚本头）"
 echo
 
 echo "== A 取得到：取一次，退出码 0，输出非空 =="
