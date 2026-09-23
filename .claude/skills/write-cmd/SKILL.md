@@ -17,6 +17,8 @@ description: 写一刀的卡片。新增 docs_meta/docs/cmd/PROMPT_xx.md，并�
 
 少出一份就是没写完。`SESSION.md` 横线以下是另一席的审阅记录，只追加，不改上面的话。
 
+**整篇覆盖含横线以下：写新卡时，横线以下清零起步。** 旧刀的审阅、结案记录是运行态，随覆盖扔掉——该留的已经在 `docs_meta/docs/cmd/` 和 todo 的已办区（`docs_meta/src/workflow.md`「状态在磁盘，不在聊天」）。「只追加」限定在刀内：本刀的审阅记录一个字不许改。
+
 ## 编号和许可面
 
 - 编号跟 `docs_meta/docs/todo.md` 上人点的那一行走。**不自选行**，也不重排已经锚在卡上的编号。

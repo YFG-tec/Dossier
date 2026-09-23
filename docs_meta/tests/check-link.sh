@@ -2,8 +2,9 @@
 # 第二份记录验收：第 n 份一律写成链接，不抄。零权威，只作证，不算「通过」。
 # 用法：bash docs_meta/tests/check-link.sh
 #
-# **现在四段**：A / B / C 查链接，**D 查闸一红印**（2026-09-09 由 PROMPT_008 加）。
-# **名字对不上，故意不改**——它叫 check-link，D 段查的不是链接。
+# **现在五段**：A / B / C 查链接，**D 查闸一红印**（2026-09-09 由 PROMPT_008 加），
+#   **E 查横线以下没堆旧刀**（2026-09-23 由 PROMPT_038 加）。
+# **名字对不上，故意不改**——它叫 check-link，现在 D、E 两段查的都不是链接。
 # 名字是历史（同 check-mark.sh 那一裁），改名是以后搬 test/ 时的事。
 #
 # 口径（脚本和文档必须同一套）：
@@ -56,6 +57,17 @@
 #     **查不了那句话是不是真有人说过**。落印的手往往就是等着开工的那只手，形式上是自证——
 #     唯一的防线是「逐字抄原话」，那是纪律，不是判据。
 #
+#   E 横线以下没有旧刀 —— 横线以上指着当前卡时，横线以下不许出现别刀的标题行。
+#     2026-09-23 由 PROMPT_038 加。**这是收紧，不是放宽**（同 C / D 那两条理由），不另发授权。
+#     本刀行号从横线以上「点的行」那格现算（第一个 X.Y 形 token，可带字母尾），
+#     本刀卡号从横线以上唯一的 cmd/PROMPT_ 指针现算（取 NNN，比数字部分）。
+#     **两者有一个现算不出来 → E 段 FAIL**（宁可响，不许静默绿——check-trace A 段同款哲学）。
+#     横线以下凡 # 开头的行，含行号形（数字.数字，可带字母尾）或卡号形（PROMPT_数字）token
+#     且 ≠ 本刀的，红，点名行号和内容。不含编号的标题放过。
+#     **正文行不扫**——正文引别刀是常态（`4.10` 审卡页引过 `4.9`、`3.3`），扫了全是假红。
+#     代价照写：标题里引别刀编号也红（哪怕正当引用），这逼出干净的标题，是特性；
+#     反过来把旧刀内容塞进无编号标题或正文，E 段看不见——两头都是「机检形状不检意思」的标准代价。
+#
 #   **两条都扫原文，不剥围栏。** 上一刀那条「裸的是授权、围栏里的是提及」是为标记立的；
 #   这里问的是另一件事——**有没有第二份内容**，而围栏里的内容也是内容。
 #   判据要跟着问题走，不跟着上一条判据走。
@@ -72,9 +84,16 @@
 #     **开的口子照写，不粉饰：** 有人把整张卡抄到横线以下，A 不会红。
 #     赌的是那半页只有人自己写、且它是审稿而不是许可面（横线以下明写「不改卡」）。
 #     **要堵就得另立一条查「横线以下有没有整段抄」，本刀没做。**
+#
+# SESSION 路径用的根目录开关：环境变量 LINK_ROOT，默认仓库根（不设时路径不前缀，行为一字不变）。
+#   形状照 check-lock.sh 的 LOCK_ROOT。设成假树根时，A–E 五段都读那一棵，探针走这一路，不写 live SESSION。
+#   **run.sh 走默认那一路，不带参数、不设这个变量。**
 cd "$(dirname "$0")/../.."
 fail=0
-S=docs_meta/docs/SESSION.md
+ROOT="${LINK_ROOT:-}"
+ROOT="${ROOT%/}"
+S="${ROOT:+$ROOT/}docs_meta/docs/SESSION.md"
+FULL="$S"   # 原文整页，E 段扫横线以下要用它（S 稍后被换成「横线以上」那份）
 
 [ -f "$S" ] || { echo "FAIL: $S 不存在"; exit 1; }
 
@@ -131,7 +150,7 @@ if [ -z "$ptrs" ]; then
   echo "   SKIP: B 没数到指针，这一条无从查起（红已经记在 B）"
 else
   for p in $ptrs; do
-    if [ -f "docs_meta/docs/$p" ]; then
+    if [ -f "${ROOT:+$ROOT/}docs_meta/docs/$p" ]; then
       echo "   docs_meta/docs/$p  OK: 在"
     else
       echo "   docs_meta/docs/$p  FAIL: 不存在——指针悬空"
@@ -159,6 +178,57 @@ elif [ "$d" -eq 0 ]; then
   echo "   FAIL: 一处都没有——闸一还没过，或者过了没落印"
   echo "         没有红印，实现不许落第一笔（写卡阶段红是正常的）"
   fail=1
+fi
+
+echo
+echo "== E 横线以下没有旧刀：指着当前卡时，横线以下不许出现别刀的标题行 =="
+echo "   （正文行不扫——正文引别刀是常态，扫了全是假红；见脚本头）"
+# 本刀行号：横线以上「点的行」那格第一个 X.Y 形 token（可带字母尾）。
+ROW=$(grep -F '点的行' "$S" | grep -oE '[0-9]+\.[0-9]+[a-z]*' | head -n1)
+# 本刀卡号：横线以上唯一的 cmd/PROMPT_NNN.md 指针（NNN 现算，比数字部分）。
+CARD_LIST=$(grep -oE 'cmd/PROMPT_[0-9]{3,}\.md' "$S" | sort -u)
+NCARD=$(printf '%s\n' "$CARD_LIST" | grep -c .)
+if [ -z "$ROW" ] || [ "$NCARD" -ne 1 ]; then
+  echo "   FAIL: 本刀口径现算不出来，E 段宁可响不许静默绿"
+  if [ -z "$ROW" ]; then echo "         「点的行」那格里没读到 X.Y 形行号"; fi
+  if [ "$NCARD" -ne 1 ]; then echo "         横线以上 cmd/PROMPT_ 指针不唯一（读到 $NCARD 个不同指针）"; fi
+  fail=1
+else
+  CARD=$(printf '%s' "$CARD_LIST" | sed 's/.*PROMPT_//; s/\.md$//')
+  echo "   本刀行号=$ROW 本刀卡号=$CARD"
+  sep=$(grep -n '^---$' "$FULL" | head -n1 | cut -d: -f1)
+  if [ -z "$sep" ]; then
+    echo "   （本页没有横线，横线以下无内容可扫）"
+    echo "   PASS: 横线以下没有带别刀编号的标题"
+  else
+    e_hit=0
+    nr=0
+    while IFS= read -r line || [ -n "$line" ]; do
+      nr=$((nr + 1))
+      if [ "$nr" -le "$sep" ]; then continue; fi
+      case "$line" in
+        \#*)
+          bad=""
+          for t in $(printf '%s\n' "$line" | grep -oE '[0-9]+\.[0-9]+[a-z]*'); do
+            if [ "$t" != "$ROW" ]; then bad="$bad $t"; fi
+          done
+          for t in $(printf '%s\n' "$line" | grep -oE 'PROMPT_[0-9]+'); do
+            if [ "${t#PROMPT_}" != "$CARD" ]; then bad="$bad $t"; fi
+          done
+          if [ -n "$bad" ]; then
+            e_hit=1
+            printf '   FAIL: 第 %s 行是别刀的标题，含编号:%s\n' "$nr" "$bad"
+            printf '         标题：%s\n' "$line"
+          fi
+          ;;
+      esac
+    done < "$FULL"
+    if [ "$e_hit" -eq 0 ]; then
+      echo "   PASS: 横线以下没有带别刀编号的标题"
+    else
+      fail=1
+    fi
+  fi
 fi
 
 echo
