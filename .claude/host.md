@@ -25,9 +25,14 @@
 
 不是这张桌的规矩，不当判据引。人裁：A 直接改项目 `.claude/settings.json`，B/C 暂不处理。
 读测前缀：`grep` / `sed -n` / `echo` / `wc` / `head` / `tail` / `mkdir`、`bash docs_meta/tests/*`、只读 `git status|diff|log|ls-files`。
+**这张桌是元项目（母本）。** 核和把关住在 `docs_meta/src/`、`docs_meta/tests/`。
+根上的 `src/`、`tests/` 也放——换根带走时普通桌用的就是这两层。
+`.tmp/` 是零权威层，在仓库根上，另算。
+壳上建目录、跑脚本、`chmod +x`：`docs_meta/` 和根上 `src/` / `tests/` 都放。
+`cp` / `mv` / `rm` / `tee` 仍不放（人裁 B 停在这）。
 假根 `SWITCH_ROOT=` / `SECT_ROOT=` 以及换成 `env SWITCH_ROOT=* bash docs_meta/tests/*` 都量死了，不放。
 不写 `Bash(env *)`（罩住 `env` 能起的任何进程）。假根跑 `check-switch.sh` / `check-sect.sh` 接受每次弹一下。
-**没放** `tee`、`chmod`、`awk`。改完要重载窗口。
+**没放** `tee`、`awk`、全域 `chmod`。改完要重载窗口。
 
 **没验过的一句，写在改动旁边：** 前缀够宽之后，宿主还往不往 `settings.local.json` 追加原文，本席没量。
 A 本身是写权限：`echo … > 文件`、`grep … > 文件` 实测静默且真落盘，不是「只读旁边有洞」。
