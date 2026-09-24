@@ -10,6 +10,8 @@
 #   **人 2026-09-11 落槌**「字面退役」。减扫描目标是放宽，不由测试这只手自己做。
 #   **代价照写**：`paradigm.md` 里以后写出含混的行不会红。去掉它的那一刻盘上命中 0 处，
 #   所以这一减没有掩盖任何现存问题；但往后漏了就只能靠人读。
+# D 段 2026-09-25 新增（6.12/反馈#3）：权限表 cmd/SESSION 行的实现席格不许回到裸「只读」。
+# A 段防词含混；D 段防这张表对 roles.md 的单边授权声明。加检查是收紧不是放宽（本手本职，不发授权）。
 cd "$(dirname "$0")/../.."
 fail=0
 SRC="docs_meta/src/directory.md docs_meta/src/workflow.md \
@@ -44,6 +46,19 @@ for f in docs_meta/src/directory.md docs_meta/src/workflow.md docs_meta/src/role
   echo "   $f  ->  $n"
   if [ "$n" -lt 1 ]; then echo "   FAIL: $f 没写"; fail=1; fi
 done
+
+echo
+echo "== D directory.md 权限表 cmd/SESSION 行的实现席格不许裸只读（2026-09-25，6.12/反馈#3） =="
+row=$(grep -n '其余（cmd / SESSION / reports）' docs_meta/src/directory.md)
+if [ -z "$row" ]; then
+  echo "   FAIL: 权限表里找不到那一行——表结构变了，先重新现算射程"
+  fail=1
+elif ! echo "$row" | grep -q '写卡' || ! echo "$row" | grep -q '由桌自己定'; then
+  echo "   FAIL: 那一行的实现席格回到了裸「只读」——两处出处又会打架（roles.md write-cmd 行还在说新增+覆盖）"
+  fail=1
+else
+  echo "   PASS: 实现席格带着写卡豁免"
+fi
 
 echo
 if [ "$fail" -eq 0 ]; then echo "ALL PASS"; else echo "FAILED"; fi

@@ -190,10 +190,6 @@
       出处：`reports/dossier-feedback-2026-09-17.md:### 1`；`roles.md`（领班格、落点图 reports 行）、「是谁说了算不是谁敲键盘」段
       该改的地方：「只许动」改成路径？reports 的**内容**归领班、「通过」那个**词**归人？落点图补领班一行？（报告三条建议可分采）
       追记：本桌 2026-09-24 同形踩过一回——36 桌反馈入 `docs_meta/docs/reports/` 由领班落盘，靠的是人当回合点名，卡外无痕
-- [ ] **6.12** `docs/cmd`+`SESSION` 的写权限，两处出处给相反答案
-      现象：`directory.md` 权限表说 `docs/` 其余（cmd/SESSION/reports）实现席只读；`roles.md` 说 write-cmd 新增 cmd + 覆盖 SESSION；`claude-code.md` 把 write-cmd 技能与 spec-guard 都落在 `.claude/`（实现席的 harness）。实现席刚用技能写完卡，按一处对、按另一处越权，母本没法告诉它是哪个。「写卡归哪一席由桌自己定」化解不彻底：规划席列标「默认」、实现席列没标，一硬一软只能猜
-      出处：`reports/dossier-feedback-2026-09-17.md:### 3`；`directory.md`（「docs/ 其余」行）、`roles.md` write-cmd 格、`claude-code.md` 目标文件段
-      该改的地方：`directory.md` 实现席那格补「默认」或改「由桌自己定，见 `roles.md`」，与规划席列对齐？
 - [ ] **6.13** 定义层×手的表有三张，正文声称只有一张出处
       现象：`claude-code.md` 写「出处是 `roles.md` 那张表，角色文件不是第二处定义」；盘上实有三张（`directory.md` 两张 + `roles.md` 一张），且 `directory.md` 的手×写表缺 write-cmd/spec-guard/cursor-desk/领班——6.10、6.12 两个洞正落在缺的几只身上。「对不上改转译不改出处」在三份出处面前没有落点：改哪张才算改出处？
       出处：`reports/dossier-feedback-2026-09-17.md:### 4`；`claude-code.md`（「不是第二处定义」句）、`directory.md` 两张表、`roles.md` 角色表
@@ -283,6 +279,8 @@
 **改过两次，这是最后一次**（人 2026-09-09 裁）。前两次都是为了让卡号跟上行号 / 编号；
 这一次是把卡号从编号上摘下来，**摘完就没有再改的理由了**。
 
+- [x] **6.12** `docs/cmd`+`SESSION` 的写权限，两处出处给相反答案
+      → `cmd/PROMPT_042.md`（2026-09-25 结案）
 - [x] **6.11** `check-rename.sh` 第 4 条比 mtime，新 clone 必红
       → `cmd/PROMPT_041.md`（2026-09-25 结案）
 - [x] **4.11** backlog 重整：把第 5、6 章并成「新能力 / 历史 bug」两条道——只搬不判 → §5

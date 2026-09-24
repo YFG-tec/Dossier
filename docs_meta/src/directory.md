@@ -273,7 +273,7 @@ examples/<case>/    演示：run.py + REPORT.md + 本算例图；批跑 / 出图
 |---|---|---|---|
 | `CLAUDE.md` `AGENTS.md`（约定） | **只读** | **只读** | 写 |
 | `docs/design/`（合同） | 写 | 只读；除非卡片点名改合同 | 写 |
-| `docs/` 其余（cmd / SESSION / reports） | 写 | 只读 | 只勾 `TODO.md` |
+| `docs/` 其余（cmd / SESSION / reports） | 写 | 只读——写卡那只手除外：`docs/cmd` 的新增与 `SESSION.md` 的覆盖归哪一席，由桌自己定（见 `roles.md` write-cmd 行与落点图）；`reports` 仍只读 | 只勾 `TODO.md` |
 | `research/` | 写 | 只读 | 读 |
 | `examples/` 的叙述与图 | 写 | 卡片点名才动 | 读 |
 | `src/` `tests/` | **不写** | 只做「交什么」；**但不是同一只手** | **不写** |
