@@ -394,3 +394,11 @@ fig.savefig(output_path, dpi=100,
 plt.close(fig)
 
 print(f'Generated: {output_path}')
+
+# 6.11：渲染成功即盖内容戳——记「哪一版脚本生成了当前图」的 git 眼中哈希（blob）；
+# 对 EOL 形态恒等（autocrlf 的 clone 树算出同值），git 带得走，mtime 和裸字节都带不走
+import subprocess as _sp
+_bh = _sp.run(['git', 'hash-object', __file__], capture_output=True, text=True, check=True).stdout.strip()
+with open('docs_meta/src/figures/dossier-frame.render-stamp', 'w', newline='\n') as _s:
+    _s.write(_bh + '\n')
+print(f'Stamped: {_bh[:12]}…')

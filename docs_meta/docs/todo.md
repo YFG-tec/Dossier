@@ -190,10 +190,6 @@
       出处：`reports/dossier-feedback-2026-09-17.md:### 1`；`roles.md`（领班格、落点图 reports 行）、「是谁说了算不是谁敲键盘」段
       该改的地方：「只许动」改成路径？reports 的**内容**归领班、「通过」那个**词**归人？落点图补领班一行？（报告三条建议可分采）
       追记：本桌 2026-09-24 同形踩过一回——36 桌反馈入 `docs_meta/docs/reports/` 由领班落盘，靠的是人当回合点名，卡外无痕
-- [ ] **6.11** `check-rename.sh` 第 4 条比 mtime，新 clone 必红
-      现象：git 不记 mtime，checkout 后 PNG 与被比文件同龄，`-nt` 严格比即假 → 唯一验收入口在每张挂子模块的桌上长期 `FAILED`；「必红的绿灯等于没有绿灯」，先学会忽略假红的人也会忽略真红。FAIL 给的处置（重渲回拷）修不了同龄
-      出处：`reports/dossier-feedback-2026-09-17.md:### 2`；`docs_meta/tests/check-rename.sh`（第 4 段，收口当天现算：比较对象已被 `3.3` 从 SVG 换成出图脚本，**机制仍是 `-nt`，bug 活着**）
-      该改的地方：比内容哈希（stamp 文件随库提交），还是把这条移出 `run.sh`（它查的是发布端构建新鲜度，不是桌上的规矩——`naming.md` 分过「给桌的/给母本的」，这条属后者）？
 - [ ] **6.12** `docs/cmd`+`SESSION` 的写权限，两处出处给相反答案
       现象：`directory.md` 权限表说 `docs/` 其余（cmd/SESSION/reports）实现席只读；`roles.md` 说 write-cmd 新增 cmd + 覆盖 SESSION；`claude-code.md` 把 write-cmd 技能与 spec-guard 都落在 `.claude/`（实现席的 harness）。实现席刚用技能写完卡，按一处对、按另一处越权，母本没法告诉它是哪个。「写卡归哪一席由桌自己定」化解不彻底：规划席列标「默认」、实现席列没标，一硬一软只能猜
       出处：`reports/dossier-feedback-2026-09-17.md:### 3`；`directory.md`（「docs/ 其余」行）、`roles.md` write-cmd 格、`claude-code.md` 目标文件段
@@ -287,6 +283,8 @@
 **改过两次，这是最后一次**（人 2026-09-09 裁）。前两次都是为了让卡号跟上行号 / 编号；
 这一次是把卡号从编号上摘下来，**摘完就没有再改的理由了**。
 
+- [x] **6.11** `check-rename.sh` 第 4 条比 mtime，新 clone 必红
+      → `cmd/PROMPT_041.md`（2026-09-25 结案）
 - [x] **4.11** backlog 重整：把第 5、6 章并成「新能力 / 历史 bug」两条道——只搬不判 → §5
       → `cmd/PROMPT_040.md`（2026-09-24 结案）
 - [x] **3.5** 全页通读：四刀各自绿完之后，通读整个 `readme.md`，确认是统一的状态 → `design/ch3.md` §6（**依赖 `3.3`、`3.4`，均已结案，解锁**）

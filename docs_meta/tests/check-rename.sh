@@ -9,6 +9,7 @@
 #
 # 第 3、4 条指针改向（2026-09-21，`cmd/PROMPT_034.md` 第 7 步）。原来钉在那份已弃的 SVG 蓝本上，
 # 现在改指 make_frame.py。断言不松，只换钉在哪份文件上。
+# 第 4 条换尺（2026-09-24，6.11，`cmd/PROMPT_041.md` 闸一裁 A）：从 `-nt` 比 mtime 换成比 git 内容戳（dossier-frame.render-stamp）。理由两条：mtime 不进 git（36 桌反馈 #2，新 clone 必红）；裸字节哈希也不跟 git 旅行（core.autocrlf 的 EOL 归一化，本刀施工实测）。尺子取 `git hash-object`，检查端零 python 依赖——新桌必有 git。
 #
 # 第 2 条退役（2026-09-11，`cmd/PROMPT_013.md` 第 10 件）。原来查的是：
 #   `paradigm.md` 里的旧名必须全部落在 §10 之内，§10 之前一处都不许有。
@@ -47,14 +48,19 @@ for f in docs_meta/src/directory.md docs_meta/src/figures/make_frame.py; do
 done
 
 echo
-echo "== 4. PNG 不比出图脚本旧（改了脚本必须重渲） =="
+echo "== 4. 帧图脚本改了必须重渲（git 内容戳，不比 mtime——2026-09-24，6.11/反馈#2，闸一退卡裁 A） =="
 source=docs_meta/src/figures/make_frame.py
-png=docs_meta/src/figures/dossier-frame.png
-if [ "$png" -nt "$source" ]; then
-  echo "   PASS: PNG 新于出图脚本"
+stamp=docs_meta/src/figures/dossier-frame.render-stamp
+if [ ! -f "$stamp" ]; then
+  echo "   FAIL: 戳不在 —— 先跑 .venv/Scripts/python.exe docs_meta/src/figures/make_frame.py"; fail=1
 else
-  echo "   FAIL: PNG 旧于或同龄于出图脚本 —— 跑 make_frame.py"
-  fail=1
+  now=$(git hash-object "$source")
+  want=$(tr -d '\r' < "$stamp")
+  if [ "$now" = "$want" ]; then
+    echo "   PASS: 脚本的 git 眼中哈希与戳一致，图出自当前版脚本"
+  else
+    echo "   FAIL: 脚本改过而图未重渲（现算与戳不符）——跑 .venv/Scripts/python.exe docs_meta/src/figures/make_frame.py，戳与图一起提交"; fail=1
+  fi
 fi
 
 echo
