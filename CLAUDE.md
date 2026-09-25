@@ -22,6 +22,7 @@
 拧档只改那一份，不改本页。
 
 @.cursor/rules/switches.mdc
+若 `@` 未展开（实现席在 VSCode 扩展宿主下），开工时 Read `.cursor/rules/switches.mdc`，把开关现态读进上下文；规划席靠 `alwaysApply` 自动展开，不必手动。
 
 ## 先读顺序
 
