@@ -157,18 +157,26 @@ fi
 # E 段：`.mirror/` 里 CR 字节 0
 # ============================================================================
 
-echo "== E LF 行尾 =="
+echo "== E LF 行尾（量库内 blob 形，不量工作树——6.25 换尺，041/6.11 同族）=="
+#   旧尺 grep -rlU $CR 数工作树含 CR 的文件：库内全是 LF，但 autocrlf 的 clone
+#   把副本 smudge 成 CRLF → fresh clone 首跑恒红（假红）。断言要的是库里的事实，
+#   尺子就得读库：git ls-files --eol 看 index 形，工作树 w/ 归环境，不管。
 E_PASS=true
-CR=$'\r'
-CR_COUNT=$(grep -rlU "$CR" "$MIRROR_ROOT" 2>/dev/null | wc -l)
-if [ "$CR_COUNT" -ne 0 ]; then
-  echo "   FAIL: 副本里有 $CR_COUNT 个文件含 CR 字节，期望 0"
+eol_lines=$(git ls-files --eol -- "$MIRROR_ROOT")
+eol_n=$(printf '%s\n' "$eol_lines" | grep -c 'i/lf')
+eol_all=$(printf '%s\n' "$eol_lines" | grep -c '^i/')
+if [ "$eol_all" -ne 11 ]; then
+  echo "   FAIL: .mirror 在库内只数到 $eol_all 件，期望 11——文件没入库？"
+  E_PASS=false
+  EXIT_CODE=1
+elif [ "$eol_n" -ne "$eol_all" ]; then
+  echo "   FAIL: 库内 $eol_all 件里有 $((eol_all-eol_n)) 件不是 i/lf——副本必须 LF 入库（autocrlf 管不着库）"
   E_PASS=false
   EXIT_CODE=1
 fi
 
 if [ "$E_PASS" = true ]; then
-  echo "   PASS: CR 字节 0 件"
+  echo "   PASS: 11 件全 i/lf（库内 blob 形；工作树被 smudge 成什么不算账）"
 fi
 
 # ============================================================================

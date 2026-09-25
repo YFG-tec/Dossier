@@ -5,6 +5,7 @@
 #       bash docs_meta/tests/check-trace.sh diff A B   两份比，不一致退出码 1
 #
 # 谁加的：2026-09-12 由 cmd/PROMPT_016.md 新增，实现席这只手写的。
+# A 段空输出判据 2026-09-25 改（6.25）：退码非零=取失败必红；空+退码0=干净树合法。B/C/D 一字未动。
 # **这是收紧，不是放宽**，所以不另发一次授权（paradigm.md §3 第 4 条：松判据才是人的那一爪）。
 # 同 check-lock.sh 整本、check-word.sh 整本那条理由。
 #
@@ -169,16 +170,17 @@ trap cleanup EXIT INT TERM
 echo "（射程：整个工作树减 .venv/，含 ignored 那一层——.venv/ 排出是人 2026-09-22 那道裁，todo.md 4.9，见脚本头。空跑只自检取法，不自检任何一次真实派发——见脚本头）"
 echo
 
-echo "== A 取得到：取一次，退出码 0，输出非空 =="
-echo "   （取不到就红，不许静默绿——取失败不等于「这一趟没改」）"
+echo "== A 取得到：取一次，退出码 0（6.25 改：空输出=干净树，不是取失败）=="
+echo "   （取不到就红，不许静默绿——退码非零才算取失败；fresh clone 上 .tmp/ 是空的，"
+echo "     status 零行、指纹合法为空——041 那族「尺子量错对象」的第三标本，本刀拆掉）"
 fpA=$(take)
 rcA=$?
 if [ "$rcA" -ne 0 ]; then
   echo "   FAIL: 取指纹退出码 $rcA"
   fail=1
 elif [ -z "$fpA" ]; then
-  echo "   FAIL: 指纹为空"
-  fail=1
+  echo "   OK   干净树：status 零行，指纹合法为空（B/C/D 照跑：造探针后非空、清回后仍等 A）"
+  echo "   PASS: 取得到"
 else
   echo "   OK   取到 $(printf '%s\n' "$fpA" | wc -l) 行"
   echo "   PASS: 取得到"
