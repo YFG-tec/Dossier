@@ -24,6 +24,7 @@ description: 写一刀的卡片。新增 docs_meta/docs/cmd/PROMPT_xx.md，并�
 - 编号跟 `docs_meta/docs/todo.md` 上人点的那一行走。**不自选行**，也不重排已经锚在卡上的编号。
 - **那一份卡是这一刀唯一的许可面。** 卡上没写的，施工时一个字都不许动。
 - 卡每改一稿，`SESSION.md` 横线以上跟一稿。写卡阶段就跟，不是闸一之后才覆盖。
+- **改 SESSION 上半页后必跑结构本。** 每次改 `SESSION.md` 横线以上之后，当场跑 `check-link.sh` 与 `check-gate.sh`，两本全绿才往下。红即停，不改完不收口。
 
 ## 冻结的时点是结案
 

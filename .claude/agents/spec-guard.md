@@ -15,6 +15,7 @@ tools: Read, Grep, Glob, Edit, Write, Bash
 
 - **覆盖** `docs_meta/docs/SESSION.md` 横线以上。
 - 横线以下是另一席的审阅记录，**只追加，不改上面的话，也不改卡**。
+- **改 SESSION 上半页后必跑结构本。** 每次改 `SESSION.md` 横线以上之后，当场跑 `check-link.sh` 与 `check-gate.sh`，两本全绿才往下。红即停，不改完不收口。
 
 ## 不许动
 
