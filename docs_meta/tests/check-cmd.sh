@@ -13,6 +13,9 @@
 # D 段 2026-09-25 新增（6.12/反馈#3）：权限表 cmd/SESSION 行的实现席格不许回到裸「只读」。
 # A 段防词含混；D 段防这张表对 roles.md 的单边授权声明。加检查是收紧不是放宽（本手本职，不发授权）。
 cd "$(dirname "$0")/../.."
+# E 段 2026-09-25 新增（6.15/6.17/6.18 并修三件套/反馈#6#8#9）：立案三件套不许回退——
+#   权限表须有 TODO.md 独立行（6.18 的「根本不在场」），全程图须有 ⓪ 立案格（6.15/6.17 的动作与入口）。
+#   加检查是收紧不是放宽（本手本职，不发授权）。
 fail=0
 SRC="docs_meta/src/directory.md docs_meta/src/workflow.md \
      docs_meta/src/roles.md docs_meta/src/cursor.md"
@@ -58,6 +61,20 @@ elif ! echo "$row" | grep -q '写卡' || ! echo "$row" | grep -q '由桌自己�
   fail=1
 else
   echo "   PASS: 实现席格带着写卡豁免"
+fi
+
+echo
+echo "== E 立案三件套在盘（2026-09-25，6.15/6.17/6.18 并修/反馈#6#8#9） =="
+trow=$(grep -c '^| `docs/TODO.md`' docs_meta/src/directory.md)
+zero=$(grep -c '⓪' docs_meta/src/workflow.md)
+if [ "$trow" -lt 1 ]; then
+  echo "   FAIL: 权限表没有 TODO.md 独立行——6.18「根本不在场」的形状回来了"
+  fail=1
+elif [ "$zero" -lt 1 ]; then
+  echo "   FAIL: 全程图没有 ⓪ 立案格——裂行/写行的动作从图上消失了"
+  fail=1
+else
+  echo "   PASS: TODO 有行，立案有格"
 fi
 
 echo

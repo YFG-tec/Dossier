@@ -273,7 +273,8 @@ examples/<case>/    演示：run.py + REPORT.md + 本算例图；批跑 / 出图
 |---|---|---|---|
 | `CLAUDE.md` `AGENTS.md`（约定） | **只读** | **只读** | 写 |
 | `docs/design/`（合同） | 写 | 只读；除非卡片点名改合同 | 写 |
-| `docs/` 其余（cmd / SESSION / reports） | 写 | 只读——写卡那只手除外：`docs/cmd` 的新增与 `SESSION.md` 的覆盖归哪一席，由桌自己定（见 `roles.md` write-cmd 行与落点图）；`reports` 仍只读 | 只勾 `TODO.md` |
+| `docs/` 其余（cmd / SESSION / reports） | 写 | 只读——写卡那只手除外：`docs/cmd` 的新增与 `SESSION.md` 的覆盖归哪一席，由桌自己定（见 `roles.md` write-cmd 行与落点图）；`reports` 仍只读 | 写 |
+| `docs/TODO.md` | 只读；人点行、人裁写行时才动，代笔须在行内引原话（见 `workflow.md` 全程图 ⓪ 格） | 只读；卡片点名才动那一行（挂 `cmd/` 指针） | 写：点行、立案裂行、勾、结案日期、搬已办 |
 | `research/` | 写 | 只读 | 读 |
 | `examples/` 的叙述与图 | 写 | 卡片点名才动 | 读 |
 | `src/` `tests/` | **不写** | 只做「交什么」；**但不是同一只手** | **不写** |
