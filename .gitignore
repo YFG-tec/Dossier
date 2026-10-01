@@ -2,4 +2,5 @@
 !.tmp/README.md
 .env
 .venv/
+.claude/settings.local.json
 example_meta/add_task/
