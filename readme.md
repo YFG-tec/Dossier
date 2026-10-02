@@ -9,6 +9,8 @@
   一刀，两席，收口对账。人做这套会累死，智能体不会——这是它成立的前提。
 </p>
 
+<p align="center"><i>English? See <a href="README.en.md">README.en.md</a>.</i></p>
+
 > 2026-09-06 起稿。范围：这套范式怎么在磁盘上落地和生效。课题锁、语言栈、具体物理不进这一层。
 > 本页只留设计思维和安装两步。细则在 `docs_meta/src/`。
 
@@ -16,12 +18,8 @@
 
 **Dossier 是一套给 AI 编程代理用的流程约束和 harness 配置。** 以 git submodule 挂进你的仓库，跑一次 `init`，它在你的仓库根上铺出 `docs/` 骨架、`CLAUDE.md` / `AGENTS.md` 和几份角色文件。从那以后代理按它的规矩干活：一次只做一张卡上的事；写卡和改代码是两个会话；验收判据先写下来再跑；说「通过」必须指得出能复现的证据。
 
-*Dossier is a process harness for AI coding agents. Add it as a git submodule, run `init`, and it lays a `docs/` skeleton, `CLAUDE.md` / `AGENTS.md`, and role files into your repo. From then on the agent works one card at a time, planning and implementation live in two separate sessions, acceptance criteria are declared before the run, and "passed" must point at reproducible evidence.*
-
 **给谁用**：你让代理写的代码，测试全绿也不等于对——数值求解器、数据管线、任何交付物是「一个结论」而不是「一个能跑的东西」的项目。
 **不给谁用**：失败很响的项目。编译不过、页面白屏、用户当场就能发现——这套密度在那里是税，不是保险。
-
-*For work where green tests do not mean correct: numerical solvers, data pipelines, anything whose deliverable is a claim rather than a running thing. Not for projects whose failures are loud.*
 
 ```text
 your-repo/
