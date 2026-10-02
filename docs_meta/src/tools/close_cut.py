@@ -100,7 +100,7 @@ def move_row(row: str, card: str, dry: bool) -> list[str]:
 
 def advance_queue(qn: str, status: str, dry: bool) -> list[str]:
     q = REPO / "docs_meta/docs/queue.md"
-    s = q.read_text(encoding="utf-8", newline="")
+    s = q.read_bytes().decode("utf-8")  # 3.12 兼容：不用 read_text(newline=)
     pat = re.compile(rf"^(\| {int(qn)} \|[^|]+\|[^|]+\|) *[^|]+(\|.*)$", re.M)
     m = pat.search(s)
     if not m:

@@ -78,5 +78,22 @@ else
 fi
 
 echo
+echo "== F 行宽哨兵：待办区未勾行块内不得有缩进细则行，除非行内带 cmd 指针（6.21，2026-10-02） =="
+# 冻结的是人立案首句；代理代笔的缩进细则行在挂卡时移进卡（workflow.md「瘦身时点」）。
+# 带指针 = 挂卡中转态，合法；无指针的缩进细则行 = 胖，红。已办区不扫（历史胖是既成事实，冻结）。
+frows=$(awk '
+  /^## 已办/{exit}
+  /^- \[ \] \*\*/{cur=$0; has=($0 ~ /cmd\/PROMPT_/ || $0 ~ /lean-rows\.md#/)?1:0; next}
+  cur!="" && /^[ \t]+[^ \t]/{ if(!has){print "   FAIL: 胖行细则（无指针）: " cur; bad=1} next }
+  /^[^ \t]/{cur=""}
+' docs_meta/docs/todo.md | sort -u)
+if [ -n "$frows" ]; then
+  printf '%s\n' "$frows"
+  echo "   FAIL: 上面这些行块在长胖——挂卡时把细则移进卡，或暂归 design 页留指针"
+  fail=1
+else
+  echo "   PASS: 待办区未勾行都是一行态（或挂卡中转）"
+fi
+echo
 if [ "$fail" -eq 0 ]; then echo "ALL PASS"; else echo "FAILED"; fi
 exit $fail
