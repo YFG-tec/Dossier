@@ -105,7 +105,7 @@ def advance_queue(qn: str, status: str, dry: bool) -> list[str]:
     pat = re.compile(rf"^(\| {int(qn)} \|[^|]+\|[^|]+\|) *[^|]+(\|.*)$", re.M)
     m = pat.search(s)
     if not m:
-        return [f"FAIL: queue.md 没有 #{qn} 行"]
+        return [f"FAIL: queue.md 没有 #{qn} 行——先在 queue.md 登记本刀再收口"]
     s2 = pat.sub(lambda mm: f"{mm.group(1)} {status} {mm.group(2)}", s, count=1)
     ops = [_write(q, s2.encode("utf-8"), dry), f"QUEUE #{qn} → {status}"]
     # 下一未结行推进（「排队」或「在办」且非挂起/断点）
