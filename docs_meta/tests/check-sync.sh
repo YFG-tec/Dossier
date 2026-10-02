@@ -132,7 +132,8 @@ while IFS=$'\t' read -r QLINE_NO QN QROW QCARD QSTATUS QLINE; do
   for token in $(printf '%s\n' "$QROW" | grep -oE '[0-9]+\.[0-9]+[a-z]*'); do
     [ "$token" = "$ROW" ] && ROW_HIT=1
   done
-  if [ "$ROW_HIT" -eq 0 ] && [ -n "$TODO_LABEL" ]; then
+  # 6.13 修：LABEL 残字节（多字节切分坏字）或过短时弃用兜底——空/残标签会让 case 误中任意行
+  if [ "$ROW_HIT" -eq 0 ] && [ -n "$TODO_LABEL" ] && [ "${#TODO_LABEL}" -ge 6 ] && ! printf '%s' "$TODO_LABEL" | grep -q $'\xef\xbf\xbd'; then
     case "$QROW" in *"$TODO_LABEL"*) ROW_HIT=1 ;; esac
   fi
   [ "$ROW_HIT" -eq 1 ] || continue
