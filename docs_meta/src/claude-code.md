@@ -21,7 +21,14 @@ AGENTS.md                      同一份锁，写短的
   write-cmd/SKILL.md           写 PROMPT + 覆盖 SESSION；写完停
   one-slice/SKILL.md           串行顺序；自己不改核
   example-report/SKILL.md      算例报告公式写法；不是角色
+.codex/agents/
+  builder.toml                 同 builder.md，instructions 搬运；工具面走 Codex sandbox
+  contract-tester.toml         同 contract-tester.md
+  review.toml                  同 review.md；只读由 sandbox 只读档兑现
+  spec-guard.toml              同 spec-guard.md
 ```
+
+`.codex/agents/` 是 Codex 编译目标（TOML 形，2026-10-02 5.7）：四份与 `.claude/agents/` 同源，instructions 搬运，工具面走 Codex sandbox。
 
 调度 skill 不是角色。`one-slice` 只规定 `roles.md` 那条顺序。
 `31` 的 `tmp-experiment` 是探索模式，对应 `.tmp/` 层，不落成第五个实现角色。

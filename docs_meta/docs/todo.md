@@ -91,6 +91,7 @@
 
 再点。
 
+
 - [ ] **4.2** `naming.md` / `directory.md` 里 `docs_meta/` 还写成平的，同步成 `src/` + `docs/` → §5
       连带 `naming.md` 那句「母本没有 `src/`，这几个脚本无处安放」已经不成立
 
@@ -249,6 +250,8 @@
 
 - [x] **7.1** 出一个 release 版本，发到 GitHub → `design/release.md` §2
       → `cmd/PROMPT_051.md`（2026-10-02 结案）
+- [x] **5.7** `.mirror/` 加 `.codex/` 编译目标：角色落点 TOML 化 → `design/model-routing.md` 实现面那节
+      → `cmd/PROMPT_054.md`（2026-10-02 结案）
 - [x] **4.8** `example_meta/` 里做一份跑得通全流程的冒烟样例：玩具核 + 假人 → §6
       → `cmd/PROMPT_053.md`（2026-10-02 结案）
 - [x] **5.5** 模型路由立法：副官常驻建制与角色模型下限入 `roles.md` → `design/model-routing.md`
