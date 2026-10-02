@@ -5,14 +5,10 @@
 <h1 align="center">Dossier</h1>
 
 <p align="center">
-  <b>一次一刀，盖章才算数。</b><br>
-  一刀，两席，收口对账。人做这套会累死，智能体不会——这是它成立的前提。
+  <b>一次一刀，盖章才算数。</b>
 </p>
 
 <p align="center"><i>English? See <a href="README.en.md">README.en.md</a>.</i></p>
-
-> 2026-09-06 起稿。范围：这套范式怎么在磁盘上落地和生效。课题锁、语言栈、具体物理不进这一层。
-> 本页只留设计思维和安装两步。细则在 `docs_meta/src/`。
 
 ---
 

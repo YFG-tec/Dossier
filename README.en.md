@@ -5,14 +5,10 @@
 <h1 align="center">Dossier</h1>
 
 <p align="center">
-  <b>One cut at a time; nothing counts until it is stamped.</b><br>
-  One cut, two seats, and a closing audit. Doing this by hand would bury a person — an agent won't break a sweat. That is the premise this rests on.
+  <b>One cut at a time; nothing counts until it is stamped.</b>
 </p>
 
 <p align="center"><i>中文版见 <a href="readme.md">readme.md</a>。</i></p>
-
-> First drafted 2026-09-06. Scope: how this discipline lands on disk and takes effect. Project locks, language stacks, and specific physics stay out of this layer.
-> This page keeps only the design thinking and the two install steps. Details live in `docs_meta/src/`.
 
 ---
 
