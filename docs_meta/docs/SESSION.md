@@ -30,7 +30,9 @@
 | 步 | 读数 |
 |---|---|
 | 1 基线 | `HEAD` `bce0e0e`；盘面 2 行（todo 指针＋新卡）＋门口三新件（LICENSE / feedback.md / CHANGELOG.md，写卡同回合按人裁定预落） |
-| 2 builder | 四件预落（LICENSE / feedback / CHANGELOG / .gitignore 复验）；格 1–5/7/9 绿。**格 6 现算暴露行文滞后**：`6.24` 帽子使占位变两处（:39/:119），行判据「只换一处」写成于帽子之前——两处都换才是本意，待人地址时一并处置并留痕 |
+| 2 builder | 四件预落（LICENSE / feedback / CHANGELOG / .gitignore 复验）；格 1–5/7/9 绿。**格 6 现算暴露行文滞后**：`6.24` 帽子使占位变两处（:39/:119），行判据「只换一处」写成于帽子之前——两处都换才是本意，处置留痕在此。③人当回合给真地址 `https://github.com/YFG-tec/Dossier`（fetch 验证：公开仓、现为空仓）——两处已换，格 6=0、真地址 2，整盘 ALL PASS |
+| 3 审查 | 发行件机械复核 5/5 中（LICENSE 三段/版权行/ignore 命中/三字段/CHANGELOG 三查）；贴横线以下 |
+| 4 收口 | 对账：五件全交（①LICENSE ②ignore ③真地址 ④issue 模板 ⑤CHANGELOG）；审查 5/5；整盘 18 本 ALL PASS；word/link/gate 绿。结案代笔：勾 7.1、搬已办、commit（不 push；tag/push/GitHub release 是人的动作） |
 
 ## 写卡阶段在盘上查了什么
 

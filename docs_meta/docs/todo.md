@@ -229,12 +229,7 @@
 本章管的是「这一版怎么发到 GitHub 并收得回反馈」。改的是仓库门口那几件：许可证、忽略规则、真地址、反馈入口、版本标。
 `readme.md` 正文归 `6.24`，本章不碰。材料在 `design/release.md` §2。
 
-- [ ] **7.1** 出一个 release 版本，发到 GitHub → `design/release.md` §2 → `cmd/PROMPT_051.md`
-      **人 2026-09-27 立案，原话逐字：「再开一个todo，目标是出一个release版本，我准备发布到github上」；同回合：「做好这一版发布的准备」「如果可能的话收集一些反馈，促进我这个东西的迭代」。**
-      **交的是门口五件**：①根上 `LICENSE`（选哪种归人，候选与理由见材料；卡上以〔爪：发授权〕请示）；②仓库 `.gitignore` 加 `.claude/settings.local.json`（现在只靠本机全局 ignore 挡着密钥文件，换机器就漏）；③`readme.md` 安装段的 `<母本仓库地址>` 换成真地址（只换这一处字面，不动别的句子）；④`.github/ISSUE_TEMPLATE/` 一份，字段照第 6 章「现象 / 出处 / 该改的地方」三样，外人提的东西直接长成本章能收的形状；⑤`CHANGELOG.md` 或 release notes 一页：这一版有什么、没什么、已知的坑指向第 6 章。
-      **不交**：打 tag、push、在 GitHub 上点 release——三样是人的动作，结案之后人自己按；英文全页翻译（另一刀、另一分支，早有裁）；任何 `docs_meta/src/` 改动。
-      **判据**：`git ls-files` 能列出 `LICENSE`、`.github/ISSUE_TEMPLATE/*.md`、`CHANGELOG.md`；`git check-ignore -v .claude/settings.local.json` 命中的是仓库 `.gitignore` 而不是用户级文件；`grep -c '<母本仓库地址>' readme.md` 为 `0`；整盘 `run.sh` 本数不涨、`ALL PASS`。
-      **依赖**：`6.24` 结案之后才开——首页帽子没戴好，发出去收到的第一条反馈必是「不知道这是干嘛的」。
+
 
 ## 退卡留档（不是待办，行首没有勾选框）
 
@@ -277,6 +272,8 @@
 **改过两次，这是最后一次**（人 2026-09-09 裁）。前两次都是为了让卡号跟上行号 / 编号；
 这一次是把卡号从编号上摘下来，**摘完就没有再改的理由了**。
 
+- [x] **7.1** 出一个 release 版本，发到 GitHub → `design/release.md` §2
+      → `cmd/PROMPT_051.md`（2026-10-02 结案）
 - [x] **6.24** 首页开头没有讲清这是什么、怎么用 → `design/release.md` §1
       → `cmd/PROMPT_050.md`（2026-10-02 结案）
 - [x] **5.4** 队列立法：序列授权一次后，点行、开工印、结案按式代笔 → `design/loop.md` 全篇；`later.md` §2 与本稿的冲突由人本轮原话裁掉

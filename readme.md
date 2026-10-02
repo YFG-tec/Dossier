@@ -36,7 +36,7 @@ your-repo/
 安装两步：
 
 ```text
-git submodule add <母本仓库地址> dossier
+git submodule add https://github.com/YFG-tec/Dossier dossier
 python dossier/docs_meta/src/init.py
 ```
 
@@ -116,7 +116,7 @@ python dossier/docs_meta/src/init.py
 装这套东西是两个动作：把母本挂成子模块，再跑一次 `init`。
 
 ```text
-1. git submodule add <母本仓库地址> dossier
+1. git submodule add https://github.com/YFG-tec/Dossier dossier
 2. python dossier/docs_meta/src/init.py
 ```
 
