@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+运行时契约：Python >= 3.13（3.12 兼容模式可用）＋ Git Bash（Windows）。详见 docs_meta/tests/check-env.sh。
+"""
 import sys
 import os
 import pathlib

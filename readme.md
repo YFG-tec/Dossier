@@ -136,6 +136,7 @@ python dossier/docs_meta/src/init.py
 | Cursor 怎么落 | `docs_meta/src/cursor.md` |
 | 外面有什么、为什么不那样做 | `docs_meta/src/sources.md` |
 | 还没对齐的问题 | `docs_meta/docs/design/open.md` |
+| 运行时 | Python ≥ 3.13、Windows 用 Git Bash 跑检查——环境自检 `bash docs_meta/tests/check-env.sh` |
 
 ---
 
