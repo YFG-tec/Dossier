@@ -12,6 +12,8 @@
 #   所以这一减没有掩盖任何现存问题；但往后漏了就只能靠人读。
 # D 段 2026-09-25 新增（6.12/反馈#3）：权限表 cmd/SESSION 行的实现席格不许回到裸「只读」。
 # A 段防词含混；D 段防这张表对 roles.md 的单边授权声明。加检查是收紧不是放宽（本手本职，不发授权）。
+# G 段 2026-10-03 新增（6.6，cmd/PROMPT_066，2026-10-03）：卡面预测值哨兵；只查同卡形状冲突，不查真值。
+
 cd "$(dirname "$0")/../.."
 # E 段 2026-09-25 新增（6.15/6.17/6.18 并修三件套/反馈#6#8#9）：立案三件套不许回退——
 #   权限表须有 TODO.md 独立行（6.18 的「根本不在场」），全程图须有 ⓪ 立案格（6.15/6.17 的动作与入口）。
@@ -94,6 +96,57 @@ if [ -n "$frows" ]; then
 else
   echo "   PASS: 待办区未勾行都是一行态（或挂卡中转）"
 fi
+echo
+echo "== G 卡面预测值哨兵（6.6，2026-10-03） =="
+S=docs_meta/docs/SESSION.md
+TOP=$(mktemp)
+trap 'rm -f "$TOP"' EXIT
+awk '/^---$/{exit} {print}' "$S" > "$TOP"
+CARD_OCC=$(grep -oE 'cmd/PROMPT_[0-9]{3,}\.md' "$TOP" | wc -l)
+if [ "$CARD_OCC" -ne 1 ]; then
+  echo "   FAIL: SESSION.md 横线以上卡片指针应为恰好一处，现 $CARD_OCC 处"
+  fail=1
+elif ! CARD_REL=$(grep -oE 'cmd/PROMPT_[0-9]{3,}\.md' "$TOP"); then
+  echo "   FAIL: SESSION.md 横线以上找不到卡片指针"
+  fail=1
+else
+  CARD="docs_meta/docs/$CARD_REL"
+  if [ ! -f "$CARD" ]; then
+    echo "   FAIL: 当前卡不存在：$CARD"
+    fail=1
+  elif ! grep -q '验收命令' "$CARD"; then
+    echo "   SKIP: 当前卡无「验收命令」，按免验卡放行"
+  else
+    TABLE_NUMS=$(
+      awk '/^## 验收命令/{in_accept=1; next} in_accept && /^## /{exit} in_accept && /^\|/{print}' "$CARD" \
+        | grep -oE '`[0-9]+`' | grep -oE '[0-9]+' | sort -nu
+    )
+    BODY_NUMS=$(
+      awk '/^## 验收命令/{in_accept=1; next} in_accept && /^## /{in_accept=0} /^\|/{next} $0 ~ /应读|应为|期望/{print}' "$CARD" \
+        | grep -oE '`[0-9]+`' | grep -oE '[0-9]+' | sort -nu
+    )
+    CONFLICT=$(if [ -n "$TABLE_NUMS" ] && [ -n "$BODY_NUMS" ]; then
+      # 包含判定（审查修，6.6）：正文数字凡不在验收表集合中才算冲突——一致复述合法（裁定①）
+      while IFS= read -r b; do
+        [ -n "$b" ] || continue
+        if ! printf '%s\n' "$TABLE_NUMS" | grep -qx "$b"; then
+          printf '%s' "$b"
+          break
+        fi
+      done <<BN
+$BODY_NUMS
+BN
+    fi)
+    if [ -n "$CONFLICT" ]; then
+      tbl_hit=$(printf '%s\n' "$TABLE_NUMS" | head -1)
+      echo "   FAIL: 验收表 $tbl_hit 与正文预期 $CONFLICT 打架——预测值两处各写各的（6.6）"
+      fail=1
+    else
+      echo "   PASS: 验收表与正文预期数字无同卡形状冲突（不查真值）"
+    fi
+  fi
+fi
+
 echo
 if [ "$fail" -eq 0 ]; then echo "ALL PASS"; else echo "FAILED"; fi
 exit $fail
