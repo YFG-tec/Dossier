@@ -4,6 +4,7 @@
 
 用法：
   python docs_meta/src/tools/close_cut.py <行号> <卡号> [--review <审查页文件>] [--queue <#> [<状态>]] [--dry-run]
+  python docs_meta/src/tools/close_cut.py <行号> <卡号> --void "人原话" [--dry-run]   # 废除通道（5.17）：人裁作废的行搬入「## 废除」节；不与 --review/--queue 同用，只接人原话
   python docs_meta/src/tools/close_cut.py --selftest
 
 三件（对应 workflow.md 收口纪律里可机械化的部分）：
@@ -58,6 +59,38 @@ def paste_review(review_file: str, dry: bool) -> list[str]:
     nl = b"\r\n" if body.endswith(b"\n") else body  # 正文自带结尾就不补
     return [_write(sess, data[:end] + tail + body, dry)]
 
+
+
+def void_row(row: str, quote: str, dry: bool) -> list[str]:
+    """废除通道（5.17）：人裁作废的行搬入 todo「## 废除」节，两行式；只接人原话。
+    与 move_row 的差别：不勾、不写结案日期、不改已办——搬的是「不再做」，不是「做完了」。"""
+    todo = REPO / "docs_meta/docs/todo.md"
+    lines = todo.read_text(encoding="utf-8").splitlines()
+    out, moved, note = [], [], None
+    for idx, ln in enumerate(lines):
+        if ln.startswith("- [ ]") and f"**{row}**" in ln:
+            note = f"      **废除**（人裁，原话逐字：「{quote}」）"
+            moved = [ln, note]
+            continue
+        out.append(ln)
+    if not moved:
+        return [f"FAIL: 没找到在办行 {row}"]
+    # 插入 ## 废除 节：找到节头，插在节尾（下一个 ## 或文件末）
+    res, inserted = [], False
+    in_void = False
+    for ln in out:
+        if ln.startswith("## ") and "废除" in ln:
+            in_void = True; res.append(ln); continue
+        if in_void and ln.startswith("## "):
+            res.extend(moved); res.append(""); inserted = True; in_void = False
+        res.append(ln)
+    if in_void and not inserted:
+        res.extend(moved); inserted = True
+    if not inserted:
+        return ["FAIL: todo.md 没找到「## 废除」节——先立法后用（5.17）"]
+    if not dry:
+        todo.write_text("\n".join(res) + "\n", encoding="utf-8")
+    return [f"{'DRY ' if dry else ''}MOVED {row} → 废除（两行式，原话随行）"]
 
 def move_row(row: str, card: str, dry: bool) -> list[str]:
     todo = REPO / "docs_meta/docs/todo.md"
@@ -182,6 +215,7 @@ def main() -> None:
     row, card = args[0], args[1]
     card = card.removeprefix("PROMPT_")  # 全名短名都认（审查意见 3）
     review = None
+    void_quote = None
     qn = None
     qstatus = "已结"
     dry = False
@@ -195,14 +229,23 @@ def main() -> None:
                 qstatus = args[i + 2]; i += 3
             else:
                 i += 2
+        elif args[i] == "--void":
+            void_quote = args[i + 1]; i += 2
         elif args[i] == "--dry-run":
             dry = True; i += 1
         else:
             print(f"不认的参数 {args[i]}"); sys.exit(2)
     ops: list[str] = []
-    if review:
-        ops += paste_review(review, dry)
-    ops += move_row(row, card, dry)
+    if void_quote is not None:
+        if review is not None or qn is not None:
+            print("FAIL: --void 不与 --review/--queue 同用"); sys.exit(1)
+        ops += void_row(row, void_quote, dry)
+    else:
+        if review:
+            ops += paste_review(review, dry)
+        ops += move_row(row, card, dry)
+        if qn:
+            ops += advance_queue(qn, qstatus, dry)
     if qn:
         ops += advance_queue(qn, qstatus, dry)
     lock = REPO / ".tmp" / "locks" / f"{row}.lock"
