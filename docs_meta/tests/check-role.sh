@@ -95,12 +95,12 @@ echo
 list_rows=$(awk '/^## 目标文件/{f=1} f&&/^```text/{g=1;next} g&&/^```/{exit} g' "$LIST" | awk -v sep="$SEP" '
   /^[^ ]/ && /\/$/ { dir=$1; next }
   /^  [^ ]/ {
-    e=$1; split(e, s, "/"); id=s[1]; sub(/\.md$/, "", id)
+    e=$1; split(e, s, "/"); id=s[1]; sub(/\.md$/, "", id); sub(/\.toml$/, "", id)
     printf "%s%s%s%s%s%s%s%s\n", dir, sep, e, sep, id, sep, dir, e
     next
   }
   /^[^ ]/ {
-    e=$1; split(e, s, "/"); id=s[1]; sub(/\.md$/, "", id)
+    e=$1; split(e, s, "/"); id=s[1]; sub(/\.md$/, "", id); sub(/\.toml$/, "", id)
     printf "%s%s%s%s%s%s\n", sep, e, sep, id, sep, e
   }
 ')
@@ -203,8 +203,8 @@ while IFS="$SEP" read -r id who only; do
     echo "   跳过 $who —— 不带 id，源码没说它落这张桌"
     continue
   fi
-  hit=$(printf '%s\n' "$list_rows" | awk -F"$SEP" -v id="$id" '$3 == id {print $4}')
-  dir=$(printf '%s\n' "$list_rows" | awk -F"$SEP" -v id="$id" '$3 == id {print $1}')
+  hit=$(printf '%s\n' "$list_rows" | awk -F"$SEP" -v id="$id" '$3 == id {print $4}' | head -n1)
+  dir=$(printf '%s\n' "$list_rows" | awk -F"$SEP" -v id="$id" '$3 == id {print $1}' | head -n1)
   if [ -z "$hit" ]; then
     echo "   跳过 \`$id\` —— 清单里 0 处，源码在说它不落这张桌"
     continue
@@ -216,6 +216,15 @@ while IFS="$SEP" read -r id who only; do
     continue
   fi
   case "$dir" in
+    *agents/*.toml)
+      nt=$(grep -c '^\[instructions\]' "$hit")
+      if [ "$nt" -ge 1 ]; then
+        echo "   OK   \`$id\` → $hit，Codex 目标，[instructions] 在"
+      else
+        echo "   BAD  \`$id\` → $hit，Codex 目标缺 [instructions] 段"
+        c=1
+      fi
+      ;;
     *agents/)
       nt=$(grep -c '^tools:' "$hit")
       if [ "$nt" -ge 1 ]; then
@@ -251,13 +260,24 @@ while IFS="$SEP" read -r id who only; do
     *) continue ;;
   esac
   found=$((found + 1))
-  hit=$(printf '%s\n' "$list_rows" | awk -F"$SEP" -v id="$id" '$3 == id {print $4}')
+  hit=$(printf '%s\n' "$list_rows" | awk -F"$SEP" -v id="$id" '$3 == id {print $4}' | head -n1)
   hit="${ROOT:+$ROOT/}$hit"
   if [ -z "$hit" ] || [ ! -f "$hit" ]; then
     echo "   BAD  \`$id\` 写着「$only」，但产物查不到（B / C 段已经报过）"
     d=1
     continue
   fi
+  case "$hit" in
+    *.toml)
+      if grep -q 'read-only' "$hit"; then
+        echo "   \`$id\` 表里写「$only」；TOML 落点 $hit 带 read-only sandbox 声明"
+      else
+        echo "   BAD  \`$id\` TOML 落点 $hit 没写 read-only——零写权限在 Codex 目标上没兑现"
+        d=1
+      fi
+      continue
+      ;;
+  esac
   tl=$(grep '^tools:' "$hit")
   echo "   \`$id\` 表里写「$only」"
   echo "      $hit  ->  $tl"

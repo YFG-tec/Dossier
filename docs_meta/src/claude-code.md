@@ -21,7 +21,14 @@ AGENTS.md                      同一份锁，写短的
   write-cmd/SKILL.md           写 PROMPT + 覆盖 SESSION；写完停
   one-slice/SKILL.md           串行顺序；自己不改核
   example-report/SKILL.md      算例报告公式写法；不是角色
+.codex/agents/
+  builder.toml                 同 builder.md，instructions 搬运；工具面走 Codex sandbox
+  contract-tester.toml         同 contract-tester.md
+  review.toml                  同 review.md；只读由 sandbox 只读档兑现
+  spec-guard.toml              同 spec-guard.md
 ```
+
+`.codex/agents/` 是 Codex 编译目标（TOML 形，2026-10-02 5.7）：四份与 `.claude/agents/` 同源，instructions 搬运，工具面走 Codex sandbox。
 
 调度 skill 不是角色。`one-slice` 只规定 `roles.md` 那条顺序。
 `31` 的 `tmp-experiment` 是探索模式，对应 `.tmp/` 层，不落成第五个实现角色。
@@ -35,11 +42,19 @@ AGENTS.md                      同一份锁，写短的
 一句话要当判据用，判据的正身得在源码那几份里，`CLAUDE.md` 只是把它转译过来。
 检查要断言，去断言源码，不断言这一份。
 
-**手够得着什么，落在角色文件里。** 出处是 `roles.md` 那张层 × 手的表，
-角色文件只是把那张表兑现成 frontmatter，不是第二处定义。表改了，文件跟着改。
+**手够得着什么，落在角色文件里。** **出处是 `roles.md` 公共角色表**——`directory.md` 的权限表与手×写表是它的两张投影视图，不是第二、第三处定义；三处对不上改视图，不改出处。
+表改了，文件跟着改。
 
 **工具面写 `tools` 白名单，不写即没有。** 不用「禁掉哪几样」那种写法：
 禁的清单永远漏，白名单漏了只会少一样工具，当场看得见。
+
+## permissions 层的机械边界
+
+**名单 ≠ 生效**：`permissions.allow/deny` 是声明，不是机械保证——前缀通配盖不住带 flag 的复合用法（`chmod 644` 拦、`chmod -v 644` 溜）；配了就默认生效，错了会归罪「配置坏了」，这一格默认是错的。（6.19，2026-10-02；报告反馈#10）
+
+**热重载分两型**：`deny` 与 `hooks` 中途改即时生效；`allow` 不热重载——中途加 allow 当场无效，要重开会话。（6.19，2026-10-02；报告反馈#10）
+
+**机械兜底是 PreToolUse 守卫**：复合命令与 flag 形状归守卫判（本桌 2026-09-23 已装，用户级）；**改任何 permissions 设置之后，重开会话再信**。（6.19，2026-10-02；报告反馈#10）
 
 ## 轻档 / 重档
 

@@ -33,13 +33,17 @@ MIRROR_ROOT=".mirror"
 EXIT_CODE=0
 
 # ============================================================================
-# A 段：11 件逐件在，且 find .mirror -type f 恰好 11 件
+# A 段：15 件逐件在，且 find .mirror -type f 恰好 15 件
 # ============================================================================
 
-echo "== A 11 件逐件在 =="
+echo "== A 15 件逐件在 =="
 
 # 11 件清单，出处：cmd/PROMPT_029.md 第 2 件 + todo.md 2.10a
 EXPECTED_FILES=(
+  .mirror/.codex/agents/builder.toml
+  .mirror/.codex/agents/contract-tester.toml
+  .mirror/.codex/agents/review.toml
+  .mirror/.codex/agents/spec-guard.toml
   ".mirror/CLAUDE.md"
   ".mirror/AGENTS.md"
   ".mirror/.claude/agents/builder.md"
@@ -55,7 +59,7 @@ EXPECTED_FILES=(
 
 A_PASS=true
 
-# 检查 11 件逐件在
+# 检查 15 件逐件在
 for file in "${EXPECTED_FILES[@]}"; do
   if [ ! -f "$file" ]; then
     echo "   FAIL: 缺文件 $file"
@@ -64,16 +68,16 @@ for file in "${EXPECTED_FILES[@]}"; do
   fi
 done
 
-# 检查 find .mirror -type f 恰好 11 件
+# 检查 find .mirror -type f 恰好 15 件
 FILE_COUNT=$(find "$MIRROR_ROOT" -type f 2>/dev/null | wc -l)
-if [ "$FILE_COUNT" -ne 11 ]; then
-  echo "   FAIL: 副本里 find .mirror -type f 共 $FILE_COUNT 件，期望 11"
+if [ "$FILE_COUNT" -ne 15 ]; then
+  echo "   FAIL: 副本里 find .mirror -type f 共 $FILE_COUNT 件，期望 15"
   A_PASS=false
   EXIT_CODE=1
 fi
 
 if [ "$A_PASS" = true ]; then
-  echo "   PASS: 11 件逐件在，文件总数恰好 11"
+  echo "   PASS: 15 件逐件在，文件总数恰好 15"
 else
   EXIT_CODE=1
 fi
@@ -165,8 +169,8 @@ E_PASS=true
 eol_lines=$(git ls-files --eol -- "$MIRROR_ROOT")
 eol_n=$(printf '%s\n' "$eol_lines" | grep -c 'i/lf')
 eol_all=$(printf '%s\n' "$eol_lines" | grep -c '^i/')
-if [ "$eol_all" -ne 11 ]; then
-  echo "   FAIL: .mirror 在库内只数到 $eol_all 件，期望 11——文件没入库？"
+if [ "$eol_all" -ne 15 ]; then
+  echo "   FAIL: .mirror 在库内只数到 $eol_all 件，期望 15——文件没入库？"
   E_PASS=false
   EXIT_CODE=1
 elif [ "$eol_n" -ne "$eol_all" ]; then
@@ -176,7 +180,7 @@ elif [ "$eol_n" -ne "$eol_all" ]; then
 fi
 
 if [ "$E_PASS" = true ]; then
-  echo "   PASS: 11 件全 i/lf（库内 blob 形；工作树被 smudge 成什么不算账）"
+  echo "   PASS: 15 件全 i/lf（库内 blob 形；工作树被 smudge 成什么不算账）"
 fi
 
 # ============================================================================

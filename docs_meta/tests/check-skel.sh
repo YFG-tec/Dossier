@@ -88,7 +88,7 @@
 #
 #   E 段幂等（只在自造那一路）：
 #   - 同一棵树上再跑一趟 init（--force --non-interactive）
-#   - 末行必须是 `建 0 件，跳过 30 件，覆盖 0 件`
+#   - 末行必须是 `建 0 件，跳过 36 件，覆盖 0 件`
 #   - 整树逐份 cksum 与第一趟相同
 #   第二路跳过 E 的时候要印一行说明，必须同时含「幂等」和「跳过」。
 #
@@ -331,7 +331,7 @@ check_e() {
   local init_output=$(python -B docs_meta/src/init.py "$target" --force --non-interactive 2>/dev/null)
   local last_line=$(printf '%s\n' "$init_output" | tail -1)
 
-  if ! printf '%s' "$last_line" | grep -qF '建 0 件，跳过 30 件，覆盖 0 件'; then
+  if ! printf '%s' "$last_line" | grep -qF '建 0 件，跳过 36 件，覆盖 0 件'; then
     echo "   FAIL: 第二趟末行不对：$last_line"
     fail=1
     return
