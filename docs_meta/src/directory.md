@@ -27,7 +27,7 @@ papers/ codes/              papers/ codes/
 
 | 层 | 三桌里的名字 | 权威 | 寿命 |
 |---|---|---|---|
-| 约定 | `CLAUDE.md` `AGENTS.md` | 每会话怎么干 | 和项目一样长 |
+| 约定 | `CLAUDE.md` `AGENTS.md` | 每会话怎么干 | 和项目一样长 |（转译：CLAUDE.md/AGENTS.md 是它的产物，寿命随源码，见 workflow「源码→产物单向」）
 | 合同 | `docs/design/`（Xenia 是 ROADMAP / KERNEL 等长文） | **看桌分两档**（下同）：**业务类**装物理与离散事实，**以及还没定的那些问题**；**管理类**只服务方案思路 | 业务类改了必须同步实现；管理类**落地牵头一律在 `TODO`**，反映到行里才算数 |
 | 在办 | `TODO.md` `SESSION.md` `docs/cmd/` `queue.md` | 现在这一刀 | 两种寿命三种角色：TODO 勾完移进「已办」、`cmd/` 结案后只增不删（退卡的卡留档盖章），SESSION 下一刀覆盖；queue.md 活过序列走完（授权历史，不随刀覆盖） |
 | 实现 | `src/` | 可复现逻辑 | 和项目一样长 |
@@ -210,6 +210,8 @@ docs/
 | 层内 `figures/` vs `docs/figures/` | 图只住 design / reports 各自的 `figures/`。根上不准开 `docs/figures/`；重复就复制 |
 
 `31` 的合同几乎全在 `docs/design/`，在办文件却在根上（`TODO.md`）——职责对，落点散。`29` 把在办、合同、交付都收进 `docs/`，地图更清楚。**建议在办文件统一进 `docs/`。**
+
+**转译读径（6.22 乙）**：先读顺序五档各自通向的层，凡涉**该层文件何时失效/覆盖/归档**，入口在本节的寿命句，不在各文件自述——文件里写寿命是第二真相
 
 ## 代码侧：`src/` / `tests/` / `examples/`
 
