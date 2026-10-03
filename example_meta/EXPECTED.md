@@ -8,3 +8,5 @@
 - todo 四行全勾：`docs/todo.md` 待办区无 `- [ ] **1.` 残行
 - 已办带指针：四条已办行各含 `cmd/PROMPT_0001.md` 与结案日期
 - SESSION 已结案：`docs/SESSION.md` 状态格为「已结案」
+- lock 档输出含撞锁：第二次 take 输出「撞锁」且退出 2（撞锁被拦＝档通过）
+- release 后该行号无锁文件：`.tmp/locks/1.1.lock` 不在场

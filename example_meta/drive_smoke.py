@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """4.8 冒烟驱动器：十步全流程 + 机器判定。不进 docs_meta/tests/run.sh（todo 4.8 行内原文）。
 
-两档：
-  ok  —— 白名单那条：十步走通，终态比对 EXPECTED.md 的断言清单。
-  ban —— 禁制那条（本体）：builder 在写卡后无卡改核，驱动器必须判 FAIL。
+三档：
+  ok   —— 白名单那条：十步走通，终态比对 EXPECTED.md 的断言清单。
+  ban  —— 禁制那条（本体）：builder 在写卡后无卡改核，驱动器必须判 FAIL。
+  lock —— 在办锁那条：取锁成功、撞锁被拦、放锁后无残留。
 
 判定由机器做，人不参与比对（行内原文）。日志落 add_task/.tmp/smoke.log。
-用法：python example_meta/drive_smoke.py [--scenario ok|ban]   默认两档连跑。
+用法：python example_meta/drive_smoke.py [--scenario ok|ban|lock]   默认 ok＋ban 连跑。
 """
 from __future__ import annotations
 
+import argparse
+import os
 import subprocess
 import sys
 from datetime import date
@@ -25,6 +28,9 @@ SRC = DESK / "src" / "plus.py"
 TEST = DESK / "tests" / "test_plus.py"
 LOGDIR = DESK / ".tmp"
 LOG = LOGDIR / "smoke.log"
+REPO = HERE.parent
+CUT_LOCK = REPO / "docs_meta" / "src" / "tools" / "cut_lock.py"
+ROW_LOCK = REPO / ".tmp" / "locks" / "1.1.lock"
 
 
 def log(msg: str) -> None:
@@ -174,6 +180,63 @@ def scenario_ok() -> bool:
     return True
 
 
+# ---------- lock 档：在办锁三件 ----------
+def _cut_lock(*args: str) -> subprocess.CompletedProcess[bytes]:
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+    return subprocess.run(
+        [sys.executable, str(CUT_LOCK), *args],
+        capture_output=True,
+        env=env,
+    )
+
+
+def _out(r: subprocess.CompletedProcess[bytes]) -> str:
+    return (r.stdout + r.stderr).decode("utf-8", errors="replace").strip()
+
+
+def scenario_lock() -> bool:
+    reset()
+    log("== 档 lock：在办锁 ==")
+
+    first = _cut_lock("take", "1.1", "0001", "builder-a")
+    log(f"take #1 退出 {first.returncode}\n{_out(first)}")
+    if first.returncode != 0:
+        log("SMOKE FAIL: 首次取锁没有成功")
+        return False
+
+    second = _cut_lock("take", "1.1", "0001", "builder-b")
+    second_text = _out(second)
+    log(f"take #2 退出 {second.returncode}\n{second_text}")
+    if second.returncode != 2 or "撞锁" not in second_text:
+        log("SMOKE FAIL: 撞锁未被拦截")
+        return False
+
+    present = _cut_lock("check", "1.1")
+    present_text = _out(present)
+    log(f"check #1 退出 {present.returncode}\n{present_text}")
+    if present.returncode != 0 or not ROW_LOCK.exists():
+        log("SMOKE FAIL: 取到的锁查不到")
+        return False
+
+    released = _cut_lock("release", "1.1")
+    released_text = _out(released)
+    log(f"release 退出 {released.returncode}\n{released_text}")
+    if released.returncode != 0 or "LOCK RELEASED" not in released_text:
+        log("SMOKE FAIL: 放锁失败")
+        return False
+
+    absent = _cut_lock("check", "1.1")
+    absent_text = _out(absent)
+    log(f"check #2 退出 {absent.returncode}\n{absent_text}")
+    if absent.returncode != 1 or "无锁" not in absent_text or ROW_LOCK.exists():
+        log("SMOKE FAIL: 放锁后仍有锁文件")
+        return False
+
+    log("SMOKE PASS")
+    return True
+
+
 # ---------- ban 档：无卡改核必须被拦 ----------
 def scenario_ban() -> bool:
     reset()
@@ -193,19 +256,25 @@ def scenario_ban() -> bool:
 
 
 def main() -> None:
-    args = sys.argv[1:]
-    scenario = args[1] if args and args[0] == "--scenario" and len(args) > 1 else ""
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--scenario", choices=["ok", "ban", "lock"])
+    args = parser.parse_args()
+    scenario = args.scenario or ""
     results: dict[str, bool] = {}
     if scenario in ("", "ok"):
         results["ok"] = scenario_ok()
     if scenario in ("", "ban"):
         results["ban"] = scenario_ban()
+    if scenario == "lock":
+        results["lock"] = scenario_lock()
     # ok 档期望 True；ban 档期望 False（FAIL 即拦截成功）
     passed = True
     if "ok" in results:
         passed = passed and results["ok"]
     if "ban" in results:
         passed = passed and (results["ban"] is False)
+    if "lock" in results:
+        passed = passed and results["lock"]
     print(f"DRIVE RESULT: {results}")
     sys.exit(0 if passed else 1)
 

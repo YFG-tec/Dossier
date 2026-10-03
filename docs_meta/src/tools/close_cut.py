@@ -205,6 +205,11 @@ def main() -> None:
     ops += move_row(row, card, dry)
     if qn:
         ops += advance_queue(qn, qstatus, dry)
+    lock = REPO / ".tmp" / "locks" / f"{row}.lock"
+    if lock.exists() and not any(o.startswith("FAIL") for o in ops):
+        if not dry:
+            lock.unlink()
+        print(f"{'DRY ' if dry else ''}LOCK RELEASED {row}")
     for o in ops:
         print(o)
     if any(o.startswith("FAIL") for o in ops):
