@@ -42,7 +42,7 @@
 - 没动 check-ask；没勾行、没 commit、没 push。
 
 ---
-## 审查 · 6.4＋6.5（PROMPT_065 · check-ask 两洞，Codex 施工＋领班收射程，2026-10-03，只读零写）
+## 审查 · check-ask 两洞（PROMPT_065 · Codex 施工＋领班收射程，2026-10-03，只读零写）
 
 **结论：四件全过（沙箱红绿两对全复现）。** 日志 `D:\tmp\065-rev-run.log`。
 
