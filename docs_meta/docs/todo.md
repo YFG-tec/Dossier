@@ -76,6 +76,7 @@
 
 
 
+
 - [ ] **5.11** PreToolUse 守卫产品化：随附 `.mirror/` 的形状与装法 → `design/lean-rows.md#6.19` → 待 6.19 结案后归 lean-rows
   判据候补：脚本在 mirror、init 可选装、装后自测一违规样本
 - [ ] **4.2** `naming.md` / `directory.md` 里 `docs_meta/` 还写成平的，同步成 `src/` + `docs/` → §5 → `design/lean-rows.md#4.2`
@@ -144,6 +145,8 @@
 **改过两次，这是最后一次**（人 2026-09-09 裁）。前两次都是为了让卡号跟上行号 / 编号；
 这一次是把卡号从编号上摘下来，**摘完就没有再改的理由了**。
 
+- [x] **5.15** 工牌制正式化：roles/workflow/directory 三落点 → `cmd/PROMPT_072.md`
+      （2026-10-03 结案）
 - [x] **5.14** 切分首演：6.22 三块并行，双 builder 首次同台 → `design/parallel-research.md` 一节 → `cmd/PROMPT_071.md`（顺交 6.22 首块，其行结案随本刀）
       （2026-10-03 结案）
 - [x] **5.13** 在办锁落地：cut_lock.py＋冒烟 lock 档＋close_cut 放锁 → `design/parallel-research.md` 二节 → `cmd/PROMPT_070.md`
