@@ -72,9 +72,8 @@
 
 - [ ] **5.11** PreToolUse 守卫产品化：随附 `.mirror/` 的形状与装法 → `design/lean-rows.md#6.19` → 待 6.19 结案后归 lean-rows
   判据候补：脚本在 mirror、init 可选装、装后自测一违规样本
-- [ ] **4.2** `naming.md` / `directory.md` 里 `docs_meta/` 还写成平的，同步成 `src/` + `docs/` → §5 → `design/lean-rows.md#4.2`
 
-- [ ] **4.3** 卡号新规只落在本页头部：`directory.md` 那棵「建议的公共顶层」树注还没写只增不删； → `design/lean-rows.md#4.3`
+- [ ] **4.3** 卡号新规只落在本页头部：`directory.md` 那棵「建议的公共顶层」树注还没写只增不删； → `design/lean-rows.md#4.3` 〔已随 4.2 打包刀施工毕（2026-10-06），搬行随 #35 吸收形状〕
 
 
 - [ ] **6.2** 首页上的「三」哪些算一组三（初稿，不裁） → `design/lean-rows.md#6.2`
@@ -156,6 +155,8 @@
 **改过两次，这是最后一次**（人 2026-09-09 裁）。前两次都是为了让卡号跟上行号 / 编号；
 这一次是把卡号从编号上摘下来，**摘完就没有再改的理由了**。
 
+- [x] **4.2** `naming.md` / `directory.md` 里 `docs_meta/` 还写成平的，同步成 `src/` + `docs/` → §5 → `design/lean-rows.md#4.2` → cmd/PROMPT_075.md
+      （2026-10-06 结案）
 - [x] **5.17** 废除池：作废行分流＋close_cut `--void` → `cmd/PROMPT_074.md`
       （2026-10-04 结案）
 - [x] **5.16** 影子首报：36 刀派单-耗时-返工分布 → `design/shadow-report.md` → `cmd/PROMPT_073.md`

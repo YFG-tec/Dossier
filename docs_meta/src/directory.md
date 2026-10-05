@@ -128,6 +128,8 @@ papers/ codes/              papers/ codes/
   .venv/                    项目解释器
 ```
 
+树里 `cmd/` 一层只增不删：勾完沉已办、退卡留档盖章，卡号从 `000` 起流水、永不改名（正身见 `workflow.md`「TODO 只能长」与 todo 页头）。
+
 加厚才出现的目录，默认不要预建：
 
 | 目录 | 何时才要 |
@@ -141,7 +143,7 @@ papers/ codes/              papers/ codes/
 对 **Dossier** 而言它们是产品本身，规划在 `claude-code.md` / `cursor.md`。
 
 这一段说的是**桌**长成什么样。母本自己不长 `src/` `tests/` `.venv/`。
-`docs/` 是给桌的骨架，由 `init` 铺到宿主上；`docs_meta/` 是母本自己的规划与品牌，不铺进宿主工作区。见 `naming.md`。
+`docs/` 是给桌的骨架，由 `init` 铺到宿主上；`docs_meta/` 是母本自己的两层——`src/` 规范与工具、`docs/` 母本在办层——不铺进宿主工作区。见 `naming.md`。
 
 ## `docs/` 内部怎么切（→ harness）
 
