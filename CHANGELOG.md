@@ -32,6 +32,8 @@ Dossier 以 git submodule 挂进你的仓库，`init` 在你的仓库根上铺�
 
 - `c1f449b`：text-to-image 的 skill 与命令在刀外提交，其提交文自认 outside the knife commits——记一笔账，不回改（反馈建议 12；2026-10-06 落账，哈希本仓亲核为提交）。
 - `workflow.md:270`「换根带走」为 src 残留旧词（换根 2026-09-14 已摒弃，2.8b 判据 src 归零）——既有偏差记档不治，待回流刀（6.22 续块侦察指认，2026-10-06）。
+- `4d45ae0`：`design/model-tiers.md`＋`figures/model-tiers.png` 调研稿，刀外提交（空转期调研授权，人 2026-10-02 原话在 `queue.md`；5.26 记账形，2026-10-06 落账）。
+- （本笔随账）：`tests/check-skel.sh` 骨架计数 36→37——PROMPT_083 裁定 5 的必然机械连带（init 多铺 `docs/SETUP.md` 一件，幂等末行跟着走）；卡面格 7 立格时漏收该件，台账留痕判刀内连带，不松判据（2026-10-06）。
 
 ### 重译分拣（宿主需重译）
 
