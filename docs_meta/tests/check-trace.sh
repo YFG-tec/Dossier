@@ -31,6 +31,11 @@
 #     **松的只有这一格**：.tmp/ 的 --ignored、-uall 两个保证（B、C 段自检）一律不动，
 #     射程其余部分不动；排除锚在根，嵌套在别处的 .venv/ 不在豁免之内。
 #     这道裁明付的代价，写在下面「查不到什么」第一条。
+#     2026-10-07 又松一格（.tmp/queue-runner/ 心跳载体，人裁在案，注见上）——
+#     「松的只有这一格」自该日起读成「只有这两格」，B、C 两个保证仍一律不动。
+#     心跳豁免是人 2026-10-07 裁加的（原话选项「射程排除心跳件」，queue #45 台账）：
+#     唤醒载体 .tmp/queue-runner/wake.md 每 10 分钟追加，内容哈希落进指纹——整套跨心跳即红（两实证）。
+#     豁免代价：该目录不受指纹可逆性保护，载体健康靠 schtasks 任务状态自证。
 #   **两个开关都要**（本刀实测）：缺 --ignored，.tmp/ 整层看不见；
 #     缺 -uall，已经在报的那个 ignored 目录塌成一行，里面改什么都不动指纹。
 #   **内容哈希比行上写的宽**（收紧，写明）：行上写的是「未跟踪文件的哈希」，
@@ -62,7 +67,7 @@
 # 口径（脚本和文档必须同一套）：
 #
 #   指纹怎么算，写死：
-#     git -c core.quotepath=false status --porcelain -uall --ignored -- ':(exclude).venv'   状态行，排序
+#     git -c core.quotepath=false status --porcelain -uall --ignored -- ':(exclude).venv' ':(exclude).tmp/queue-runner'   状态行，排序
 #     （那段排除是人 2026-09-22 那道裁加的，来历见上面「钉的是哪几裁」）
 #     每一条报出来的路径，只要是普通文件，再算一次内容哈希
 #   core.quotepath=false 是为了非 ASCII 路径不被转义成 \xxx。
@@ -95,6 +100,8 @@
 #
 #   查不到 **.venv/ 里改了什么**。人 2026-09-22 那道裁把它整层排出射程（见上）。
 #     有手往 .venv/ 里落笔，这一本不红——那是那道裁明付的代价，不是漏。
+#   查不到 **.tmp/queue-runner/ 里改了什么**。人 2026-10-07 裁（见上）——
+#     载体健康靠 schtasks 任务状态自证，同是明付的代价。
 #
 #   查不到**是哪只手改的**。指纹只答盘变没变。
 #     重档下派出去的是子代理，但指纹分不出是它写的还是领班顺手写的。
@@ -120,7 +127,7 @@ cd "$(dirname "$0")/../.."
 
 # ---- 取一份指纹 ----
 take() {
-  git -c core.quotepath=false status --porcelain -uall --ignored -- ':(exclude).venv' | LC_ALL=C sort | while IFS= read -r line; do
+  git -c core.quotepath=false status --porcelain -uall --ignored -- ':(exclude).venv' ':(exclude).tmp/queue-runner' | LC_ALL=C sort | while IFS= read -r line; do
     path=${line#???}
     if [ -f "$path" ]; then
       h=$(git hash-object "$path" 2>/dev/null || echo "HASHFAIL")
@@ -167,7 +174,7 @@ probe=".tmp/trace-probe-$$"
 cleanup() { rm -rf "$probe"; }
 trap cleanup EXIT INT TERM
 
-echo "（射程：整个工作树减 .venv/，含 ignored 那一层——.venv/ 排出是人 2026-09-22 那道裁，todo.md 4.9，见脚本头。空跑只自检取法，不自检任何一次真实派发——见脚本头）"
+echo "（射程：整个工作树减 .venv/ 与 .tmp/queue-runner/，含 ignored 那一层——.venv/ 排出是人 2026-09-22 那道裁，todo.md 4.9；queue-runner 排出是人 2026-10-07 裁，均见脚本头。空跑只自检取法，不自检任何一次真实派发——见脚本头）"
 echo
 
 echo "== A 取得到：取一次，退出码 0（6.25 改：空输出=干净树，不是取失败）=="
