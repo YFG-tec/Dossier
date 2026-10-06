@@ -89,6 +89,8 @@ Dossier 里**没有求解器**。文件分两堆：留在子模块里的，和 `
 | **留在子模块里** | 原则与规划。不铺进宿主工作区 | `readme.md`；`docs_meta/` |
 | **`init` 铺到宿主上** | 给桌的骨架 + harness 规矩 | `docs/`；`CLAUDE.md`、`AGENTS.md`、`.claude/`、`.cursor/` |
 
+子模块指针跟上游：本地不改母本文件；宿主提交前重新暂存指针（`git add <子模块路径>`）——指针漂着不暂存，等于宿主对母本的私改悬在账外（反馈建议 15）。
+
 `docs/` 是运行时的**数据布局**：卡片空壳和目录本身，不是「代码」——
 代码是 `docs_meta/src/`，编出来的产物是 harness（见上面术语表那一行）。
 桌长 `src/` / `tests/` / `.venv/`；母本的同层不长在根上，住 `docs_meta/src/` 与 `docs_meta/tests/`。

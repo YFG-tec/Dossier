@@ -32,7 +32,7 @@ papers/ codes/              papers/ codes/
 | 在办 | `TODO.md` `SESSION.md` `docs/cmd/` `queue.md` | 现在这一刀 | 两种寿命三种角色：TODO 勾完移进「已办」、`cmd/` 结案后只增不删（退卡的卡留档盖章），SESSION 下一刀覆盖；queue.md 活过序列走完（授权历史，不随刀覆盖） |
 | 实现 | `src/` | 可复现逻辑 | 和项目一样长 |
 | 交付 | `docs/reports/`（算例叙述仍可在 `examples/*/REPORT.md`） | 对外说「通过」 | 阶段结束入库 |
-| 草稿 | `.tmp/` | 零 | 探针、dump，默认不进 git；并行刀的块草稿纸按 `.tmp/<刀>/<块>/` 分目录，工牌 `brief.md` 与回话 `report.md` 落其内，收口即焚（证据摘录进审查页后整目录删） |
+| 草稿 | `.tmp/` | 零 | 探针、dump，默认不进 git；并行刀的块草稿纸按 `.tmp/<刀>/<块>/` 分目录，工牌 `brief.md` 与回话 `report.md` 落其内，收口即焚（证据摘录进审查页后整目录删）；被验收格点名引用过的证据不许只留 `.tmp/`——收口前升格进 `docs/reports/`（宿主形状；母本现址 `docs_meta/docs/reports/`）随刀 commit，摘录进审查页的既有做法保留 |
 | 以上都不匹配 → 停，回出处，或问人；不许挑最近的一条套用 | | | |
 
 其余都是加厚，不是入场券：`tests/` 与 `examples/` 常分开；`research/` 是设计之前的调研；`papers/` `codes/` 是只读对照；`utils/` 是尺子，不是公开 API。批跑 / 同步入口走 `examples/`，不另开 `scripts/`。
