@@ -29,6 +29,8 @@
 按 `docs_meta/src/directory.md`「`docs/` 内部怎么切」那三行现算到本仓库的路径。
 母本没有根 `docs/`：在办层是 `docs_meta/docs/`，把关层是 `docs_meta/tests/`。
 
+**会话起步闸**：本桌执行架构在场时，第一段先跑 `check-env` 的 E 段——半身不遂即红，不准静默跑；全无（轻档）则明记不适用。量程跟档位走：桌用什么，验什么。
+
 ```text
 议事先读     docs_meta/docs/design/      相关的一节，当材料读，不当判据
 开刀先读     docs_meta/docs/todo.md      人点的那一行，只读那一行

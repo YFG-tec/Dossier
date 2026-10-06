@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # todo 5.9 的运行时契约自检；出处：cmd/PROMPT_058.md。
-# 本脚本按 UTF-8 输出；FAIL 只由 B/C 两段置位。
+# 本脚本按 UTF-8 输出；FAIL 由 B/C/E 三段置位。
 set -u
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
@@ -52,6 +52,51 @@ if (( ${#missing[@]} != 0 )); then
     warn "D 三处声明：缺 ${missing[*]}"
 else
     pass "D 三处声明：close_cut.py、init.py、readme.md 均在盘"
+fi
+
+# E：架构执行在场性（量程跟档位——5.20，PROMPT_083）。正身＝cmd/PROMPT_083.md 裁定 1。
+# 只查在场配对，不查生效性——无实件可查的东西不写死（生效性深检待 hooks 等实件出现）。
+e_agents_on=0
+e_skills_on=0
+e_sw_on=0
+declare -a e_missing=()
+if [[ -d "$ROOT/.claude/agents" ]]; then
+    e_agents_on=1
+    for f in builder contract-tester review spec-guard; do
+        [[ -f "$ROOT/.claude/agents/$f.md" ]] || e_missing+=("agents/$f.md")
+    done
+fi
+if [[ -d "$ROOT/.claude/skills" ]]; then
+    e_skills_on=1
+    for d in write-cmd one-slice example-report; do
+        [[ -f "$ROOT/.claude/skills/$d/SKILL.md" ]] || e_missing+=("skills/$d/SKILL.md")
+    done
+fi
+if [[ -d "$ROOT/.cursor" ]]; then
+    e_sw_on=1
+    [[ -f "$ROOT/.cursor/rules/switches.mdc" ]] || e_missing+=(".cursor/rules/switches.mdc")
+fi
+# 组间配对（裁定 1「部分在场即红」的整组缺半边；审查083-逻辑 MUST-FIX 修项）：
+# agents 与 skills 互为配对，一在而另一整组缺即半身不遂；
+# switches 单独在场而两组架构全无，同罪。整组缺与件缺同列 e_missing。
+if (( e_agents_on != e_skills_on )); then
+    (( e_agents_on == 0 )) && e_missing+=("agents/（整组缺）")
+    (( e_skills_on == 0 )) && e_missing+=("skills/（整组缺）")
+fi
+if (( e_sw_on == 1 && e_agents_on == 0 && e_skills_on == 0 )); then
+    e_missing+=("agents/（整组缺）" "skills/（整组缺）")
+fi
+e_present=()
+(( e_agents_on )) && e_present+=("agents")
+(( e_skills_on )) && e_present+=("skills")
+(( e_sw_on )) && e_present+=("switches")
+printf '== E 架构执行（在场性 v1，量程跟档位——5.20，PROMPT_083） ==\n'
+if (( e_agents_on == 0 && e_skills_on == 0 && e_sw_on == 0 )); then
+    warn "E 架构执行：轻档无执行架构，起步闸不适用（明记在案）"
+elif (( ${#e_missing[@]} != 0 )); then
+    fail "E 架构执行：半身不遂——开工即红（后补九标本）：缺 ${e_missing[*]}"
+else
+    pass "E 架构执行：在场配对齐（在场组：${e_present[*]}）——在场性 v1：生效性深检待 hooks 等实件出现"
 fi
 
 if (( fail_count != 0 )); then

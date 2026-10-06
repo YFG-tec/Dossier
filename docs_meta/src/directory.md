@@ -143,6 +143,21 @@ papers/ codes/              papers/ codes/
 `.claude/`、`.cursor/` 对**桌**是工具配置，不是项目内容层。有没有角色**文件**是档位问题，见 `roles.md`。
 对 **Dossier** 而言它们是产品本身，规划在 `claude-code.md` / `cursor.md`。
 
+**宿主无关层清单（5.20）**：执行架构类设置不得只存宿主特有文件——换宿主等于静默丢配置（后补九标本）。缺口由 `check-mirror` 现算，本表是立场声明不是覆盖表；件名件数以 `check-mirror` A 段为准，本表不维护副本。
+
+| 住哪 | 件 | 说明 |
+|---|---|---|
+| `.claude/agents/` | 四件：`builder.md` / `contract-tester.md` / `review.md` / `spec-guard.md` | 随 submodule 旅行 |
+| `.claude/skills/` | 三件：`write-cmd` / `one-slice` / `example-report` 的 SKILL.md | 随 submodule 旅行 |
+| `.codex/` | 四件 | 随 submodule 旅行 |
+| `.cursor/rules/` | `switches.mdc` | 随 submodule 旅行 |
+| `.claude/` | `settings.json` | 随 submodule 旅行 |
+| 仓库根 | `CLAUDE.md` / `AGENTS.md` 本身 | 随 submodule 旅行 |
+| `.claude/` | `host.md` | 换宿主即丢，桌自担 |
+| `.claude/` | `settings.local.json` | 换宿主即丢，桌自担 |
+| `.claude/` | text-to-image 命令与 skill | 换宿主即丢，桌自担 |
+| `.claude/` | hooks（尚无实件） | 出现时必须入 mirror |
+
 这一段说的是**桌**长成什么样。母本自己不长 `src/` `tests/` `.venv/`。
 `docs/` 是给桌的骨架，由 `init` 铺到宿主上；`docs_meta/` 是母本自己的两层——`src/` 规范与工具、`docs/` 母本在办层——不铺进宿主工作区。见 `naming.md`。
 

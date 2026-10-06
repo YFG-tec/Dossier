@@ -79,6 +79,8 @@ def main():
         ('docs', None),
         ('docs/TODO.md', '# 待办\n\n（空。还没有一行。）\n\n## 已办\n\n（空。）\n'),
         ('docs/SESSION.md', '# 本刀运行态\n\n（空。还没点行。）\n\n---\n\n## 横线以下 · 审阅\n\n（空。）\n'),
+        # 装桌检查单（5.20，PROMPT_083 裁定 5）：起步闸与首刀自检的入口页
+        ('docs/SETUP.md', '# 装桌检查单\n\n装桌五步，依次勾：\n\n1. `git submodule update --remote`\n2. `python docs_meta/src/init.py` 铺桌\n3. 起步闸：`bash docs_meta/tests/check-env.sh` 的 E 段绿才开\n4. 首刀前：`bash docs_meta/tests/run.sh` 红绿自检\n5. 转译基线回执（见 5.30 刀）\n'),
         ('docs/cmd', None),
         ('docs/cmd/.gitkeep', ''),
         ('docs/design', None),
