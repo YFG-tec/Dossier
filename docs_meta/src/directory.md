@@ -303,7 +303,7 @@ examples/<case>/    演示：run.py + REPORT.md + 本算例图；批跑 / 出图
 | 写卡 `write-cmd` | **新增** `docs/cmd/PROMPT_xx.md`（结案后只增不删；退卡的卡留档盖章）+ **覆盖** `SESSION.md` | `src/` `tests/` |
 | 规格看守 `spec-guard` | 只覆盖 `SESSION.md` | `src/` `tests/`、自己派 builder |
 | 规划席默认 `cursor-desk` | `docs/` `research/` `examples/` 叙述 `.tmp/` | `src/` `tests/`、派 builder |
-| 领班 | 派角色、跑收口验收、对人说话 | 自己少写核 |
+| 领班 | 派角色、跑收口验收、对人说话 | 只派单、不落笔核 |
 
 压成一行就等于说「改核的手可以改测试口径」，`readme` 五条里的第二、三条当场作废。
 三只手可以同坐一个会话（轻档），但顺序和写路径不变。职责全表见 `roles.md`。
