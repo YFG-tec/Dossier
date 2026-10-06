@@ -42,3 +42,4 @@ Dossier 以 git submodule 挂进你的仓库，`init` 在你的仓库根上铺�
 ### 许可证
 
 MIT。
+- （邻席刀外）：harness-specialization-bet-research-2026-10-07-dsh-glm5.3.md＋figures——独立调研报告，不占刀；写入授权＝人 2026-10-07 原话逐字（存报告头）；由领班按 5.26 记账形代落（该调研席自落未果，文件静默 7 分钟后代提交）。
