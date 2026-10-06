@@ -28,6 +28,10 @@ Dossier 以 git submodule 挂进你的仓库，`init` 在你的仓库根上铺�
 
 见 `docs_meta/docs/todo.md` 第 6 章（历史 bug 攒批区），不复述。36 桌的反馈报告（`docs_meta/docs/reports/dossier-feedback-2026-09-17.md`）收录了十二条实测问题及回流情况。
 
+### 刀外落盘记账
+
+- `c1f449b`：text-to-image 的 skill 与命令在刀外提交，其提交文自认 outside the knife commits——记一笔账，不回改（反馈建议 12；2026-10-06 落账，哈希本仓亲核为提交）。
+
 ### 许可证
 
 MIT。
