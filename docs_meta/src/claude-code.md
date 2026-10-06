@@ -28,6 +28,8 @@ AGENTS.md                      同一份锁，写短的
   spec-guard.toml              同 spec-guard.md
 ```
 
+以上都不匹配 → 停，回出处，或问人；不许挑最近的一条套用。
+
 `.codex/agents/` 是 Codex 编译目标（TOML 形，2026-10-02 5.7）：四份与 `.claude/agents/` 同源，instructions 搬运，工具面走 Codex sandbox。
 
 调度 skill 不是角色。`one-slice` 只规定 `roles.md` 那条顺序。
@@ -47,6 +49,7 @@ AGENTS.md                      同一份锁，写短的
 
 **工具面写 `tools` 白名单，不写即没有。** 不用「禁掉哪几样」那种写法：
 禁的清单永远漏，白名单漏了只会少一样工具，当场看得见。
+本节共 17 条可转译项（条＝bullet＋表格数据行＋代码块内非空行，计数时点 2026-10-06）
 
 ## permissions 层的机械边界
 

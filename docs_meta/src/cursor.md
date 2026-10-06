@@ -16,7 +16,10 @@ AGENTS.md                      与 Claude Code 共用的短锁
   example-report/SKILL.md      算例报告公式；与 Claude 侧同名 skill 同一口径
 ```
 
+以上都不匹配 → 停，回出处，或问人；不许挑最近的一条套用。
+
 不另开「用户指南」。从哪启动、第一段贴什么，写进 `CLAUDE.md` 头几行（`init` 铺到宿主上的锁），不写进 `docs/`。
+本节共 5 条可转译项（条＝bullet＋表格数据行＋代码块内非空行，计数时点 2026-10-06）
 
 ## `cursor-desk` 要锁住的
 
