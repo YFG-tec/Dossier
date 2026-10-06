@@ -9,7 +9,7 @@
   一刀，两席，收口对账。人做这套会累死，智能体不会——这是它成立的前提。
 </p>
 
-> 2026-09-06 起稿。范围：这套范式怎么在磁盘上落地和生效。课题锁、语言栈、具体物理不进这一层。
+> 2026-09-06 起稿，v0.2.0 重写于 2026-10-07。范围：这套范式怎么在磁盘上落地和生效。课题锁、语言栈、具体物理不进这一层。
 > 本页只留设计思维和安装两步。细则在 `docs_meta/src/`。
 
 ---
@@ -26,9 +26,11 @@
 ```text
 your-repo/
   CLAUDE.md  AGENTS.md        代理每次开工先读的约定
-  .claude/   .cursor/         角色文件、开关
+  .claude/   .cursor/  .codex/   角色文件、开关、执行席落点
   docs/
     TODO.md  SESSION.md       待办；本刀的运行态
+    queue.md                  序列单：授权一批刀排队自己往下走
+    SETUP.md                  装桌检查单（init 铺出，五步）
     cmd/  design/  reports/   每刀的卡；合同层；阶段交付
   dossier/                    子模块。母本本身，你不改它
 ```
@@ -40,7 +42,7 @@ git submodule add https://github.com/YFG-tec/Dossier dossier
 python dossier/docs_meta/src/init.py
 ```
 
-细则往下读；只想装，看这两行就够。
+装完跟着 `docs/SETUP.md` 的五步走一遍（拉子模块 → 铺桌 → 起步闸自检 → 首刀先跑一遍检查看红绿 → 转译基线回执）。细则往下读；只想装，看这两行就够。
 
 ## 绘卷
 
@@ -69,7 +71,7 @@ python dossier/docs_meta/src/init.py
 
 这份管理密度，人类项目负担不起。它在这里成立，是因为**执行规矩的边际成本降到了近乎为零**：写卡、落盘、逐条对账，对智能体是顺手；文档是它唯一稳定的记忆。规矩定得细不是因为聪明，是因为现在定得起。
 
-判据先声明、证据能复现、盖章的手不是干活的手。核心不是转化，是取信——不是把原料变成产品，是让一个结论**可以被相信**。
+判据先声明、证据能复现、盖章的手不是干活的手。核心不是转化，是取信——不是把原料变成产品，是让一个结论**可以被相信**。v0.2 起连「可以结案了」都收成了一条可机读的查询：谓词红，谁说情都不算。
 
 偏离要逐条写明代价，藏起来的偏离自己就是一类失败。欠的账摊在 `docs_meta/docs/todo.md` 第 5 章、第 6 章。怎么立的，见下一节。
 
@@ -113,6 +115,22 @@ python dossier/docs_meta/src/init.py
   <img src="docs_meta/src/figures/dossier-frame.png" width="880" alt="目录即权限：一张七列五行的矩阵。列是约定、合同、在办、实现、把关、交付、草稿七层；行是人、规划席（默认 Cursor），以及实现席内部的实现、测试、审查三只手，后三行左边一道括弧圈成一席（默认 Claude Code）。格子三种记号：实心方块是写，空心圈是只读，点是不许碰。人那一行在办那一格是朱红，全图唯一一处颜色，只有人能落。合同一列人和规划席都是实心，实现那只手在这一格是空心带星号，注着卡片点名才改合同；实现层和把关层各归一只手；审查整行一个实心都没有，图下注着审查的手不写文件。表下一条浅灰的流转带，标题是换阶段就是换手，把同一批手摊到时间轴上：规划席立案，实现席三只手串行走施工、举证、对账，人结案；两道虚线闸分别标着闸一「按卡片做」和结案「勾 TODO」">
 </p>
 
+### v0.2 起，这台机器自己会转
+
+上面那些规矩，v0.1 的时候全靠你一句一句盯着。现在分三层，各归各。
+
+先答两个进门问题。**它不收钱**：没有服务、不连账号，就是一叠文件和检查脚本，跑在你自己的会话里。**两席＝两个会话**：默认规划席 Cursor、实现席 Claude Code，Codex CLI 也能坐实现席；用哪家可以换，两个会话合不成一个。
+
+**你每天只做四件事。** 点一行待办、说一声开工、结案时认账、遇到断点拍板。就这四样，别的都有人代笔。
+
+**代理自己会跑一批。** 把一串待办授权进 `docs/queue.md`，代理席就按序列自己往下走：代点行、写卡、派手施工、独立审查、跑验收、结案、提交到本地分支——每刀一报。它的章是**蓝印**，效力与人印相同，只标明是代理落的。七样它永远不碰，撞上就停下、把待裁的事写进队列等你一句话（你回了就续跑）：**松判据**（放宽验收标准）、**发授权**（给自己扩权）、**改序列**（动你排的队）、**动根基条款**（改这套规矩的地基）、**胖行**（把待办行写肥）、**做不到的卡**、**审查返工**。**push 对代理永远禁止**，远端同步是你的动作。
+
+**机器替你把话验真。** 二十一本机械检查一条入口全量跑；开工先过起步闸——执行架构缺了半边（有 agents 没 skills 这类「半身不遂」）当场红，不等活了半天才发现配置早丢了。**宿主**就是你用的那款代理程序（Claude Code、Cursor、Codex 这类）；母本会把角色文件**转译**成各宿主要的样子铺给你。换宿主不静默失灵：进 `.mirror/` 的配置随子模块一起旅行，宿主私有的件有清单点名，转译偏没偏有内容戳——「宿主那份偏了没有」是一条命令的问答，`CHANGELOG` 会告诉宿主哪半边要重译。
+
+*Since v0.2 the machine runs itself in three layers. You do four things a day: pick a row, say go, acknowledge closes, rule at breakpoints. The agent seat walks an authorized queue on its own - every close commits to your local branch under a blue stamp with the same force as your own, one report per knife, hard stops at seven breakpoint kinds, never pushes. And the machinery verifies the talk: twenty-one checks behind one entry, a start gate that catches half-installed harnesses before work begins, a mirror that travels with the submodule, and content stamps that turn "has the host copy drifted" into a machine answer.*
+
+这套自转不是变出来的，是在本仓库一场一场实测调出来的。**值日手**就是定时唤醒的值班机制：系统计划任务每十分钟碰一下文件，代理的「耳朵」听见就醒来干活；一个 deadman 探针随时做三面体检——定时任务还在不在、心跳按节律跳没跳、有没有卡死的在办锁——任何一面不对就停下报告，不装没事。宿主没有定时能力也不阻塞开发：记一笔死账，等你点火。装法与拆法都在 `docs_meta/docs/design/loop.md`。
+
 装这套东西是两个动作：把母本挂成子模块，再跑一次 `init`。
 
 ```text
@@ -124,16 +142,20 @@ python dossier/docs_meta/src/init.py
 
 重跑只补缺的那几件，已经有的一律不覆盖，所以升级也是这条路：`git submodule update --remote` 拉新版，再跑一次 `init`。边界是物理的——子模块目录里面归母本，外面全归你这张桌。
 
+想先看一圈怎么转：`example_meta/` 里有一份跑得通全流程的冒烟样例（玩具核＋假人）。
+
 细则按需要打开，不必先读完：
 
 | 要干什么 | 读 |
 |---|---|
 | 目录长什么样、图放哪 | `docs_meta/src/directory.md` |
 | 一刀、卡片、收口 | `docs_meta/src/workflow.md` |
-| 验证、排障 | `docs_meta/src/verify.md` |
-| 角色、档位 | `docs_meta/src/roles.md` |
-| Claude Code 怎么落 | `docs_meta/src/claude-code.md` |
+| 验证、排障、这套验不了什么 | `docs_meta/src/verify.md` |
+| 角色、档位、模型下限 | `docs_meta/src/roles.md` |
+| Claude Code / Codex CLI 怎么落 | `docs_meta/src/claude-code.md` |
 | Cursor 怎么落 | `docs_meta/src/cursor.md` |
+| 队列与自动化怎么转 | `docs_meta/docs/design/loop.md` |
+| 模型分档与派单路由 | `docs_meta/docs/design/model-routing.md` |
 | 外面有什么、为什么不那样做 | `docs_meta/src/sources.md` |
 | 还没对齐的问题 | `docs_meta/docs/design/open.md` |
 | 运行时 | Python ≥ 3.13、Windows 用 Git Bash 跑检查——环境自检 `bash docs_meta/tests/check-env.sh` |
