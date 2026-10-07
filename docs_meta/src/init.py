@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-运行时契约：Python >= 3.13（3.12 兼容模式可用）＋ Git Bash（Windows）。详见 docs_meta/tests/check-env.sh。
+运行时契约：Python >= 3.13（3.12 兼容模式可用；解释器优先项目内 `.venv`，未建则系统，首次需要时建——5.32）＋ Git Bash（Windows）。详见 docs_meta/tests/check-env.sh。
 """
 import sys
 import os

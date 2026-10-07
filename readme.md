@@ -158,7 +158,7 @@ python dossier/docs_meta/src/init.py
 | 模型分档与派单路由 | `docs_meta/docs/design/model-routing.md` |
 | 外面有什么、为什么不那样做 | `docs_meta/src/sources.md` |
 | 还没对齐的问题 | `docs_meta/docs/design/open.md` |
-| 运行时 | Python ≥ 3.13、Windows 用 Git Bash 跑检查——环境自检 `bash docs_meta/tests/check-env.sh` |
+| 运行时 | Python ≥ 3.13（解释器优先 `.venv`，未建则系统，首次需要时建）、Windows 用 Git Bash 跑检查——环境自检 `bash docs_meta/tests/check-env.sh` |
 
 ---
 

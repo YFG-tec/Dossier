@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """close_cut.py —— 收口三件的通用腿（todo 5.8，cmd/PROMPT_055，2026-10-02）。
-运行时契约：Python >= 3.13（3.12 兼容模式可用）＋ Git Bash（Windows）。详见 docs_meta/tests/check-env.sh。
+运行时契约：Python >= 3.13（3.12 兼容模式可用；解释器优先项目内 `.venv`，未建则系统，首次需要时建——5.32）＋ Git Bash（Windows）。详见 docs_meta/tests/check-env.sh。
 
 用法：
   python docs_meta/src/tools/close_cut.py <行号> <卡号> [--review <审查页文件>] [--queue <#> [<状态>]] [--dry-run]

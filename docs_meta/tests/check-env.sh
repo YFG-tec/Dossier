@@ -11,15 +11,25 @@ pass() { printf '[PASS] %s\n' "$1"; }
 warn() { printf '[WARN] %s\n' "$1"; }
 fail() { printf '[FAIL] %s\n' "$1"; fail_count=$((fail_count + 1)); }
 
-# A：Python 3.13 是基准；3.12 已由 close_cut 兼容，所以只提示。
-py_line="$(python -X utf8 -c 'import sys; print(f"Python {sys.version_info.major}.{sys.version_info.minor}"); sys.exit(0 if sys.version_info >= (3, 13) else 2)' 2>/dev/null)"
+# A：Python 3.13 是基准；3.12 已由 close_cut 兼容，所以只提示。正身＝cmd/PROMPT_090.md 裁定 1（人裁①：惰性 venv，未建不算红）。
+if [[ -x "$ROOT/.venv/Scripts/python.exe" ]]; then
+    py_bin="$ROOT/.venv/Scripts/python.exe"
+    py_tag="[venv]"
+elif [[ -x "$ROOT/.venv/bin/python" ]]; then
+    py_bin="$ROOT/.venv/bin/python"
+    py_tag="[venv]"
+else
+    py_bin="python"
+    py_tag="[系统·venv 未建——首次需要时建 5.32]"
+fi
+py_line="$($py_bin -X utf8 -c 'import sys; print(f"Python {sys.version_info.major}.{sys.version_info.minor}"); sys.exit(0 if sys.version_info >= (3, 13) else 2)' 2>/dev/null)"
 py_rc=$?
 if (( py_rc == 0 )); then
-    pass "A Python：$py_line（>= 3.13）"
+    pass "A Python$py_tag：$py_line（>= 3.13）"
 elif (( py_rc == 2 )); then
-    warn "A Python：$py_line（< 3.13；3.12 兼容模式可用）"
+    warn "A Python$py_tag：$py_line（< 3.13；3.12 兼容模式可用）"
 else
-    warn "A Python：python 不可用或无法读取版本"
+    warn "A Python$py_tag：python 不可用或无法读取版本"
 fi
 
 # B：Windows 基准是 Git Bash（MSYS/Cygwin 形态）；WSL 直接判 FAIL。
