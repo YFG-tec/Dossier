@@ -6,11 +6,10 @@
 
 <p align="center">
   <b>一次一刀，盖章才算数。</b><br>
-  一刀，两席，收口对账。人做这套会累死，智能体不会——这是它成立的前提。
+  装两行命令，你的代理从「聊着写」变成「按卷宗办事」——你只管点行、认账、拍板。
 </p>
 
-> 2026-09-06 起稿。范围：这套范式怎么在磁盘上落地和生效。课题锁、语言栈、具体物理不进这一层。
-> 本页只留设计思维和安装两步。细则在 `docs_meta/src/`。
+> 写给会用 AI 编程代理、但没折腾过 harness 的人。五分钟读完知道它替你管什么；只想装，往下翻到安装两步。细则在 `docs_meta/src/`。
 
 ---
 
@@ -46,7 +45,7 @@ python dossier/docs_meta/src/init.py
 
 ## 这台机器自己会转
 
-上面那些规矩，v0.1 的时候全靠你一句一句盯着。现在分三层，各归各。
+早先，这些规矩全靠你一句一句盯着。现在分三层，各归各。
 
 先答两个进门问题。**它不带服务、不连账号**：就是一叠文件和检查脚本，跑在你自己的会话里。**两席＝两个会话**：默认规划席 Cursor、实现席 Claude Code，Codex CLI 也能坐实现席；用哪家可以换，两个会话合不成一个。
 
@@ -56,9 +55,11 @@ python dossier/docs_meta/src/init.py
 
 **机器替你把话验真。** 二十一本机械检查一条入口全量跑；开工先过起步闸——执行架构缺了半边（有 agents 没 skills 这类「半身不遂」）当场红，不等活了半天才发现配置早丢了。**宿主**就是你用的那款代理程序（Claude Code、Cursor、Codex 这类）；母本会把角色文件翻成各宿主要的样子铺给你。换宿主不静默失灵：进 `.mirror/` 的配置随子模块一起旅行，宿主私有的件有清单点名，配置偏没偏有指纹可对——「宿主那份偏了没有」是一条命令的问答，`CHANGELOG` 会告诉宿主哪半边要重译。
 
-*The machine runs itself in three layers. You do four things a day: pick a row, say go, acknowledge closes, rule at breakpoints. The agent seat walks an authorized queue on its own - every close commits to your local branch under a blue stamp with the same force as your own, one report per knife, hard stops at seven breakpoint kinds, never pushes. And the machinery verifies the talk: twenty-one checks behind one entry, a start gate that catches half-installed harnesses before work begins, a mirror that travels with the submodule, and content stamps that turn "has the host copy drifted" into a machine answer.*
+
 
 这套自转不是变出来的。**值日手**就是定时唤醒的值班机制：系统计划任务每十分钟碰一下文件，代理的「耳朵」听见就醒来干活；一个 deadman 探针随时做三面体检——定时任务还在不在、心跳按节律跳没跳、有没有卡死的在办锁——任何一面不对就停下报告，不装没事。宿主没有定时能力也不阻塞开发：记一笔死账，等你点火。装法与拆法都在 `docs_meta/docs/design/loop.md`。
+
+*The machine runs itself in three layers. It ships no service and connects no account - just files and check scripts running in your own sessions; two seats simply means two sessions, whichever vendors. You do four things a day: pick a row, say go, acknowledge closes, rule at breakpoints. The agent seat walks an authorized queue on its own - every close commits to your local branch under a blue stamp with the same force as your own, one report per knife, hard stops at seven breakpoint kinds, never pushes. And the machinery verifies the talk: twenty-one checks behind one entry, a start gate that catches half-installed harnesses before work begins, a mirror that travels with the submodule, and content stamps that turn "has the host copy drifted" into a machine answer. The wake loop is a scheduled task touching one file every ten minutes, watched by a three-face deadman probe; where the host cannot schedule, the desk records a dead account and waits for your ignition - development never stalls.*
 
 ## 绘卷
 
@@ -128,7 +129,7 @@ python dossier/docs_meta/src/init.py
 **先用目录把权威分开，再用一刀把范围锁死。范围、合同、证据、许可都落到磁盘上。**
 
 <p align="center">
-  <img src="docs_meta/src/figures/dossier-frame.png" width="880" alt="目录即权限：一张七列五行的矩阵。列是约定、合同、在办、实现、把关、交付、草稿七层；行是人、规划席（默认 Cursor），以及实现席内部的实现、测试、审查三只手，后三行左边一道括弧圈成一席（默认 Claude Code）。格子三种记号：实心方块是写，空心圈是只读，点是不许碰。人那一行在办那一格是朱红，全图唯一一处颜色，只有人能落。合同一列人和规划席都是实心，实现那只手在这一格是空心带星号，注着卡片点名才改合同；实现层和把关层各归一只手；审查整行一个实心都没有，图下注着审查的手不写文件。表下一条浅灰的流转带，标题是换阶段就是换手，把同一批手摊到时间轴上：规划席立案，实现席三只手串行走施工、举证、对账，人结案；两道虚线闸分别标着闸一「按卡片做」和结案「勾 TODO」">
+  <img src="docs_meta/src/figures/dossier-frame.png" width="880" alt="「Dossier 的一天」：左栏红框「你」列四件事（点行、开工、认账、拍板）；中栏蓝框「代理席」六步闭环（取队列、写卡、派手施工、独立审查、跑验收、蓝印记档），角注「蓝印＝你的章」「永不 push」，红字「撞断点：停下等你」；底部横带「机器验真」（二十一本检查、起步闸、配置指纹）；红虚线＝每刀一报折回「你」认账。">
 </p>
 
 装这套东西是两个动作：把母本挂成子模块，再跑一次 `init`。
