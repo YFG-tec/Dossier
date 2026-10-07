@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3300 2800"><rect width="3300" height="2800" fill="#ffffff"/><polygon points="1650,1174 1785,1252 1785,1408 1650,1486 1515,1408 1515,1252" fill="none" stroke="#e1e4e8" stroke-width="2"/>
+<text x="1662.0" y="1166.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#aaa" font-weight="normal" text-anchor="middle" dominant-baseline="middle">1</text>
+<polygon points="1650,1018 1920,1174 1920,1486 1650,1642 1380,1486 1380,1174" fill="none" stroke="#e1e4e8" stroke-width="2"/>
+<text x="1662.0" y="1010.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#aaa" font-weight="normal" text-anchor="middle" dominant-baseline="middle">2</text>
+<polygon points="1650,862 2055,1096 2055,1564 1650,1798 1245,1564 1245,1096" fill="none" stroke="#e1e4e8" stroke-width="2"/>
+<text x="1662.0" y="854.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#aaa" font-weight="normal" text-anchor="middle" dominant-baseline="middle">3</text>
+<polygon points="1650,706 2190,1018 2190,1642 1650,1954 1110,1642 1110,1018" fill="none" stroke="#e1e4e8" stroke-width="2"/>
+<text x="1662.0" y="698.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#aaa" font-weight="normal" text-anchor="middle" dominant-baseline="middle">4</text>
+<polygon points="1650,550 2325,940 2325,1720 1650,2110 975,1720 975,940" fill="none" stroke="#e1e4e8" stroke-width="2"/>
+<text x="1662.0" y="542.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#aaa" font-weight="normal" text-anchor="middle" dominant-baseline="middle">5</text>
+<line x1="1650.0" y1="1330.0" x2="1650.0" y2="550.0" stroke="#e1e4e8" stroke-width="2"/>
+<line x1="1650.0" y1="1330.0" x2="2325.4998149518624" y2="940.0" stroke="#e1e4e8" stroke-width="2"/>
+<line x1="1650.0" y1="1330.0" x2="2325.4998149518624" y2="1720.0" stroke="#e1e4e8" stroke-width="2"/>
+<line x1="1650.0" y1="1330.0" x2="1650.0" y2="2110.0" stroke="#e1e4e8" stroke-width="2"/>
+<line x1="1650.0" y1="1330.0" x2="974.5001850481378" y2="1720.0" stroke="#e1e4e8" stroke-width="2"/>
+<line x1="1650.0" y1="1330.0" x2="974.500185048138" y2="939.9999999999999" stroke="#e1e4e8" stroke-width="2"/>
+<text x="1650.0" y="431.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#3c4046" font-weight="bold" text-anchor="middle" dominant-baseline="middle">仪器面</text>
+<text x="1650.0" y="481.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#969ba0" font-weight="normal" text-anchor="middle" dominant-baseline="middle">35%</text>
+<text x="2446.4324823492284" y="873.5" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#3c4046" font-weight="bold" text-anchor="start" dominant-baseline="middle">host</text>
+<text x="2446.4324823492284" y="923.5" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#969ba0" font-weight="normal" text-anchor="start" dominant-baseline="middle">能力</text>
+<text x="2446.4324823492284" y="1758.5" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#3c4046" font-weight="bold" text-anchor="start" dominant-baseline="middle">演进速度</text>
+<text x="2446.4324823492284" y="1808.5" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#969ba0" font-weight="normal" text-anchor="start" dominant-baseline="middle">15%</text>
+<text x="1650.0" y="2201.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#3c4046" font-weight="bold" text-anchor="middle" dominant-baseline="middle">开放程度</text>
+<text x="1650.0" y="2251.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#969ba0" font-weight="normal" text-anchor="middle" dominant-baseline="middle">15%</text>
+<text x="853.5675176507717" y="1758.5" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#3c4046" font-weight="bold" text-anchor="end" dominant-baseline="middle">Windows</text>
+<text x="853.5675176507717" y="1808.5" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#969ba0" font-weight="normal" text-anchor="end" dominant-baseline="middle">现实</text>
+<text x="853.5675176507718" y="873.4999999999999" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#3c4046" font-weight="bold" text-anchor="end" dominant-baseline="middle">合同稳定性</text>
+<text x="853.5675176507718" y="923.4999999999999" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#969ba0" font-weight="normal" text-anchor="end" dominant-baseline="middle">5%</text>
+<text x="1650" y="90" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="84" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">主力 harness 候选 · 六轴读数</text>
+<text x="1650" y="185" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="44" fill="#82878c" font-weight="normal" text-anchor="middle" dominant-baseline="middle">0–5 分 · 分数是读数不是判据 · 权重与证据边界见报告 §2 / §6</text>
+<polygon points="1650,706 2325,940 2325,1720 1650,2110 975,1720 1515,1252" fill="#d62728" fill-opacity="0.18" stroke="#d62728" stroke-width="6" stroke-linejoin="round"/>
+<circle cx="1650.0" cy="706.0" r="13" fill="#d62728" stroke="#fff" stroke-width="3"/>
+<circle cx="2325.4998149518624" cy="940.0" r="13" fill="#d62728" stroke="#fff" stroke-width="3"/>
+<circle cx="2325.4998149518624" cy="1720.0" r="13" fill="#d62728" stroke="#fff" stroke-width="3"/>
+<circle cx="1650.0" cy="2110.0" r="13" fill="#d62728" stroke="#fff" stroke-width="3"/>
+<circle cx="974.5001850481378" cy="1720.0" r="13" fill="#d62728" stroke="#fff" stroke-width="3"/>
+<circle cx="1514.9000370096276" cy="1252.0" r="13" fill="#d62728" stroke="#fff" stroke-width="3"/>
+<polygon points="1650,862 1920,1174 2325,1720 1650,1954 1380,1486 1110,1018" fill="#1f77b4" fill-opacity="0.18" stroke="#1f77b4" stroke-width="6" stroke-linejoin="round"/>
+<circle cx="1650.0" cy="862.0" r="13" fill="#1f77b4" stroke="#fff" stroke-width="3"/>
+<circle cx="1920.1999259807449" cy="1174.0" r="13" fill="#1f77b4" stroke="#fff" stroke-width="3"/>
+<circle cx="2325.4998149518624" cy="1720.0" r="13" fill="#1f77b4" stroke="#fff" stroke-width="3"/>
+<circle cx="1650.0" cy="1954.0" r="13" fill="#1f77b4" stroke="#fff" stroke-width="3"/>
+<circle cx="1379.8000740192551" cy="1486.0" r="13" fill="#1f77b4" stroke="#fff" stroke-width="3"/>
+<circle cx="1109.6001480385103" cy="1018.0" r="13" fill="#1f77b4" stroke="#fff" stroke-width="3"/>
+<polygon points="1650,550 1920,1174 2325,1720 1650,1642 1245,1564 1110,1018" fill="#9467bd" fill-opacity="0.18" stroke="#9467bd" stroke-width="6" stroke-linejoin="round"/>
+<circle cx="1650.0" cy="550.0" r="13" fill="#9467bd" stroke="#fff" stroke-width="3"/>
+<circle cx="1920.1999259807449" cy="1174.0" r="13" fill="#9467bd" stroke="#fff" stroke-width="3"/>
+<circle cx="2325.4998149518624" cy="1720.0" r="13" fill="#9467bd" stroke="#fff" stroke-width="3"/>
+<circle cx="1650.0" cy="1642.0" r="13" fill="#9467bd" stroke="#fff" stroke-width="3"/>
+<circle cx="1244.7001110288827" cy="1564.0" r="13" fill="#9467bd" stroke="#fff" stroke-width="3"/>
+<circle cx="1109.6001480385103" cy="1018.0" r="13" fill="#9467bd" stroke="#fff" stroke-width="3"/>
+<polygon points="1650,1018 1785,1252 2055,1564 1650,1486 1245,1564 1245,1096" fill="#7f7f7f" fill-opacity="0.18" stroke="#7f7f7f" stroke-width="6" stroke-linejoin="round"/>
+<circle cx="1650.0" cy="1018.0" r="13" fill="#7f7f7f" stroke="#fff" stroke-width="3"/>
+<circle cx="1785.0999629903724" cy="1252.0" r="13" fill="#7f7f7f" stroke="#fff" stroke-width="3"/>
+<circle cx="2055.299888971117" cy="1564.0" r="13" fill="#7f7f7f" stroke="#fff" stroke-width="3"/>
+<circle cx="1650.0" cy="1486.0" r="13" fill="#7f7f7f" stroke="#fff" stroke-width="3"/>
+<circle cx="1244.7001110288827" cy="1564.0" r="13" fill="#7f7f7f" stroke="#fff" stroke-width="3"/>
+<circle cx="1244.7001110288827" cy="1096.0" r="13" fill="#7f7f7f" stroke="#fff" stroke-width="3"/>
+<rect x="634" y="2490" width="52" height="90" rx="10" fill="#d62728"/>
+<text x="715" y="2518" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="50" fill="#282c32" font-weight="bold" text-anchor="start" dominant-baseline="middle">DSH</text>
+<text x="715" y="2582" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="42" fill="#8c929a" font-weight="normal" text-anchor="start" dominant-baseline="middle">加权 4.45</text>
+<rect x="1294" y="2490" width="52" height="90" rx="10" fill="#1f77b4"/>
+<text x="1375" y="2518" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="50" fill="#282c32" font-weight="bold" text-anchor="start" dominant-baseline="middle">Codex</text>
+<text x="1375" y="2582" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="42" fill="#8c929a" font-weight="normal" text-anchor="start" dominant-baseline="middle">加权 3.20</text>
+<rect x="1954" y="2490" width="52" height="90" rx="10" fill="#9467bd"/>
+<text x="2035" y="2518" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="50" fill="#282c32" font-weight="bold" text-anchor="start" dominant-baseline="middle">Claude Code</text>
+<text x="2035" y="2582" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="42" fill="#8c929a" font-weight="normal" text-anchor="start" dominant-baseline="middle">加权 3.70</text>
+<rect x="2614" y="2490" width="52" height="90" rx="10" fill="#7f7f7f"/>
+<text x="2695" y="2518" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="50" fill="#282c32" font-weight="bold" text-anchor="start" dominant-baseline="middle">Cursor</text>
+<text x="2695" y="2582" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="42" fill="#8c929a" font-weight="normal" text-anchor="start" dominant-baseline="middle">加权 1.95</text>
+<text x="1650" y="2720" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="32" fill="#b9bcc0" font-weight="normal" text-anchor="middle" dominant-baseline="middle">取数 2026-10-07 · harness-specialization-bet-research-2026-10-07</text>
+</svg>

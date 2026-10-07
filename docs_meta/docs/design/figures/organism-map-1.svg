@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3300 2500"><rect width="3300" height="2500" fill="#ffffff"/><text x="1650" y="80" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="76" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">共生体剖面：一张桌的生物对应</text>
+<text x="1650" y="165" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="42" fill="#82878c" font-weight="normal" text-anchor="middle" dominant-baseline="middle">33 号桌现场（2026-10-07）：四宿主各占一层，Dossier 是遗传层</text>
+<rect x="150" y="240" width="2750" height="170" rx="22" fill="#fafafc" stroke="#aaafb6" stroke-width="5" stroke-dasharray="18,12"/>
+<text x="1525.0" y="313.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">皮 · claw／消息网关</text>
+<text x="1525.0" y="376" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#5a6068" font-weight="normal" text-anchor="middle" dominant-baseline="middle">微信告警通道（todo 5.6，未建）——人那一爪装进手机</text>
+<rect x="150" y="450" width="2750" height="260" rx="22" fill="#e9f2fc" stroke="#426eb4" stroke-width="5"/>
+<text x="1525.0" y="568.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">脑 · AutoClaw</text>
+<text x="1525.0" y="676" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#5a6068" font-weight="normal" text-anchor="middle" dominant-baseline="middle">领班 · 写卡 · 表面/语义双审查（.zwork/runs 在案）——会思考，无 shell</text>
+<rect x="150" y="750" width="1355" height="240" rx="22" fill="#ebf6ee" stroke="#3e8458" stroke-width="5"/>
+<text x="827.5" y="858.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">手 · Codex</text>
+<text x="827.5" y="956" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#5a6068" font-weight="normal" text-anchor="middle" dominant-baseline="middle">建造块执行（句级锚定优）</text>
+<rect x="1545" y="750" width="1355" height="240" rx="22" fill="#f3eef7" stroke="#8458a8" stroke-width="5"/>
+<text x="2222.5" y="858.0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="56" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">感官 · DSH</text>
+<text x="2222.5" y="956" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#5a6068" font-weight="normal" text-anchor="middle" dominant-baseline="middle">议事 · 调研 · 沙箱实验</text>
+<rect x="150" y="1030" width="2750" height="300" rx="26" fill="#fff6e6" stroke="#c48020" stroke-width="6"/>
+<text x="1525.0" y="1148" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="60" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">基因组 · Dossier（盘上文件＝唯一真相）</text>
+<text x="1525.0" y="1230" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" fill="#6e6046" font-weight="normal" text-anchor="middle" dominant-baseline="middle">锁（CLAUDE/AGENTS）· 卡（cmd/）· queue · 刀级锁 · 写权限表 —— 器官可移植，基因组不可外包</text>
+<text x="1525.0" y="1282" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#c48020" font-weight="bold" text-anchor="middle" dominant-baseline="middle">生殖：submodule + init → 36 号宿主已发育成体</text>
+<text x="85" y="700" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#969ba0" font-weight="bold" text-anchor="middle" dominant-baseline="middle">器官层</text>
+<text x="85" y="760" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#969ba0" font-weight="bold" text-anchor="middle" dominant-baseline="middle">(可移植)</text>
+<text x="85" y="1180" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#c49430" font-weight="bold" text-anchor="middle" dominant-baseline="middle">遗传层</text>
+<text x="85" y="1240" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="40" fill="#c49430" font-weight="bold" text-anchor="middle" dominant-baseline="middle">(不可外包)</text>
+<rect x="2980" y="240" width="230" height="1090" rx="20" fill="#fcf2f2" stroke="#c85a5a" stroke-width="4"/>
+<text x="3095" y="300" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="38" fill="#aa4646" font-weight="bold" text-anchor="middle" dominant-baseline="middle">免疫系统</text>
+<text x="3095" y="362" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="38" fill="#aa4646" font-weight="bold" text-anchor="middle" dominant-baseline="middle">harness</text>
+<text x="3095" y="424" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="38" fill="#aa4646" font-weight="bold" text-anchor="middle" dominant-baseline="middle">沙箱＋审批</text>
+<text x="3095" y="548" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="38" fill="#aa4646" font-weight="bold" text-anchor="middle" dominant-baseline="middle">屏障 ✓</text>
+<text x="3095" y="610" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="38" fill="#aa4646" font-weight="bold" text-anchor="middle" dominant-baseline="middle">动员 ⚠ 过敏</text>
+<text x="3095" y="672" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="38" fill="#aa4646" font-weight="bold" text-anchor="middle" dominant-baseline="middle">记忆 ✗</text>
+<text x="3095" y="734" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="38" fill="#aa4646" font-weight="bold" text-anchor="middle" dominant-baseline="middle">耐受 ✗</text>
+<text x="1650" y="2420" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="30" fill="#b9bcc0" font-weight="normal" text-anchor="middle" dominant-baseline="middle">取证：.zwork/runs · queue.md 派单路由 · 本会话实测 · harness-specialization-bet-research-2026-10-07</text>
+</svg>

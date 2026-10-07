@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3300 2100"><rect width="3300" height="2100" fill="#ffffff"/><text x="1650" y="85" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="76" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">同一基因组，不同表达</text>
+<text x="1650" y="170" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="42" fill="#82878c" font-weight="normal" text-anchor="middle" dominant-baseline="middle">同一份锁（CLAUDE.md/AGENTS.md）→ 两席 → 多手：DNA 相同，组织不同</text>
+<rect x="1150" y="260" width="1000" height="170" rx="20" fill="#fff6e6" stroke="#c48020" stroke-width="5"/>
+<text x="1650" y="325" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="50" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">基因组：CLAUDE.md ＋ AGENTS.md</text>
+<text x="1650" y="394" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="30" fill="#6e6046" font-weight="normal" text-anchor="middle" dominant-baseline="middle">先读顺序 · 禁令 · 人怎么说→做什么</text>
+<rect x="620" y="640" width="940" height="210" rx="20" fill="#f0f4fa" stroke="#5878aa" stroke-width="5"/>
+<text x="1090" y="720" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="52" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">规划席</text>
+<text x="1090" y="788" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="32" fill="#646a74" font-weight="normal" text-anchor="middle" dominant-baseline="middle">Cursor / DSH 宿主</text>
+<text x="1090" y="830" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="32" fill="#646a74" font-weight="normal" text-anchor="middle" dominant-baseline="middle">读合同 · 写卡 · 对账 · 拒超售</text>
+<rect x="1740" y="640" width="940" height="210" rx="20" fill="#f0f4fa" stroke="#5878aa" stroke-width="5"/>
+<text x="2210" y="720" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="52" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">实现席</text>
+<text x="2210" y="788" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="32" fill="#646a74" font-weight="normal" text-anchor="middle" dominant-baseline="middle">Codex 实现体</text>
+<text x="2210" y="830" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="32" fill="#646a74" font-weight="normal" text-anchor="middle" dominant-baseline="middle">动核 · 建造 · 施工</text>
+<line x1="1350" y1="430" x2="1090" y2="640" stroke="#787c82" stroke-width="3"/>
+<line x1="1090" y1="640" x2="1085.202194295992" y2="653.1522264437086" stroke="#787c82" stroke-width="3"/>
+<line x1="1090" y1="640" x2="1076.1327523572322" y2="641.9233935671487" stroke="#787c82" stroke-width="3"/>
+<line x1="1950" y1="430" x2="2210" y2="640" stroke="#787c82" stroke-width="3"/>
+<line x1="2210" y1="640" x2="2223.867247642768" y2="641.9233935671487" stroke="#787c82" stroke-width="3"/>
+<line x1="2210" y1="640" x2="2214.7978057040077" y2="653.1522264437086" stroke="#787c82" stroke-width="3"/>
+<text x="2640" y="570" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#969ba0" font-weight="bold" text-anchor="middle" dominant-baseline="middle">分化＝同一基因，按席表达</text>
+<rect x="1310" y="1010" width="680" height="210" rx="20" fill="#e9f2fc" stroke="#426eb4" stroke-width="5"/>
+<text x="1650" y="1090" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="46" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">领班（代理席 · AutoClaw）</text>
+<text x="1650" y="1160" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="30" fill="#646a74" font-weight="normal" text-anchor="middle" dominant-baseline="middle">只派单 · 对账 · 汇账 · 收口，不参与直接工作</text>
+<line x1="2210" y1="850" x2="1850" y2="1010" stroke="#787c82" stroke-width="3"/>
+<line x1="1850" y1="1010" x2="1841.9686213676412" y2="1021.4672122708046" stroke="#787c82" stroke-width="3"/>
+<line x1="1850" y1="1010" x2="1836.1064031484407" y2="1008.2772212776034" stroke="#787c82" stroke-width="3"/>
+<text x="2380" y="940" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="32" fill="#969ba0" font-weight="bold" text-anchor="middle" dominant-baseline="middle">序列授权期间三手必派 subagent</text>
+<rect x="450" y="1400" width="700" height="300" rx="20" fill="#f3eef7" stroke="#78788a" stroke-width="4"/>
+<text x="800.0" y="1525" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="48" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">写卡手</text>
+<text x="800.0" y="1620" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#646a74" font-weight="normal" text-anchor="middle" dominant-baseline="middle">独立上下文</text>
+<line x1="1650" y1="1220" x2="800.0" y2="1400" stroke="#787c82" stroke-width="3"/>
+<line x1="800.0" y1="1400" x2="789.758974956858" y2="1409.545753300067" stroke="#787c82" stroke-width="3"/>
+<line x1="800.0" y1="1400" x2="786.7686688407832" y2="1395.4248633074915" stroke="#787c82" stroke-width="3"/>
+<rect x="1280" y="1400" width="700" height="300" rx="20" fill="#ebf6ee" stroke="#3e8458" stroke-width="4"/>
+<text x="1630.0" y="1525" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="48" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">建造手</text>
+<text x="1630.0" y="1620" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#646a74" font-weight="normal" text-anchor="middle" dominant-baseline="middle">工牌 b1 · fresh</text>
+<line x1="1650" y1="1220" x2="1630.0" y2="1400" stroke="#787c82" stroke-width="3"/>
+<line x1="1630.0" y1="1400" x2="1635.8480925432214" y2="1412.720055566149" stroke="#787c82" stroke-width="3"/>
+<line x1="1630.0" y1="1400" x2="1621.5023365408733" y2="1411.1260826769992" stroke="#787c82" stroke-width="3"/>
+<rect x="2110" y="1400" width="700" height="300" rx="20" fill="#faf6e6" stroke="#b07a18" stroke-width="4"/>
+<text x="2460.0" y="1525" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="48" fill="#282c34" font-weight="bold" text-anchor="middle" dominant-baseline="middle">审查手 ×2</text>
+<text x="2460.0" y="1620" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="34" fill="#646a74" font-weight="normal" text-anchor="middle" dominant-baseline="middle">表面 / 语义</text>
+<line x1="1650" y1="1220" x2="2460.0" y2="1400" stroke="#787c82" stroke-width="3"/>
+<line x1="2460.0" y1="1400" x2="2473.276363263118" y2="1395.557233012443" stroke="#787c82" stroke-width="3"/>
+<line x1="2460.0" y1="1400" x2="2470.1451807024478" y2="1409.6475545354604" stroke="#787c82" stroke-width="3"/>
+<text x="1650" y="1900" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="32" fill="#8c929a" font-weight="normal" text-anchor="middle" dominant-baseline="middle">证据：.zwork/runs/21bd048e（0-建造088-b1 / 1-审查表面 / 2-审查语义）· 工牌制 roles.md</text>
+</svg>
