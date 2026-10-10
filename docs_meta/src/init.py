@@ -5,10 +5,12 @@
 import sys
 import os
 import pathlib
+import subprocess
 from pathlib import PurePath
 
 
 DOSSIER_SRC_PLACEHOLDER = '{{DOSSIER_SRC}}'
+SETUP_PROBE_SOURCE = pathlib.Path(__file__).resolve().with_name('setup_probe.py')
 
 
 def get_repo_root():
@@ -36,6 +38,7 @@ def main():
     force = False
     non_interactive = False
     dry_run = False
+    skip_self_test = False
     help_requested = False
 
     for arg in args:
@@ -49,6 +52,8 @@ def main():
             non_interactive = True
         elif arg == '--dry-run':
             dry_run = True
+        elif arg == '--skip-self-test':
+            skip_self_test = True
         elif not arg.startswith('--'):
             if target_path is None:
                 target_path = arg
@@ -156,13 +161,13 @@ def main():
         print(f'.mirror/ 不在仓库根，退出', file=sys.stderr)
         sys.exit(5)
 
-    # 现算相对路径
+    # 现算 DOSSIER_SRC：同盘落相对路径；跨盘降级为绝对路径，不中断装桌。
     try:
         relative_path = os.path.relpath(src_dir, target)
         relative_path_posix = PurePath(relative_path).as_posix()
     except ValueError:
-        print(f'靶子和源码不在同一个盘符，无法计算相对路径', file=sys.stderr)
-        sys.exit(4)
+        relative_path_posix = src_dir.resolve().as_posix()
+        print('\033[33m跨盘装桌：DOSSIER_SRC 落绝对路径\033[0m')
 
     # 遍历 .mirror/ 下的所有文件和目录
     for item in sorted(mirror_root.rglob('*')):
@@ -215,6 +220,18 @@ def main():
                 print(f'+ {rel_item_path.as_posix()}')
                 created_count += 1
 
+    # 5.41 装桌自测：探针随 docs_meta/src/ 走；默认跑，显式开关才跳过。
+    if skip_self_test:
+        print('= 5.41 装桌自测：按开关跳过（跳过不是绿）')
+    elif dry_run:
+        print('= 5.41 装桌自测：dry-run 未铺锁页，不跑')
+    else:
+        probe = subprocess.run(
+            [sys.executable, str(SETUP_PROBE_SOURCE), str(target)],
+        )
+        if probe.returncode != 0:
+            print('装桌自测失败：init 不给绿，见上方红读数', file=sys.stderr)
+            sys.exit(6)
     # 特殊输出：--force --non-interactive
     if force and non_interactive:
         print('按默认否')
