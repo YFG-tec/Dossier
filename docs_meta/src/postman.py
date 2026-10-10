@@ -2,7 +2,7 @@
 """postman.py —— 桌间邮局的两桌邮差（5.44，PROMPT_100）。
 
 运行时契约：Python >= 3.13（3.12 兼容模式可用）＋ Git >= 2.37（`add --sparse`）。
-远端只收 `file://` 与 `https://` 两形。token 只从宿主私有件读：路径写在本桌
+远端收 `file://`、`https://`、`ssh://` 与 scp 形 `git@host:path` 四形。token 只从宿主私有件读：路径写在本桌
 `.dossier/mail.json` 的 `token_file`，或放在环境变量 `DOSSIER_MAIL_TOKEN_FILE`；
 变量里放的必须是路径，不是 token 值。token 值不进仓、不进聊天、不进日志。
 """
@@ -23,6 +23,7 @@ from typing import Any
 
 
 ADDRESS_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+SCP_REMOTE_RE = re.compile(r"^git@([A-Za-z0-9][A-Za-z0-9._-]*):(.+)$", re.DOTALL)
 LETTER_TYPES = {
     "knife-report": "刀报要点：\n\n- 结果：\n- 判据：\n- 余项：\n",
     "breakpoint": "断点：\n\n- 现象：\n- 已做：\n- 下一步：\n",
@@ -59,10 +60,22 @@ def run_git(args: list[str], cwd: pathlib.Path, *, check: bool = True) -> subpro
 
 
 def normalize_url(url: str) -> tuple[str, str, str]:
-    parsed = urllib.parse.urlsplit(url.strip())
-    if parsed.scheme not in {"file", "https"}:
-        raise PostmanError(f"邮局远端只收 file:// 与 https://，当前是 {parsed.scheme or '无 scheme'}")
-    if parsed.username or parsed.password or "@" in (parsed.netloc or ""):
+    raw = url.strip()
+    scp = SCP_REMOTE_RE.fullmatch(raw)
+    if scp is not None:
+        host = scp.group(1).lower()
+        path = posixpath.normpath(urllib.parse.unquote(scp.group(2)))
+        return ("ssh", host, path if path.startswith("/") else f"/{path}")
+
+    parsed = urllib.parse.urlsplit(raw)
+    if parsed.scheme not in {"file", "https", "ssh"}:
+        raise PostmanError(
+            f"邮局远端只收 file://、https://、ssh:// 与 git@host:path，当前是 {parsed.scheme or '无 scheme'}"
+        )
+    if parsed.scheme == "ssh":
+        if parsed.password is not None or (parsed.username or "") not in {"", "git"}:
+            raise PostmanError("SSH 邮局远端只收 git 用户且不许内嵌密码")
+    elif parsed.username or parsed.password or "@" in (parsed.netloc or ""):
         raise PostmanError("邮局远端 URL 不许内嵌凭据")
     if parsed.scheme == "file":
         if parsed.netloc not in {"", "localhost"}:
@@ -71,8 +84,10 @@ def normalize_url(url: str) -> tuple[str, str, str]:
         return (parsed.scheme, "", path)
     host = parsed.hostname.lower() if parsed.hostname else ""
     if not host:
-        raise PostmanError("https:// 邮局远端缺主机")
+        raise PostmanError(f"{parsed.scheme}:// 邮局远端缺主机")
     port = parsed.port
+    if parsed.scheme == "ssh" and port == 22:
+        port = None
     netloc = host if port is None else f"{host}:{port}"
     path = posixpath.normpath(urllib.parse.unquote(parsed.path))
     return (parsed.scheme, netloc, path)
@@ -659,13 +674,23 @@ def selftest() -> int:
         if len(strangers) != 1:
             raise PostmanError("陌生件没有进陌生件格")
         print("[PASS] 陌生件：不在人签地址簿的来信只进陌生件格")
-        if not same_url(fixture.uri, fixture.uri):
-            raise PostmanError("file URL 同形比较坏")
         https_left = "https://Example.invalid/mail.git"
         https_right = "https://example.invalid/mail.git"
-        if not same_url(https_left, https_right):
-            raise PostmanError("https URL 规范化坏")
-        print("[PASS] 远端两形：file:// 夹具实跑；https:// URL 形与凭据私件通道在码内可验")
+        ssh_left = "ssh://git@Example.invalid:22/mail.git"
+        ssh_right = "git@example.invalid:mail.git"
+        accepted = (fixture.uri, https_left, ssh_left, ssh_right)
+        for remote in accepted:
+            normalize_url(remote)
+        if not same_url(https_left, https_right) or not same_url(ssh_left, ssh_right):
+            raise PostmanError("https 或 SSH 远端规范化坏")
+        for bare in ("mail.git", "/tmp/mail.git", "D:/tmp/mail.git"):
+            try:
+                normalize_url(bare)
+            except PostmanError:
+                pass
+            else:
+                raise PostmanError(f"裸路径没有被拒绝：{bare}")
+        print("[PASS] 远端四形：file/https/ssh/scp 收，裸路径拒；file:// 全周期已在上面实跑")
         print("postman selftest：ALL PASS")
     return 0
 

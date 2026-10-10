@@ -9,49 +9,53 @@
 
 | | |
 |---|---|
-| **许可面** | [本刀卡片](cmd/PROMPT_100.md) ← 要看细则，点这里 |
-| **点的行** | `todo.md` `5.44`：postman 工具（人 2026-10-10 原话逐字在行内） |
-| **状态** | 已结案（2026-10-10；事实手复验终判 GREEN、实战手 GREEN；返工 1＝顶层 import 破零影响，修讫） |
-| **落槌来源** | 邮箱批点火（#57 印文）；材料 mailbox-research（demo 16/16＋七坑）；5.43 纪律已法 |
-| **前置，满足了** | mailbox-research 全篇；demo 脚本亲读；5.43 四件亲读；init/setup_probe 现文亲读 |
-| **档位** | 重（动 `src/` 工具面＋init）。本刀不改档位的值 |
+| **许可面** | [本刀卡片](cmd/PROMPT_101.md) ← 要看细则，点这里 |
+| **点的行** | `todo.md` `5.45`：postman 远端 scheme 补 SSH 两形（红读数在行内） |
+| **状态** | 已结案（2026-10-10；事实手 GREEN 零修项；正式测试 10/10 全绿——真 Codeup SSH 双桌互寄成） |
+| **落槌来源** | 5.44 期后正式测试红（卡裁定 5：红则另立修刀）＋人点火原话 |
+| **前置，满足了** | postman scheme 校验段亲读；两探针读数在 .tmp；seed 远程在案 |
+| **档位** | 重（动 `src/` 工具）。本刀不改档位的值 |
 | **卡的稿次** | 第 1 稿 |
 | **版次** | 第 1 版（印文见「闸一」节） |
 | **谁来建造** | 独立 subagent（工牌制） |
-| **独立审查** | 事实与结构手第一顺位；实战手第二顺位（独立跑 selftest 全周期） |
+| **独立审查** | 事实与结构手第一顺位；实战手第二顺位＝正式测试续跑 |
 | **举证谁跑** | 建造手自跑＋领班终跑（日志树外） |
 
 ## 闸一
 
-闸一红印 · 2026-10-10 · 第 1 版 批内顺承（邮箱批 #58）——批点火原话在 #57 印文（人 2026-10-10「开工」「启动代理」）；序列已授权，每刀一报、开发不停。代理席代落（--代理席落印）。刀级锁已取：`.tmp/locks/5.44.lock`。
+闸一红印 · 2026-10-10 · 第 1 版 人 2026-10-10 点火（原话「1.开101刀小修」）——邮箱批 #59 微修刀：scheme 白名单补 SSH 两形；正式测试续跑即实战审查。代理席代落（--代理席落印）。刀级锁已取：`.tmp/locks/5.45.lock`。
 
 ## 现在停在哪一步
 
 | 步 | 读数 |
 |---|---|
-| 1 基线 | `HEAD` `ab1ef0d`（5.43 已结）；两笔在册外部账＋调研卷待随刀入册 |
-| 2 写卡 | PROMPT_100 第 1 稿落盘（百卡里程碑） |
-| 3 施工 | Hubble 成件（postman.py 702 行＋init --with-mail）；返工 r2＝Jason 懒加载修讫（不带旗零导入零 pyc、带旗功能不回归，importtime 硬读数在案） |
-| 4 审查 | 事实手 MUST-FIX 1→复验终判 GREEN；实战手 r2 GREEN（selftest 双跑、树外 init 全绿、恶意正文无执行路径、指纹三明治不变） |
+| 1 基线 | `HEAD` `fb5f1ff`（5.44 已结）；两笔在册外部账与本刀无关 |
+| 2 写卡 | PROMPT_101 第 1 稿落盘（微修刀） |
+| 3 施工 | Kuhn 微修：白名单四形＋三钉归一化同权＋selftest 判表（四收一拒）——selftest ALL PASS |
+| 4 审查 | 事实手 GREEN 四项（顺带加固：SSH 非 git 用户、内嵌密码也拒）；实战＝正式测试 10/10（下节） |
+
+## 正式测试读数（2026-10-10，真 Codeup SSH，树外双桌，10/10 全绿）
+
+- 挂载×2（33-dossier／echo-test，init --with-mail＋git worktree 前提）✅；视野隔离双向 ✅
+- 全周期：A draft→seal→send（真 push Codeup）→B receive→归档→B 回信→A receive→归档 ✅
+- **测试侧三课（非产品病）**：靶子须 git 工作树（真桌本来如此）；seal 收单件非 --all；批跑前探针忘 Push-Location——**probe4 曾误在母本 --here**，四样新产物（.gitmodules/.mail/.dossier/docs）当场撤暂存清盘，git status 复核归位（领班事故账，如实记）
+- 产品侧一课（本刀修讫）：scheme 白名单补 SSH 两形；先到先得闸在正式测试中如实拦下未登记桌（probe-desk）
 
 ## 收口读数
 
-- 审查：事实手 MUST-FIX 1（init.py 顶层 import postman 破「不传旗零影响」＋再生 pyc）→ Jason 返工（懒加载进分支＋清残）→ Popper 复验终判 GREEN（importtime 0/1 双形硬读数；pyc 绝迹）；实战手 r2 GREEN 四问（含 rm -rf 恶意正文逐字留档无执行、源码无 shell=True/eval/exec/os.system）。
-- 通道事故账：四手连续不应后自愈（修复手＋实战手 r2 恢复交卷）——挂起裁定未执行即失效，记录在案。
-- 已知欠账（如实记档，不堵结案）：本机自定义 Git 的 submodule status 因 git-sh-setup 路径断——C 层 clone＋手工 gitlink/.gitmodules 登记兜底已实现并验证；submodule 形在真托管上的终验归期后正式测试。
-- 期后项（人配合）：人开新远程＋专用 token（宿主私件，勿贴聊天）→ 正式测试按同流程实录追加；红则另立修刀。
-- 举证途中一笔：卡头一字误「品→哪」（check-verdict G0 抓不到行 id）——5.19 一字卡误先例原样重演，当场修，复跑全绿；22 本终跑（领班，日志树外）；行 5.44 搬已办；queue #58 已结——邮箱批收官；commit 落分支不 push。
+- **压测追加（人 2026-10-10 点名「多寄几轮，再开个用户，三个用户互相发三封」）**：注册 third-desk 入地址簿（人令即签）、三桌各发三封轮转互寄——16/16 全绿（真 Codeup SSH：三挂载＋九封投递＋三档计数各≥3）。信箱正式通邮且耐压。
+- 举证：22 本终跑 ALL PASS（领班，日志树外）；行 5.45 搬已办；queue #59 已结——邮箱批（含修刀）收官；commit 落分支不 push。
 
 ## 写卡阶段在盘上查了什么
 
-- mailbox-research 全篇；demo 脚本与七坑；5.43 落法四件；init/setup_probe 现文；PROMPT_093–099 体例。
+- postman scheme 校验段；probe/probe2 两读数；正式测试 seed 在远程的实况。
 
 ## 这只手没做的（写卡阶段）
 
-- 没动 `src/`、根 harness（回避）；没勾行、没 commit、没 push。
+- 没动 `src/`（回避）；没勾行、没 commit、没 push。
 
 ---
 
 ## 横线以下 · 审阅（只追加）
 
-- 2026-10-10 审查读数：**事实手** MUST-FIX 1→修讫→复验终判 GREEN——阻断项系 init.py 顶层 import postman（不传旗非零影响＋pyc 残留），返工后懒加载进 --with-mail 分支，importtime 双形硬读数（不带旗 0 命中/带旗 1 命中）、pycache 绝迹、gitlink/sparse/mail.json 全对；首跑 dubious ownership 红系审查沙箱 safe.directory 环境非功能回归，注记在案。**实战手 r2** GREEN——selftest 初终双跑 ALL PASS（防撞＋落后基线 rebase 重试）；树外 bare 邮局＋--with-mail 实装全绿（gitlink 160000 正常、sparse 只见 demo-x＋地址簿、自检 PASS）；人机工学三问过（五头字段、draft→sealed 规则、[RETRY] 读数教下一步）；恶意正文逐字留档无执行路径。验不了：真 https/token/跨环境安全——期后正式测试归人。
+- 2026-10-10 审查读数：**事实手** GREEN 四项零修——白名单四形收／裸路径拒（闸未拆，且加固：SSH 非 git 用户与内嵌密码拒）；三钉归属经 same_url() 归一化，ssh:// 与 scp 形归一同元组，真验「同源过／换主机红」两沿；selftest 亲跑 exit 0（判表 L677–694，file:// 全周期无回归）；不越界（src 仅 postman.py）。**实战手＝正式测试** 10/10：双桌真 SSH 挂载、视野隔离、互寄一轮双方归档——邮箱正式通邮。
