@@ -2,15 +2,20 @@
 """
 运行时契约：Python >= 3.13（3.12 兼容模式可用；解释器优先项目内 `.venv`，未建则系统，首次需要时建——5.32）＋ Git Bash（Windows）。详见 docs_meta/tests/check-env.sh。
 """
-import sys
+import hashlib
+import json
 import os
 import pathlib
 import subprocess
+import sys
+from datetime import datetime
 from pathlib import PurePath
 
 
 DOSSIER_SRC_PLACEHOLDER = '{{DOSSIER_SRC}}'
 SETUP_PROBE_SOURCE = pathlib.Path(__file__).resolve().with_name('setup_probe.py')
+BASELINE_RELATIVE_PATH = '.dossier/baseline.json'
+BASELINE_HASH_ALGORITHM = 'git-blob-sha1'
 
 
 def get_repo_root():
@@ -24,6 +29,89 @@ def get_default_target():
     """计算默认靶子：仓库根的父目录"""
     # 靶子 = 仓库根的父目录
     return get_repo_root().parent
+
+
+def build_structure():
+    """装桌骨架清单。5.30 起与 check_baseline.py 共用一份——清单只写这里，不落第二真相。"""
+    return [
+        ('docs', None),
+        ('docs/TODO.md', '# 待办\n\n（空。还没有一行。）\n\n## 已办\n\n（空。）\n'),
+        ('docs/SESSION.md', '# 本刀运行态\n\n（空。还没点行。）\n\n---\n\n## 横线以下 · 审阅\n\n（空。）\n'),
+        # 装桌检查单（5.20，PROMPT_083 裁定 5）：起步闸与首刀自检的入口页
+        ('docs/SETUP.md', '# 装桌检查单\n\n装桌五步，依次勾：\n\n1. `git submodule update --remote`\n2. `python docs_meta/src/init.py` 铺桌\n3. 起步闸：`bash docs_meta/tests/check-env.sh` 的 E 段绿才开\n4. 首刀前：`bash docs_meta/tests/run.sh` 红绿自检\n5. 转译基线回执：`python {{DOSSIER_SRC}}/check_baseline.py --here`（偏则红；故意重译后加 `--refresh` 重落——基线是读数不是判据）\n'),
+        ('docs/cmd', None),
+        ('docs/cmd/.gitkeep', ''),
+        ('docs/design', None),
+        ('docs/design/.gitkeep', ''),
+        ('docs/reports', None),
+        ('docs/reports/.gitkeep', ''),
+        ('.tmp', None),
+        ('.tmp/README.md', '草稿。零权威，不准自称通过。\n'),
+    ]
+
+
+def blob_sha1(path):
+    """git hash-object 同族一枚：blob 头＋原字节走 SHA-1（5.30 裁定 1）。"""
+    data = pathlib.Path(path).read_bytes()
+    header = f'blob {len(data)}\0'.encode('ascii')
+    return hashlib.sha1(header + data).hexdigest()
+
+
+def get_parent_head(repo_root):
+    """现算母本 HEAD；取不到返回 None——基线必填读数，缺了明红不给伪空值。"""
+    proc = subprocess.run(
+        ['git', 'rev-parse', 'HEAD'],
+        cwd=str(repo_root),
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+    )
+    if proc.returncode != 0:
+        return None
+    return proc.stdout.strip()
+
+
+def collect_manifest(repo_root):
+    """装出全集清单：骨架文件＋.mirror/ 逐件；目录不进，.dossier/ 不进。"""
+    paths = set()
+    for path_str, content in build_structure():
+        if content is not None:
+            paths.add(PurePath(path_str).as_posix())
+    mirror_root = repo_root / '.mirror'
+    for item in mirror_root.rglob('*'):
+        if item.is_file():
+            paths.add(item.relative_to(mirror_root).as_posix())
+    return sorted(paths)
+
+
+def write_baseline(target, repo_root):
+    """落桌侧转译基线：清单逐件内容哈希＋生成时戳＋母本 HEAD（5.30 裁定 1）。
+
+    零权威，只作证：哈希记的是落盘时点的盘上实况，不判那份内容合不合法；
+    偏了是读数，重译还是回滚归人。
+    """
+    head = get_parent_head(repo_root)
+    if head is None:
+        print('母本 HEAD 取不到：基线缺必填读数，不给落', file=sys.stderr)
+        return None
+    files = {}
+    for rel in collect_manifest(repo_root):
+        full = target / pathlib.Path(rel)
+        if not full.is_file():
+            print(f'基线清单缺件，不给落缩水基线——{rel}；先重跑 init 铺齐', file=sys.stderr)
+            return None
+        files[rel] = blob_sha1(full)
+    baseline = {
+        'version': 1,
+        'generated_at': datetime.now().astimezone().isoformat(timespec='seconds'),
+        'parent_head': head,
+        'hash_algorithm': BASELINE_HASH_ALGORITHM,
+        'files': files,
+    }
+    out = target / pathlib.Path(BASELINE_RELATIVE_PATH)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(baseline, ensure_ascii=False, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+    return baseline
 
 
 def main():
@@ -79,22 +167,19 @@ def main():
     if not target.exists() or not os.access(target, os.W_OK):
         sys.exit(3)
 
+    # 母本根与 DOSSIER_SRC 现算：同盘落相对路径；跨盘降级为绝对路径，不中断装桌。
+    repo_root = get_repo_root()
+    mirror_root = repo_root / '.mirror'
+    src_dir = repo_root / 'docs_meta' / 'src'
+    try:
+        relative_path = os.path.relpath(src_dir, target)
+        relative_path_posix = PurePath(relative_path).as_posix()
+    except ValueError:
+        relative_path_posix = src_dir.resolve().as_posix()
+        print('\033[33m跨盘装桌：DOSSIER_SRC 落绝对路径\033[0m')
+
     # 定义要铺的项目和内容
-    structure = [
-        ('docs', None),
-        ('docs/TODO.md', '# 待办\n\n（空。还没有一行。）\n\n## 已办\n\n（空。）\n'),
-        ('docs/SESSION.md', '# 本刀运行态\n\n（空。还没点行。）\n\n---\n\n## 横线以下 · 审阅\n\n（空。）\n'),
-        # 装桌检查单（5.20，PROMPT_083 裁定 5）：起步闸与首刀自检的入口页
-        ('docs/SETUP.md', '# 装桌检查单\n\n装桌五步，依次勾：\n\n1. `git submodule update --remote`\n2. `python docs_meta/src/init.py` 铺桌\n3. 起步闸：`bash docs_meta/tests/check-env.sh` 的 E 段绿才开\n4. 首刀前：`bash docs_meta/tests/run.sh` 红绿自检\n5. 转译基线回执（见 5.30 刀）\n'),
-        ('docs/cmd', None),
-        ('docs/cmd/.gitkeep', ''),
-        ('docs/design', None),
-        ('docs/design/.gitkeep', ''),
-        ('docs/reports', None),
-        ('docs/reports/.gitkeep', ''),
-        ('.tmp', None),
-        ('.tmp/README.md', '草稿。零权威，不准自称通过。\n'),
-    ]
+    structure = build_structure()
 
     # 执行铺装
     created_count = 0
@@ -130,6 +215,7 @@ def main():
                             if path_str.endswith('.gitkeep'):
                                 full_path.write_bytes(b'')
                             else:
+                                content = content.replace(DOSSIER_SRC_PLACEHOLDER, relative_path_posix)
                                 full_path.write_text(content, encoding='utf-8', newline='\n')
                         print(f'+ {path_str}')
                         overwritten_count += 1
@@ -147,27 +233,16 @@ def main():
                     if path_str.endswith('.gitkeep'):
                         full_path.write_bytes(b'')
                     else:
+                        content = content.replace(DOSSIER_SRC_PLACEHOLDER, relative_path_posix)
                         full_path.write_text(content, encoding='utf-8', newline='\n')
                 print(f'+ {path_str}')
                 created_count += 1
 
     # 处理 .mirror/ 那一棵
-    repo_root = get_repo_root()
-    mirror_root = repo_root / '.mirror'
-    src_dir = repo_root / 'docs_meta' / 'src'
-
     # 检查 .mirror/ 是否存在
     if not mirror_root.exists():
         print(f'.mirror/ 不在仓库根，退出', file=sys.stderr)
         sys.exit(5)
-
-    # 现算 DOSSIER_SRC：同盘落相对路径；跨盘降级为绝对路径，不中断装桌。
-    try:
-        relative_path = os.path.relpath(src_dir, target)
-        relative_path_posix = PurePath(relative_path).as_posix()
-    except ValueError:
-        relative_path_posix = src_dir.resolve().as_posix()
-        print('\033[33m跨盘装桌：DOSSIER_SRC 落绝对路径\033[0m')
 
     # 遍历 .mirror/ 下的所有文件和目录
     for item in sorted(mirror_root.rglob('*')):
@@ -232,6 +307,24 @@ def main():
         if probe.returncode != 0:
             print('装桌自测失败：init 不给绿，见上方红读数', file=sys.stderr)
             sys.exit(6)
+
+    # 5.30 转译基线：铺完骨架、自测跑完后落桌侧读数；dry-run 未铺出实桌，不落。
+    # 基线一经落盘，init 幂等重跑不重落——重落会把宿主后续漂移洗成绿；重落走 check_baseline.py --refresh。
+    if dry_run:
+        print('= 5.30 转译基线：dry-run 未铺出实桌，不落')
+    else:
+        if skip_self_test:
+            print('= 5.41 装桌自测按开关跳过（跳过不是绿）；基线照落——基线是读数，不判绿')
+        baseline_path = target / pathlib.Path(BASELINE_RELATIVE_PATH)
+        if baseline_path.is_file():
+            print(f'= 5.30 转译基线已在，不重落（{BASELINE_RELATIVE_PATH}）；重落走 check_baseline.py --refresh')
+        else:
+            baseline = write_baseline(target, repo_root)
+            if baseline is None:
+                sys.exit(7)
+            print(f'+ {BASELINE_RELATIVE_PATH}')
+            print(f"转译基线：{len(baseline['files'])} 件（时戳 {baseline['generated_at']}，母本 HEAD {baseline['parent_head'][:12]}）")
+
     # 特殊输出：--force --non-interactive
     if force and non_interactive:
         print('按默认否')
