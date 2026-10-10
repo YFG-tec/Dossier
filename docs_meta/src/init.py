@@ -8,6 +8,7 @@ import os
 import pathlib
 import subprocess
 import sys
+
 from datetime import datetime
 from pathlib import PurePath
 
@@ -128,8 +129,12 @@ def main():
     dry_run = False
     skip_self_test = False
     help_requested = False
+    mail_url = None
+    mail_desk = None
 
-    for arg in args:
+    index = 0
+    while index < len(args):
+        arg = args[index]
         if arg == '--help':
             help_requested = True
         elif arg == '--here':
@@ -142,14 +147,31 @@ def main():
             dry_run = True
         elif arg == '--skip-self-test':
             skip_self_test = True
+        elif arg == '--with-mail':
+            if index + 1 >= len(args):
+                print('--with-mail 缺 <url>', file=sys.stderr)
+                sys.exit(2)
+            mail_url = args[index + 1]
+            index += 1
+        elif arg == '--desk':
+            if index + 1 >= len(args):
+                print('--desk 缺 <地址>', file=sys.stderr)
+                sys.exit(2)
+            mail_desk = args[index + 1]
+            index += 1
         elif not arg.startswith('--'):
             if target_path is None:
                 target_path = arg
+        index += 1
 
     # 处理 --help
     if help_requested:
-        print('python docs_meta/src/init.py [TARGET] [--here] [--force] [--non-interactive] [--dry-run]')
+        print('python docs_meta/src/init.py [TARGET] [--here] [--force] [--non-interactive] [--dry-run] [--with-mail <url> --desk <地址>]')
         sys.exit(0)
+
+    if (mail_url is None) != (mail_desk is None):
+        print('--with-mail 与 --desk 必须同给同缺；不传旗零影响', file=sys.stderr)
+        sys.exit(2)
 
     # 检查参数冲突：TARGET 和 --here 同时给
     if target_path is not None and use_here:
@@ -307,6 +329,15 @@ def main():
         if probe.returncode != 0:
             print('装桌自测失败：init 不给绿，见上方红读数', file=sys.stderr)
             sys.exit(6)
+
+    # 5.44 可选邮箱适配器：只在 --with-mail 时挂；不传旗零影响。
+    if mail_url is not None:
+        import postman
+        try:
+            postman.attach_mail(target, mail_url, mail_desk, dry_run=dry_run)
+        except Exception as exc:
+            print(f'邮箱可选装失败：{exc}', file=sys.stderr)
+            sys.exit(8)
 
     # 5.30 转译基线：铺完骨架、自测跑完后落桌侧读数；dry-run 未铺出实桌，不落。
     # 基线一经落盘，init 幂等重跑不重落——重落会把宿主后续漂移洗成绿；重落走 check_baseline.py --refresh。
