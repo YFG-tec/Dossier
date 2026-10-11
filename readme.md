@@ -11,6 +11,11 @@
   装两行命令，你的代理从「聊着写」变成「按卷宗办事」——你只管点行、认账、拍板。
 </p>
 
+<p align="center">
+  <img src="docs_meta/src/figures/paradigm-shift.png" width="560" alt="碎裂消散的聊天窗＋粒子流、箭头、摊开账本上的红对勾与爪印">
+</p>
+<p align="center"><small>聊天气泡里的对勾会蒸发；卷宗里盖了章的对勾，立得住。</small></p>
+
 > 写给会用 AI 编程代理、但没折腾过 harness 的人。本页分三层读：安装与自转是五分钟层，地图与桌间信箱是按需层，绘卷、公信、建制是深读层。
 
 ---
@@ -173,3 +178,4 @@ python dossier/docs_meta/src/init.py
 ## 那枚爪印
 
 写代码的速度，人早就追不上大模型了；但最后落下的那一爪，才是灵魂。
+首屏插画：GLM-Image 生成，人工修裁。

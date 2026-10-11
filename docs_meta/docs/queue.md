@@ -115,3 +115,5 @@
 | 60 | 5.47 档案目录（archives/ 两层制＋首把全归＋check 并集＋init 铺面） | PROMPT_102 | 已结 | 事实手 GREEN；账房手 MUST-FIX 1（三行压一）修讫；111 闭行零丢零重、todo 360→89；首派卡死＋通道断自愈在案 |
 
 | 61 | 5.48 readme v0.3 门面刀（六处更新＋披露两处＋readme_en.md＋信箱入图） | PROMPT_103 | 已结 | 两手 GREEN 零修；图四轮领班亲看定稿（image-reader 代目检，如实记）；22 本 ALL PASS |
+
+| 62 | 5.49 首屏插画＋图注＋AI 声明（v0.3 前置） | PROMPT_104 | 已结 | 两手 GREEN 零修；SHA 同源；**v0.3 门面全齐，候人发布令** |

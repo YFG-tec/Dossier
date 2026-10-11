@@ -11,6 +11,11 @@
   Install it with two commands, and your agent moves from “chatting its way to code” to “working by the case file”—you just pick the row, own the result, and make the call.
 </p>
 
+<p align="center">
+  <img src="docs_meta/src/figures/paradigm-shift.png" width="560" alt="A shattering chat window with a particle stream evaporating, an arrow, and an open ledger bearing a red checkmark and paw print">
+</p>
+<p align="center"><small>A checkmark in a chat bubble evaporates; one stamped into a case file stands.</small></p>
+
 > For people who use AI coding agents but have never wrestled with a harness. This page reads in three layers: installation and self-operation are the five-minute layer; the map and desk mailbox are the on-demand layer; the scroll, trust, and governance sections are the deep-read layer.
 
 ---
@@ -173,3 +178,4 @@ To see a full run first: `example_meta/` contains a working smoke sample of the 
 ## The paw print
 
 Humans have long been unable to keep up with large models at writing code; but the final paw print is the soul.
+Hero illustration: generated with GLM-Image, cropped and cleaned by hand.
