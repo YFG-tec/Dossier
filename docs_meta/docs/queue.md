@@ -113,3 +113,5 @@
 | 59 | 5.45 postman scheme 补 SSH 两形（正式测试红修刀） | PROMPT_101 | 已结 | 事实手 GREEN 零修（四形＋加固拒）；正式测试 10/10 全绿（真 Codeup SSH 双桌互寄）——**邮箱通邮** |
 
 | 60 | 5.47 档案目录（archives/ 两层制＋首把全归＋check 并集＋init 铺面） | PROMPT_102 | 已结 | 事实手 GREEN；账房手 MUST-FIX 1（三行压一）修讫；111 闭行零丢零重、todo 360→89；首派卡死＋通道断自愈在案 |
+
+| 61 | 5.48 readme v0.3 门面刀（六处更新＋披露两处＋readme_en.md＋信箱入图） | PROMPT_103 | 已结 | 两手 GREEN 零修；图四轮领班亲看定稿（image-reader 代目检，如实记）；22 本 ALL PASS |

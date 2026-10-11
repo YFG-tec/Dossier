@@ -90,8 +90,8 @@ for i in range(len(positions) - 1):
     x1 = 276 + (i + 1) * (sw + gap) - gap
     arrow(x1, sy + sh/2, x1 + gap, sy + sh/2, COLOR_BLUE, lw=1.4, ms=10)
 # 闭环回箭头（蓝印记档 → 取队列）
-arrow(positions[-1], sy - 4, positions[0], sy - 4, COLOR_BLUE, lw=1.4, ms=10,
-      conn='arc3,rad=0.28')
+arrow(positions[-1], sy + 40, positions[0], sy + 40, COLOR_BLUE, lw=1.4, ms=10,
+      conn='arc3,rad=0.05')
 txt(456, 254, '撞断点：停下、盘上留痕、等你拍板', size=10.5, color=COLOR_RED)
 arrow(456, 274, 456, 292, COLOR_RED, lw=1.5, ms=11)
 
@@ -109,27 +109,33 @@ txt(54, 78, '机器验真', size=12, w='bold', ha='left')
 txt(54, 56, '二十二本机械检查一条入口 · 起步闸（开工自检）· 配置指纹（偏没偏一条命令问答）',
     size=10, color=COLOR_GRAY_TEXT, ha='left')
 
-# ── 右侧：收件与提示（留给「每刀一报」落点）────────────
-box(696, 152, 160, 128, COLOR_GRAY_LINE, lw=1.2, r=3.0)
-txt(776, 258, '每刀一报', size=12, w='bold')
-txt(776, 234, '每刀都有回执：', size=9.5, color=COLOR_GRAY_TEXT)
-txt(776, 214, '卡上写的验收 · 独立审查的结论', size=9.5, color=COLOR_GRAY_TEXT)
-txt(776, 194, '· 全部落盘可查', size=9.5, color=COLOR_GRAY_TEXT)
+# ── 右栏重排：每刀一报置顶，状态在磁盘居中，桌间信箱沉底 ─
+box(696, 300, 160, 110, COLOR_GRAY_LINE, lw=1.2, r=3.0)
+txt(776, 374, '每刀一报', size=12, w='bold')
+txt(776, 350, '每刀都有回执：', size=9.5, color=COLOR_GRAY_TEXT)
+txt(776, 330, '卡上写的验收 · 独立审查的结论', size=9.5, color=COLOR_GRAY_TEXT)
+txt(776, 310, '· 全部落盘可查', size=9.5, color=COLOR_GRAY_TEXT)
 
-box(696, 36, 160, 88, COLOR_GRAY_LINE, lw=1.2, r=3.0)
-txt(776, 100, '状态在磁盘', size=11.5, w='bold')
-txt(776, 76, '不在聊天里漂移', size=9.5, color=COLOR_GRAY_TEXT)
-txt(776, 58, '换窗口不丢范围', size=9.5, color=COLOR_GRAY_TEXT)
+box(696, 190, 160, 80, COLOR_GRAY_LINE, lw=1.2, r=3.0)
+txt(776, 250, '状态在磁盘', size=11.5, w='bold')
+txt(776, 226, '不在聊天里漂移', size=9.5, color=COLOR_GRAY_TEXT)
+txt(776, 206, '换窗口不丢范围', size=9.5, color=COLOR_GRAY_TEXT)
 
+box(696, 64, 160, 80, COLOR_INK, lw=1.2, r=3.0, fc=COLOR_BG)
+txt(776, 126, '桌间信箱', size=11, w='bold')
+txt(776, 102, '可选 · 一桌一址', size=9, color=COLOR_GRAY_TEXT)
+txt(776, 82, '不装零影响', size=9, color=COLOR_GRAY_TEXT)
+ax.plot([654, 676, 676, 696], [150, 150, 104, 104], color=COLOR_INK, lw=1.0,
+        linestyle=(0, (3, 3)), zorder=2)
 # ── 主箭头 ────────────────────────────────────────────
 arrow(210, 300, 252, 300, COLOR_RED, lw=2.0, ms=15)
 txt(231, 316, '点行＋开工', size=9, color=COLOR_RED)
-arrow(658, 200, 690, 200, COLOR_BLUE, lw=1.8, ms=13)
-txt(672, 188, '刀报', size=9, color=COLOR_BLUE)
+arrow(658, 352, 690, 352, COLOR_BLUE, lw=1.8, ms=13)
+txt(672, 340, '刀报', size=9, color=COLOR_BLUE)
 # 认账/拍板回线：走画布顶部，绕开蓝框与回环弧（首版穿框，目检修）
 import matplotlib.lines as mlines
-ax.add_line(mlines.Line2D([700, 700], [284, 444], color=COLOR_RED, lw=1.4, ls=(0, (4, 3)), zorder=3))
-ax.add_line(mlines.Line2D([700, 126], [444, 444], color=COLOR_RED, lw=1.4, ls=(0, (4, 3)), zorder=3))
+ax.add_line(mlines.Line2D([836, 836], [410, 444], color=COLOR_RED, lw=1.4, ls=(0, (4, 3)), zorder=3))
+ax.add_line(mlines.Line2D([836, 126], [444, 444], color=COLOR_RED, lw=1.4, ls=(0, (4, 3)), zorder=3))
 arrow(126, 444, 114, 428, COLOR_RED, lw=1.4, ms=12)
 txt(415, 458, '认账 / 拍板（断点续跑也是一句话）', size=9, color=COLOR_GRAY_TEXT)
 
