@@ -4,7 +4,7 @@
 #   verdict=在办  印未落或验收未齐——队列不动
 #   verdict=可盖  读数齐，可代笔结案（5.4 落地后启用）
 #   verdict=断点  要人：请示在场 / 审查判返工
-#   verdict=已结  行已勾、已办有本卡指针
+#   verdict=已结  行已勾、TODO 并集有本卡指针
 # 读不了盘（文件缺、行抓不到）退出码 1，绝不输出可盖。
 # 用法：bash docs_meta/tests/check-verdict.sh [--selftest] [--run-log <文件>]
 
@@ -13,6 +13,10 @@ cd "$(dirname "$0")/../.."
 
 SESS=docs_meta/docs/SESSION.md
 TODO=docs_meta/docs/todo.md
+TODO_FILES=("$TODO")
+for f in docs_meta/docs/archives/todo-*.md; do
+  [ -f "$f" ] && TODO_FILES+=("$f")
+done
 
 run_log=""
 selftest=0
@@ -86,17 +90,17 @@ row_line=$(grep -F '本刀是 TODO 哪一行' "$CARD_FILE" | head -n 1)
 row_id=$(printf '%s\n' "$row_line" | grep -oE '[0-9]+\.[0-9]+' | head -n 1)
 [ -n "$row_id" ] || { echo "G0: 卡里抓不到行 id"; exit 1; }
 row_esc=$(printf '%s\n' "$row_id" | sed 's/\./\\./')
-row_in_todo=$(grep -E "^- \[.\] \*\*$row_esc\*\*" "$TODO" | head -n 1)
-[ -n "$row_in_todo" ] || { echo "G0: todo 里找不到行 $row_id"; exit 1; }
+row_in_todo=$(grep -hE "^- \[.\] \*\*$row_esc\*\*" "${TODO_FILES[@]}" | head -n 1)
+[ -n "$row_in_todo" ] || { echo "G0: TODO 并集里找不到行 $row_id"; exit 1; }
 echo "G3: 行=$row_id"
 
 verdict=在办
 case "$row_in_todo" in
   '- [x]'*)
-    if grep -qF "$card_path" "$TODO"; then
+    if grep -qF "$card_path" "${TODO_FILES[@]}"; then
       verdict=已结
     else
-      echo "G0: 行已勾但已办无本卡指针"
+      echo "G0: 行已勾但 TODO 并集无本卡指针"
       exit 1
     fi
     ;;

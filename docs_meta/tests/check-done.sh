@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 已办区验收：勾完不删，移进 todo.md 末尾的「已办」，每行点名一份 cmd/。
+# 已办区验收：勾完不删，移进 todo.md＋archives/todo-*.md 并集，每行点名一份 cmd/。
 # 零权威，只作证，不算「通过」。用法：bash docs_meta/tests/check-done.sh
 #
 # 口径（脚本和文档必须同一套）：
@@ -54,9 +54,13 @@ cd "$(dirname "$0")/../.."
 fail=0
 TODO=docs_meta/docs/todo.md
 CMDDIR=docs_meta/docs/cmd
+FILES=("$TODO")
+for f in docs_meta/docs/archives/todo-*.md; do
+  [ -f "$f" ] && FILES+=("$f")
+done
 
 # 条目 = 「- [ ]」/「- [x]」开头的行 + 其后的缩进续行。输出：行号 <TAB> 占几行 <TAB> 全文
-# 参数：$1 起始行号（0 = 全文），$2 勾选态正则
+# 参数：$1 起始行号（0 = 全文），$2 勾选态正则，$3 本份 TODO/档案页
 #
 # **围栏内一律跳过**——已办区自己写着格式样例，样例长得和条目一模一样，
 # 检查器不能把自己的格式说明当数据读。
@@ -70,36 +74,35 @@ rows() {
       else if ($0 ~ /^[[:space:]]+[^[:space:]]/ && buf!="") { cnt++; buf=buf " " $0 }
       else if ($0 !~ /^[[:space:]]*$/) { if (buf!="") { print n "\t" cnt "\t" buf; buf="" } }
     }
-    END { if (buf!="") print n "\t" cnt "\t" buf }' "$TODO"
+    END { if (buf!="") print n "\t" cnt "\t" buf }' "$3"
 }
 # 反斜杠写两道：shell 吃一道，awk 的动态正则吃一道。
-entries() { rows "$start" '^- \\[x\\]'; }      # 已办区的条目
+entries() {
+  for f in "${FILES[@]}"; do
+    start=$(grep -n $'^## 已办' "$f" | head -1 | cut -d: -f1)
+    [ -z "$start" ] && continue
+    rows "$start" '^- \\[x\\]' "$f"
+  done
+}
 
-echo "== A 一一对应：每份 cmd 在 todo.md 整页恰好出现一次，每条已办恰好点名一份 cmd =="
+echo "== A 一一对应：每份 cmd 在 todo.md＋archives/todo-*.md 并集恰好出现一次，每条已办恰好点名一份 cmd =="
 
-start=$(grep -n $'^## 已办' "$TODO" | head -1 | cut -d: -f1)
-if [ -z "$start" ]; then
-  echo "   FAIL: todo.md 里没有「## 已办」这一节——勾完的行无处可去"
-  fail=1
-  start=$(wc -l < "$TODO")
-fi
-
-# 方向一：每个卡号在 todo.md 整页恰好出现一次（严口径，人裁）。
+# 方向一：每个卡号在 TODO 并集恰好出现一次（严口径，人裁）。
 # 数的是**出现次数**不是行数——同一行写两遍也是两次。
 for f in "$CMDDIR"/PROMPT_*.md; do
   name=$(basename "$f" .md)
-  n=$(grep -oF "$name.md" "$TODO" | wc -l)   # 带 .md 后缀：定长补零之后这已是第二道保险
+  n=$(grep -hoF "$name.md" "${FILES[@]}" | wc -l)   # 带 .md 后缀：定长补零之后这已是第二道保险
   if [ "$n" -eq 1 ]; then
     echo "   $name  OK"
   else
-    echo "   $name  FAIL: 在 todo.md 整页出现 $n 次，应为 1"
+    echo "   $name  FAIL: 在 TODO 并集出现 $n 次，应为 1"
     fail=1
   fi
 done
 
-# 方向二：页上提到的每个卡号都得真有文件
-for name in $(grep -oE 'PROMPT_[0-9]{3,}' "$TODO" | sort -u); do
-  [ -f "$CMDDIR/$name.md" ] || { echo "   FAIL: todo.md 点名 $name，但 $CMDDIR/$name.md 不存在"; fail=1; }
+# 方向二：并集上提到的每个卡号都得真有文件
+for name in $(grep -hoE 'PROMPT_[0-9]{3,}' "${FILES[@]}" | sort -u); do
+  [ -f "$CMDDIR/$name.md" ] || { echo "   FAIL: TODO 并集点名 $name，但 $CMDDIR/$name.md 不存在"; fail=1; }
 done
 
 # 方向三：已办区每一条恰好点名一份

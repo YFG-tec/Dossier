@@ -18,12 +18,12 @@
 #
 # 钉的是哪几裁：
 #   **期望值不从 init.py 里取，从出处里取**（verify.md 第一条：同源同义反复）。
-#   22 件清单独立抄一份：
-#   - 11 件原有：8 件对 directory.md（:171–:182 的树、:126、:243），3 份 .gitkeep 对 cmd/PROMPT_026.md:262 那一裁
-#   - 11 份新增 harness：CLAUDE.md、AGENTS.md 对 directory.md:115–:116，
+#   24 件清单独立抄一份：
+#   - 11 件原有：8 件对 directory.md（「建议的公共顶层」「`docs/` 内部怎么切」「`.tmp/` 是目录设计」三节），3 份 .gitkeep 对 cmd/PROMPT_026.md:262 那一裁
+#   - 11 份新增 harness：CLAUDE.md、AGENTS.md 对 directory.md「建议的公共顶层」，
 #     .claude/ 及 .cursor/rules/switches.mdc 对本卡第 1 件那张清单（cmd/PROMPT_030.md）
 #   三份 .gitkeep 和九份 harness 的出处是冻住的卡，不是代码。
-#   **期望值不从核里取，这一条对 22 件都成立。**
+#   **期望值不从核里取，这一条对 24 件都成立。**
 #
 #   **两路都判 D 段**（不给长大的桌留口子）。代价：桌一长大，D 段会红。
 #   管长大的桌是另一本，不是把 D 放宽。那一件记进缺口。
@@ -47,11 +47,13 @@
 #   把临时树改到仓库 .tmp/ 下（.gitignore 排掉，和仓库永远同盘），就不会跨盘。
 #   这样红的是核，不是临时目录选在哪儿。`.tmp/` 被排掉、盘面看不见，不算在母本上冒烟。
 #
-#   A 段 22 件逐件钉死：
+#   A 段 24 件逐件钉死：
 #   |  路径              | 类型   |
 #   | --------------- | ---- |
 #   | docs/            | 目录   |
 #   | docs/TODO.md     | 文件   |
+#   | docs/archives/    | 目录   |
+#   | docs/archives/README.md | 文件 |
 #   | docs/SESSION.md  | 文件   |
 #   | docs/cmd/        | 目录   |
 #   | docs/cmd/.gitkeep | 文件  |
@@ -74,21 +76,22 @@
 #   | .cursor/rules/switches.mdc | 文件 |
 #   目录要是目录，文件要是文件。缺一件红，类型错也红。红的那一行必须点名那一件的相对路径。
 #
-#   B 段：docs/figures/ 不许在（directory.md:189）
+#   B 段：docs/figures/ 不许在（directory.md「附件跟引用它的文档走」）
 #
-#   C 段三条，都是词的共现，不是字节比对（paradigm.md 第 6 节：能机检的是词，不是意思）：
-#   - docs/TODO.md 里有一行是 `## 已办`（directory.md:173–:174）
+#   C 段四条，都是词的共现，不是字节比对（paradigm.md 第 6 节：能机检的是词，不是意思）：
+#   - docs/TODO.md 里有一行是 `# 待办`（directory.md「`docs/` 内部怎么切」）
+#   - docs/archives/README.md 里含「只增不删」（本刀 5.47 裁定）
 #   - docs/SESSION.md 里有一行恰好是 `---`（人 2026-09-09 那一裁）
-#   - .tmp/README.md 里含「零权威」（directory.md:247）
+#   - .tmp/README.md 里含「零权威」（directory.md「`.tmp/` 是目录设计」）
 #
 #   D 段七样不许在。两处出源，都是「加厚才出现」或「有第一张图时再建」，现在都不该在：
-#   - 五样：research/、docs/README.md、utils/、papers/、codes/（directory.md:130–:137）
-#   - 两样：docs/design/figures/、docs/reports/figures/（directory.md:191）
+#   - 五样：research/、docs/README.md、utils/、papers/、codes/（directory.md「建议的公共顶层」加厚表）
+#   - 两样：docs/design/figures/、docs/reports/figures/（directory.md「附件跟引用它的文档走」）
 #   两路都判，不给长大的桌留口子。
 #
 #   E 段幂等（只在自造那一路）：
 #   - 同一棵树上再跑一趟 init（--force --non-interactive）
-#   - 末行必须是 `建 0 件，跳过 37 件，覆盖 0 件`（5.20 起 SETUP.md 入骨架，36→37）
+#   - 末行必须是 `建 0 件，跳过 39 件，覆盖 0 件`（5.20 起 SETUP.md 入骨架，36→37；5.47 起 archives 两件，37→39）
 #   - 整树逐份 cksum 与第一趟相同
 #   第二路跳过 E 的时候要印一行说明，必须同时含「幂等」和「跳过」。
 #
@@ -167,11 +170,13 @@ fi
 echo "靶子：$target"
 echo
 
-# ---- A 段：22 件逐件检查 ----
+# ---- A 段：24 件逐件检查 ----
 check_a() {
   local entries=(
     "docs:d"
     "docs/TODO.md:f"
+    "docs/archives:d"
+    "docs/archives/README.md:f"
     "docs/SESSION.md:f"
     "docs/cmd:d"
     "docs/cmd/.gitkeep:f"
@@ -220,10 +225,10 @@ check_a() {
     fi
   done
 
-  if [ "$count" -eq 22 ]; then
-    echo "   OK   22 件都在"
+  if [ "$count" -eq 24 ]; then
+    echo "   OK   24 件都在"
   else
-    echo "   现有 $count / 22"
+    echo "   现有 $count / 24"
   fi
 }
 
@@ -239,19 +244,20 @@ check_b() {
 
 # ---- C 段：词的共现 ----
 check_c() {
-  local has_todo_section=0
+  local has_todo_title=0
   local has_session_line=0
   local has_tmp_keyword=0
+  local has_archives_keyword=0
 
-  # docs/TODO.md 里有「## 已办」
+  # docs/TODO.md 里有「# 待办」
   if [ -f "$target/docs/TODO.md" ]; then
-    if grep -q '## 已办' "$target/docs/TODO.md" 2>/dev/null; then
-      has_todo_section=1
+    if grep -q '# 待办' "$target/docs/TODO.md" 2>/dev/null; then
+      has_todo_title=1
     fi
   fi
 
-  if [ "$has_todo_section" -eq 0 ]; then
-    echo "   FAIL: docs/TODO.md 里没有「## 已办」"
+  if [ "$has_todo_title" -eq 0 ]; then
+    echo "   FAIL: docs/TODO.md 里没有「# 待办」"
     fail=1
   fi
 
@@ -279,8 +285,20 @@ check_c() {
     fail=1
   fi
 
-  if [ "$has_todo_section" -eq 1 ] && [ "$has_session_line" -eq 1 ] && [ "$has_tmp_keyword" -eq 1 ]; then
-    echo "   OK   三个词的共现都在"
+  # docs/archives/README.md 里含「只增不删」
+  if [ -f "$target/docs/archives/README.md" ]; then
+    if grep -q '只增不删' "$target/docs/archives/README.md" 2>/dev/null; then
+      has_archives_keyword=1
+    fi
+  fi
+
+  if [ "$has_archives_keyword" -eq 0 ]; then
+    echo "   FAIL: docs/archives/README.md 里没有「只增不删」"
+    fail=1
+  fi
+
+  if [ "$has_todo_title" -eq 1 ] && [ "$has_session_line" -eq 1 ] && [ "$has_tmp_keyword" -eq 1 ] && [ "$has_archives_keyword" -eq 1 ]; then
+    echo "   OK   四个词的共现都在"
   fi
 }
 
@@ -331,7 +349,7 @@ check_e() {
   local init_output=$(python -B docs_meta/src/init.py "$target" --force --non-interactive 2>/dev/null)
   local last_line=$(printf '%s\n' "$init_output" | tail -1)
 
-  if ! printf '%s' "$last_line" | grep -qF '建 0 件，跳过 37 件，覆盖 0 件'; then
+  if ! printf '%s' "$last_line" | grep -qF '建 0 件，跳过 39 件，覆盖 0 件'; then
     echo "   FAIL: 第二趟末行不对：$last_line"
     fail=1
     return
@@ -391,7 +409,7 @@ check_f() {
 }
 
 # ---- 主检查流程 ----
-echo "== A 22 件逐件在 =="
+echo "== A 24 件逐件在 =="
 check_a
 echo
 
@@ -399,7 +417,7 @@ echo "== B docs/figures/ 不许在 =="
 check_b
 echo
 
-echo "== C 三份占位的结构还在 =="
+echo "== C 四份占位的结构还在 =="
 check_c
 echo
 
