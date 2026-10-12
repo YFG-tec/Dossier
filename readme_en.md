@@ -16,7 +16,7 @@
 </p>
 <p align="center"><small>A checkmark in a chat bubble evaporates; one stamped into a case file stands.</small></p>
 
-When the agent says "done," you cannot verify it — and once the window closes, even the process is gone. Dossier makes it verifiable: every step leaves a record, every conclusion leaves evidence — whether it is done is something you can check yourself. A one-off script needs none of this; long-running projects become traceable — weeks of evolution, dozens of changes, all auditable, all steerable.
+Close the window, and the process is gone — design decisions, verification history, the paths tried and abandoned, all beyond reach. Dossier keeps the process on disk: every step leaves a record, every conclusion leaves evidence — whether it is done is something you can check yourself. A one-off script needs none of this; long-running projects become traceable — weeks of evolution, dozens of changes, all auditable, all steerable.
 
 > For people who use AI coding agents but have never wrestled with a harness. This page reads in three layers: installation and self-operation are the five-minute layer; the map and desk mailbox are the on-demand layer; the scroll, trust, and governance sections are the deep-read layer.
 
