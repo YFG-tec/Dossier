@@ -1,3 +1,7 @@
+## Version binding (unreleased)
+
+- Align host rule checks with fixed product A, development checks with B, and explicit upgrades with candidate P and host state; preserve drift checks and controlled recovery.
+
 ## Product checks layout (unreleased)
 
 - Move packaged environment checks from `tests/` to `checks/`; keep development tests at the repository root.
