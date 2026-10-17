@@ -91,7 +91,7 @@ def templates(repo, tree, prefix):
         rel = path.decode().removeprefix('templates/')
         if mode not in ('100644', '100755') or kind != 'blob':
             raise RuntimeError('Unsupported template: ' + rel)
-        if not (rel in ('CLAUDE.md', 'AGENTS.md') or rel.startswith(('.claude/', '.codex/', '.cursor/'))):
+        if not (rel in ('CLAUDE.md', 'AGENTS.md') or rel.startswith(('.claude/', '.codex/', '.cursor/', '.agents/skills/'))):
             raise RuntimeError('Template outside execution scope: ' + rel)
         if rel.endswith('settings.local.json'):
             raise RuntimeError('Private template')

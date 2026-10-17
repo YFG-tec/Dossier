@@ -25,8 +25,17 @@ def select(repository, version=None):
     if version:
         if version.startswith('-'): raise ValueError('Invalid version')
         return repository, version
+    if re.fullmatch(r'(?:https://codeup\.aliyun\.com/|git@codeup\.aliyun\.com:|ssh://git@codeup\.aliyun\.com(?::[0-9]+)?/)[\w.-]+(?:/[\w.-]+)+', repository):
+        versions = []
+        for line in git('.', 'ls-remote', '--tags', repository, timeout=30).splitlines():
+            fields = line.split()
+            match = re.fullmatch(r'refs/tags/v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)', fields[1]) if len(fields) == 2 else None
+            if match:
+                versions.append((tuple(map(int, match.groups())), fields[1][len('refs/tags/'):]))
+        if not versions: raise ValueError('Codeup repository has no formal vX.Y.Z product tag')
+        return repository, max(versions)[1]
     match = re.fullmatch(r'https://github\.com/([\w.-]+)/([\w.-]+)\.git', repository)
-    if not match: raise ValueError('Non-GitHub repositories require --version')
+    if not match: raise ValueError('Repositories outside GitHub and Codeup require --version')
     request = Request('https://api.github.com/repos/' + '/'.join(match.groups()) + '/releases/latest',
                       headers={'Accept': 'application/vnd.github+json', 'User-Agent': 'Dossier-bootstrap'})
     with urlopen(request, timeout=30) as response:
@@ -37,9 +46,12 @@ def select(repository, version=None):
     return repository, tag
 
 
-def git(repo, *args):
+def git(repo, *args, timeout=None):
     environment = {k: v for k, v in os.environ.items() if not k.startswith('GIT_')}
-    proc = subprocess.run(['git', '-C', str(repo), *args], capture_output=True, env=environment)
+    try:
+        proc = subprocess.run(['git', '-C', str(repo), *args], capture_output=True, env=environment, timeout=timeout)
+    except subprocess.TimeoutExpired as exc:
+        raise ValueError('Git query timed out after ' + str(timeout) + ' seconds') from exc
     if proc.returncode: raise ValueError(proc.stderr.decode('utf-8', 'replace'))
     return proc.stdout.decode().strip()
 
@@ -83,7 +95,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--repository', required=True)
     parser.add_argument('--host-root', required=True)
-    parser.add_argument('--version', help='Explicit formal tag or commit; skips latest lookup')
+    parser.add_argument('--version', help='Explicit tag or commit; otherwise GitHub latest formal Release or highest Codeup formal vX.Y.Z tag')
     args = parser.parse_args(argv)
     try:
         # Existing installations never query latest or rerun an installer.

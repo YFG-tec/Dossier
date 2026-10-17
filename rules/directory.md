@@ -324,20 +324,7 @@ examples/<case>/    演示：run.py + REPORT.md + 本算例图；批跑 / 出图
 
 **「实现席」这一列还要再拆三只手**，`src/` 和 `tests/` 不归同一只手。
 手名取自 `roles.md`（**实现** / **契约测试** / **审查**），第二只简写成两字；
-第二只手叫「测试」不叫「把关」——把关是 `tests/` **那一层**的名字，层和手不共用一个词：
-
-**本表是 `roles.md` 公共角色表的手×写快速视图**——缺行不缺义，新增角色时两处同步加。
-
-| 手 | 写 | 不写 |
-|---|---|---|
-| 实现 `builder` | `src/`（卡片「交什么」点名的）、`.tmp/` | `tests/` 的验收口径 |
-| 测试 `contract-tester` | `tests/`、`.tmp/` | `src/` 算法 |
-| 审查 `review` | **无** | 一切，含 `.tmp/` |
-| 写卡 `write-cmd` | **新增** `docs/cmd/PROMPT_xx.md`（结案后只增不删；退卡的卡留档盖章）+ **覆盖** `SESSION.md` | `src/` `tests/` |
-| 审卡 `card-review` | **无** | 一切，含 `.tmp/` |
-| 规格看守 `spec-guard` | 只覆盖 `SESSION.md` | `src/` `tests/`、自己派 builder |
-| 规划席默认 `cursor-desk` | `docs/` `research/` `examples/` 叙述 `.tmp/` | `src/` `tests/`、派 builder |
-| 领班 | 派角色、跑收口验收、对人说话 | 只派单、不落笔核 |
+第二只手叫「测试」不叫「把关」——把关是 `tests/` **那一层**的名字，层和手不共用一个词；各手写面见 `roles.md` 公共角色表。
 
 压成一行就等于说「改核的手可以改测试口径」，`readme` 五条里的第二、三条当场作废。
 三只手可以同坐一个会话（轻档），但顺序和写路径不变。职责全表见 `roles.md`。

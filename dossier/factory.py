@@ -167,7 +167,7 @@ def main(argv=None):
     for name in ('install', 'plan', 'apply', 'status', 'rollback'):
         p = sub.add_parser(name); p.add_argument('--host-root', required=True)
         if name in ('install', 'plan'):
-            p.add_argument('--repository', required=True); p.add_argument('--version', help='Fixed tag or commit; otherwise official GitHub latest formal Release')
+            p.add_argument('--repository', required=True); p.add_argument('--version', help='Fixed tag or commit; otherwise GitHub latest formal Release or highest Codeup formal vX.Y.Z tag')
         if name == 'apply': p.add_argument('--plan', required=True)
     args = vars(parser.parse_args(argv)); command = args.pop('command')
     try:

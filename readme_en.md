@@ -187,7 +187,9 @@ Hero illustration: generated with GLM-Image, cropped and cleaned by hand.
 
 ### Product and development checkout
 
-Select an existing formal product tag explicitly before running the installer. A product tag has this package at its root; the development checkout uses `src/dossier.py`. Bootstrap selects the official GitHub latest formal Release by default; explicit versions skip latest lookup. Only the factory env check ships; development checks and mail fixtures remain on the development desk.
+A product tag has this package at its root; the development checkout uses `src/dossier.py`. Bootstrap selects the official GitHub latest formal Release by default. For official Codeup HTTPS/SSH repositories, it lists Git tags and selects the numerically highest strict `vX.Y.Z` version, excluding leading zeroes, prereleases and retreat labels. Explicit versions skip selection. Failed lookup, no formal tag or an incomplete product stops installation without falling back to main. Only the factory env check ships; development checks and mail fixtures remain on the development desk.
+
+The Codeup default branch `stable` points to published product P. Future `release tag vX.Y.Z` operations create the immutable formal tag, extend the dist product history and advance stable when needed in one reference transaction with old-OID comparisons. Prereleases and lower formal versions do not downgrade stable. Unknown, symbolic or checked-out stable references reject publication. The tool never pushes automatically. This working-tree selection capability is unreleased: use explicit `--version v0.4.1` with the existing Codeup product's bootstrap until a future release ships it.
 
 `release build` creates a directly usable standalone Git working directory with new local `.git` metadata, no remote and no development parent history. Its tracked tree is exactly the selected src tree; `.git` is local metadata, never a file in the published commit/tag tree.
 
@@ -212,6 +214,6 @@ python submodules/dossier/dossier.py factory status --host-root .
 python submodules/dossier/dossier.py factory rollback --host-root .
 ```
 
-Non-GitHub repositories require an explicit version. Plans fix the canonical repository, selected tag/commit, product tree and host pre-state; apply never queries latest. Existing install runs preserve customizations and the fixed version. Inspect Gitlink/registration and generated changes before committing. Only the env check ships. Rollback retains one completed upgrade and refuses subsequent edits; load changed rules in a new session.
+GitHub defaults to its latest formal Release; official Codeup HTTPS/SSH repositories default to the highest strict numeric vX.Y.Z tag. Other repositories require an explicit version. Failed or empty selection stops without falling back to main; explicit versions skip selection. Plans fix the canonical repository, selected tag/commit, product tree and host pre-state; apply never queries latest. Existing install runs preserve customizations and the fixed version. Inspect Gitlink/registration and generated changes before committing. Only the env check ships. Rollback retains one completed upgrade and refuses subsequent edits; load changed rules in a new session.
 
 The product includes runtime tools, images, and render stamps; figure generators live in `examples/figures/` in the development repository.

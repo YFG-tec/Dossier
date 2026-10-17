@@ -187,7 +187,9 @@ python bootstrap.py --repository https://github.com/YFG-tec/Dossier --host-root 
 
 ### 成品与开发树
 
-成品 tag 的根就是本安装包；手动选择已发布的正式成品 tag 后运行上述入口。开发仓根入口为 `src/dossier.py`，不能将开发分支检出误当成品。默认通过 bootstrap 选择 GitHub latest 正式 Release，显式版本不查询 latest。成品只随附起步 env 检查；本仓22项开发检查与邮箱开发夹具不随包交付。
+成品 tag 的根就是本安装包；上述入口取得选定的正式成品后安装。开发仓根入口为 `src/dossier.py`，不能将开发分支检出误当成品。bootstrap 默认选择 GitHub latest 正式 Release；官方 Codeup HTTPS/SSH 仓库则通过 Git tags 选择数值最高的严格 `vX.Y.Z` 正式版本，排除前导零、预发布及 retreat 等标签。显式版本跳过选版；查询失败、无正式 tag 或成品不完整时停止，不回落 main。成品只随附起步 env 检查；本仓22项开发检查与邮箱开发夹具不随包交付。
+
+Codeup 默认分支 `stable` 指向已发布成品P。未来 `release tag vX.Y.Z` 将正式 tag、dist 成品链及必要的 stable 推进放在同一引用事务中，保留旧OID比较；预发布和较低正式版本补发不降低 stable。未知、符号引用或已被 worktree 检出的 stable 会拒绝发布，工具不自动 push。当前工作区的新选版能力尚未发布；现有 Codeup 成品的 bootstrap 请显式加 `--version v0.4.1`，待后续发版后才能自动选版。
 
 本地 `release build` 输出可直接安装的独立Git工作目录，附带工具新建的 `.git`（无remote、无开发父历史）；版本化tree严格等于固定提交的src树。`.git`是本地元数据，不属于成品提交/tag的文件树。
 
@@ -218,6 +220,6 @@ python submodules/dossier/dossier.py factory status --host-root .
 python submodules/dossier/dossier.py factory rollback --host-root .
 ```
 
-Non-GitHub repositories require an explicit version. Plans fix the canonical repository, selected tag/commit, product tree and host pre-state; apply never queries latest. Existing install runs preserve customizations and the fixed version. Inspect Gitlink/registration and generated changes before committing. Only the env check ships. Rollback retains one completed upgrade and refuses subsequent edits; load changed rules in a new session.
+GitHub defaults to its latest formal Release; official Codeup HTTPS/SSH repositories default to the highest strict numeric vX.Y.Z tag. Other repositories require an explicit version. Failed or empty selection stops without falling back to main; explicit versions skip selection. Plans fix the canonical repository, selected tag/commit, product tree and host pre-state; apply never queries latest. Existing install runs preserve customizations and the fixed version. Inspect Gitlink/registration and generated changes before committing. Only the env check ships. Rollback retains one completed upgrade and refuses subsequent edits; load changed rules in a new session.
 
 成品保留运行工具、图片与图戳；绘图生成脚本位于母本开发仓库的 `examples/figures/`。

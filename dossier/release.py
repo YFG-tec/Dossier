@@ -3,6 +3,7 @@ import argparse
 import json
 import os
 from pathlib import Path, PurePosixPath
+import re
 import shutil
 import subprocess
 import sys
@@ -144,6 +145,43 @@ def build(repo,snap,out):
     finally:
         if temp.exists():remove_created(temp)
 
+def formal_version(version):
+    match = re.fullmatch(r'v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)', version)
+    return tuple(map(int, match.groups())) if match else None
+
+def branch_tip(repo, name):
+    ref = 'refs/heads/' + name
+    for line in git(repo,'worktree','list','--porcelain').decode().splitlines():
+        if line == 'branch ' + ref: raise ReleaseError(name + ' is checked out in a worktree')
+    symbolic=subprocess.run(['git','-C',str(repo),'symbolic-ref','-q',ref],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=git_environment())
+    if symbolic.returncode==0:raise ReleaseError('Symbolic ' + name + ' reference is not supported')
+    if symbolic.returncode not in (0,1):raise ReleaseError('Cannot inspect ' + name + ' reference')
+    return git(repo,'rev-parse','--verify',ref,check=False).decode().strip()
+
+def product_message(repo, commit, name):
+    message=git(repo,'show','-s','--format=%B',commit).decode()
+    if not message.startswith('Dossier product\n\nSource-commit: ') or '\nProduct-tree: ' not in message:
+        raise ReleaseError('Unknown ' + name + ' history; refusing to take over')
+    if git(repo,'rev-parse',commit+'^{tree}').decode().strip()!=message.split('Product-tree: ',1)[1].splitlines()[0]:
+        raise ReleaseError('Unknown ' + name + ' tree')
+    return message
+
+def stable_version(repo, stable, dist):
+    message = product_message(repo, stable, 'stable')
+    if not dist or git(repo,'rev-list',stable,'--not',dist).strip():
+        raise ReleaseError('stable is not in dist history')
+    snapshot(repo, stable, product=True)
+    versions = []
+    for line in git(repo,'for-each-ref','--format=%(refname:strip=2) %(objecttype) %(*objectname)','refs/tags').decode().splitlines():
+        fields = line.split()
+        version = formal_version(fields[0]) if fields else None
+        if version is not None and fields[1:] == ['tag', stable]:
+            annotation = git(repo,'cat-file','-p','refs/tags/' + fields[0]).decode()
+            if annotation.split('\n\n',1)[-1].strip() == message.strip():
+                versions.append(version)
+    if not versions: raise ReleaseError('stable has no formal Dossier product tag')
+    return max(versions)
+
 def publish(repo,snap,version):
     git(repo,'check-ref-format','refs/tags/'+version)
     if git(repo,'status','--porcelain','--untracked-files=no').strip():raise ReleaseError('Tracked worktree/index changes: commit source first')
@@ -151,18 +189,11 @@ def publish(repo,snap,version):
     existing=subprocess.run(['git','-C',str(repo),'show-ref','--verify','--quiet',tagref],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=git_environment())
     if existing.returncode==0:raise ReleaseError('Tag already exists')
     if existing.returncode not in (0,1):raise ReleaseError('Cannot inspect existing tag')
-    for line in git(repo,'worktree','list','--porcelain').decode().splitlines():
-        if line=='branch refs/heads/dist':raise ReleaseError('dist is checked out in a worktree')
-    symbolic=subprocess.run(['git','-C',str(repo),'symbolic-ref','-q','refs/heads/dist'],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=git_environment())
-    if symbolic.returncode==0:raise ReleaseError('Symbolic dist reference is not supported')
-    if symbolic.returncode not in (0,1):raise ReleaseError('Cannot inspect dist reference')
-    old=git(repo,'rev-parse','--verify','refs/heads/dist',check=False).decode().strip()
-    if old:
-        message=git(repo,'show','-s','--format=%B',old).decode()
-        if not message.startswith('Dossier product\n\nSource-commit: ') or '\nProduct-tree: ' not in message:
-            raise ReleaseError('Unknown dist history; refusing to take over')
-        if git(repo,'rev-parse',old+'^{tree}').decode().strip()!=message.split('Product-tree: ',1)[1].splitlines()[0]:
-            raise ReleaseError('Unknown dist tree')
+    old=branch_tip(repo, 'dist')
+    if old: product_message(repo, old, 'dist')
+    stable=branch_tip(repo, 'stable')
+    current=stable_version(repo, stable, old) if stable else None
+    candidate=formal_version(version)
     tmp=Path(tempfile.mkdtemp(prefix='dossier-release-'))
     try:
         product=tmp/'product';product.mkdir();export(repo,snap,product);checkout_metadata(repo,snap,product);validate(product)
@@ -176,7 +207,10 @@ def publish(repo,snap,version):
     annotated=f"object {new}\ntype commit\ntag {version}\ntagger {ident}\n\n{msg}"
     tag=git(repo,'mktag',data=annotated.encode()).decode().strip()
     zero='0'*len(new)
-    transaction=f'start\noption no-deref\nupdate refs/heads/dist {new} {old or zero}\ncreate {tagref} {tag}\nprepare\ncommit\n'
+    stable_update = candidate is not None and (current is None or candidate > current)
+    stable_command = (f'update refs/heads/stable {new} {stable or zero}\n' if stable_update
+                      else f'verify refs/heads/stable {stable or zero}\n')
+    transaction=f'start\noption no-deref\nupdate refs/heads/dist {new} {old or zero}\ncreate {tagref} {tag}\n{stable_command}prepare\ncommit\n'
     git(repo,'update-ref','--stdin',data=transaction.encode())
     return dict(product_commit=new,tag=version,tag_oid=tag)
 

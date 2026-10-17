@@ -1,3 +1,18 @@
+## v0.4.2 — 2026-10-17
+
+- Release Codeup stable version selection and atomic stable publication, plus the shared conventional-commit skill and thin Claude entry.
+- Preserve compatibility with complete historical products such as v0.4.1: the new skill templates remain packaged in this release but are not required by bootstrap or release checks for every prior version. Existing completeness and safety checks remain in place; this supersedes the unpublished minimum-completeness note below.
+
+## Conventional commit skill (unreleased)
+
+- Bundle a diff-based conventional-commit skill with a shared Codex body and a thin Claude entry; include both in installation and minimum product completeness checks.
+
+## Codeup stable entry (unreleased)
+
+- Select the highest strict numeric formal vX.Y.Z Git tag for official Codeup HTTPS/SSH repositories; explicit versions skip lookup and selection failures never fall back to main.
+- Publish formal tags, the dist product chain and necessary stable advances atomically with old-OID comparisons; reject unknown, symbolic or checked-out stable references and preserve stable on prereleases or lower formal versions. No automatic push.
+- This capability needs a future product release; existing Codeup bootstrap users must still specify `--version v0.4.1`.
+
 ## Version binding (unreleased)
 
 - Align host rule checks with fixed product A, development checks with B, and explicit upgrades with candidate P and host state; preserve drift checks and controlled recovery.
@@ -120,3 +135,7 @@ Added local runtime plan/apply/status/rollback commands. Host execution files an
 ## Development figure tools (unreleased)
 
 - Move figure generators to development `examples/figures/`; keep product images, render stamps, and runtime tools.
+
+## Permission source deduplication (unreleased)
+
+- Remove the duplicate role write-access quick table from `rules/directory.md` and point to the canonical public role table in `rules/roles.md`; update the projection reference in `rules/claude-code.md`. Permissions remain unchanged.
