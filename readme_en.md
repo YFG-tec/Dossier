@@ -1,5 +1,3 @@
-> The new framework now occupies the repository root. Stable self-dependency A is not installed, and no tag has been published. Without a target, init/baseline operate on this framework; under submodules/dossier they default to its host, and an explicit target is also supported. The new layout replaces the old shell; residual private files remain unchanged in local `.zwork/legacy-shell-2026-10-17/` and are not runtime sources. See the [root migration handoff](docs/reports/molt-handoff-2026-10-17.md).
-
 [中文](readme.md) ｜ [English](readme_en.md)
 
 <p align="center">
@@ -14,11 +12,11 @@
 </p>
 
 <p align="center">
-  <img src="rules/figures/paradigm-shift.png" width="560" alt="A shattering chat window with a particle stream evaporating, an arrow, and an open ledger bearing a red checkmark and paw print">
+  <img src="rules/figures/paradigm-shift-en.png" width="760" alt="Two lanes compare a common chat-driven approach with Dossier across defining the task, building and verifying, and confirming completion; Dossier declares scope and acceptance criteria in a task card, uses separate sessions for work and checks, and leaves records for continuity; both approaches can include tests">
 </p>
-<p align="center"><small>A checkmark in a chat bubble evaporates; one stamped into a case file stands.</small></p>
+<p align="center"><small>One task, two ways to work. The upper lane shows one common approach; both can include tests. Dossier gives scope, independent checks, and record continuity explicit places in the workflow.</small></p>
 
-Close the window, and the process is gone — design decisions, verification history, the paths tried and abandoned, all beyond reach. Dossier keeps the process on disk: every step leaves a record, every conclusion leaves evidence — whether it is done is something you can check yourself. A one-off script needs none of this; long-running projects become traceable — weeks of evolution, dozens of changes, all auditable, all steerable.
+Dossier keeps task cards, design decisions, changes, and verification records in the repository. Later sessions can follow those references to continue the work, and you can trace a conclusion to the evidence behind it. For projects that span many iterations or need handoffs and review, the record makes the work easier to resume and inspect; completion is judged against criteria declared in advance.
 
 > For people who use AI coding agents but have never wrestled with a harness. This page reads in three layers: installation and self-operation are the five-minute layer; the map and desk mailbox are the on-demand layer; the scroll, trust, and governance sections are the deep-read layer.
 
