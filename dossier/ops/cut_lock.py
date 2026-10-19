@@ -93,6 +93,11 @@ def _collision(row: str) -> str:
 
 
 def take(row: str, card: str, agent: str) -> int:
+    from .close_cut import closure_status
+    code, text = closure_status(REPO)
+    if code:
+        print(text)
+        return 2
     try:
         p = _path(row)
     except ValueError as e:
@@ -174,9 +179,10 @@ def stale(minutes: int = 240) -> int:
 
 
 def selftest() -> int:
-    global LOCKS
-    real = LOCKS
+    global REPO, LOCKS
+    real, real_repo = LOCKS, REPO
     root = Path(tempfile.mkdtemp())
+    REPO = root
     LOCKS = root / ".tmp" / "locks"
     try:
         ok: list[tuple[str, bool]] = []
@@ -199,6 +205,7 @@ def selftest() -> int:
         return 0 if not bad else 1
     finally:
         LOCKS = real
+        REPO = real_repo
         shutil.rmtree(root, ignore_errors=True)
 
 

@@ -1,3 +1,23 @@
+## Risk-proportional management thickness (unreleased, source-internal)
+
+- Preserve independent card review, testing, fresh review, gates, and human authorization while setting the default post-implementation thickness to one independent review plus foreman reconciliation. This restrained M1/N1 absorption requires extra roles, stages, materials, or reviewers to point to uncovered risks and uses existing card fields and SESSION for cost assumptions, precedent applicability, optional-versus-blocking findings, and write-strength distinctions. No ledger, quota, approval layer, exemption, host retranslation, commit, or release is added.
+
+## Evidence retention layering (unreleased, source-internal)
+
+- Separate durable records and selected key evidence from full forensic scenes, close failure causes in the current cut case, and review staged necessity before any future commit without a blanket size limit. This M5/D5 change performs no old-package rescan, host retranslation, history cleanup, commit, or release.
+
+## Impact-based revalidation (unreleased, source-internal)
+
+- Scope cut acceptance by affected interfaces and result applicability, invalidate reused results after relevant input changes, and condition the two repeated machine checks on SESSION control fields and card-review inputs. Necessary checks, independent semantic review, and gate boundaries remain; no cache/dependency platform is added and hosts need no retranslation.
+
+## Card-bound rework (unreleased)
+
+- Align the cut workflow, agent predicates, duty breakpoints, and verdict parsing so safely continuable implementation defects are repaired within the original cut while first-red evidence, independent retesting, fresh review, and the no-unresolved-blocker gate remain.
+
+## Closure commit verification (unreleased)
+
+- Make close-cut explicitly commit or defer, bind frozen files and generated ledgers to the verified Git commit, and retain one private recovery record on failure or interruption. Reuse its read-only status at the next cut-lock take; preserve authorization and independent acceptance boundaries.
+
 ## v0.4.2 — 2026-10-17
 
 - Release Codeup stable version selection and atomic stable publication, plus the shared conventional-commit skill and thin Claude entry.

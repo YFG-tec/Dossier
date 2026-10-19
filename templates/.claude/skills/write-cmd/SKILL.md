@@ -10,6 +10,8 @@ description: 写一刀的卡片。新增 docs/cmd/PROMPT_xx.md，并覆盖 docs/
 
 ## 两份都要出
 
+写下一刀之前先运行 `python {{DOSSIER_ROOT}}/dossier.py close-cut --status --host-root .`；非零先恢复上一刀，不覆盖其运行态。状态含义只见 workflow 的结案段。
+
 | 出什么 | 怎么动 | 它是什么 |
 |---|---|---|
 | `docs/cmd/PROMPT_xx.md` | **新增**。结案后只增不删；退卡的卡留档盖章 | 历史 |
